@@ -21,7 +21,7 @@ const S = {
   } as React.CSSProperties,
 };
 
-const serviceOptions = ['Databricks Migration', 'Snowflake Consulting', 'Analytics & BI', 'Staff Augmentation', 'Not Sure Yet'];
+const serviceOptions = ['Databricks AI & Lakehouse', 'AI & ML Engineering', 'Snowflake Consulting', 'Analytics & BI', 'Staff Augmentation', 'Not Sure Yet'];
 const timelineOptions = ['ASAP — urgent need', '1-3 months', '3-6 months', '6+ months', 'Just exploring'];
 
 const nextSteps = [

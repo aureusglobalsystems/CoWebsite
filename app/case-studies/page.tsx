@@ -67,9 +67,18 @@ const allCaseStudies = [
     outcomes: ['Critical regulatory deadline met', '40 legacy ETL jobs modernized', '3 engineers certified in new stack', 'Zero delivery gaps during engagement'],
     tech: ['Azure Data Factory', 'Airflow', 'dbt', 'Azure Synapse', 'Power BI'],
   },
+  {
+    category: 'AI/ML', tag: 'AI & ML Engineering', tagColor: '#8b5cf6',
+    client: 'D2C Retail Brand', industry: 'Retail / E-Commerce', duration: '4 months',
+    title: 'ML Forecasting That Recovered $2.4M in Lost Revenue',
+    challenge: 'A fast-growing D2C brand with 800 SKUs was making inventory decisions manually. Stockouts cost $3.2M in lost revenue the previous year. Their Excel-based forecast ran monthly and hit 67% accuracy — not good enough at their scale.',
+    solution: 'Built an ML demand-forecasting platform on Databricks: an ensemble model combining gradient boosting with external signals — promotions, weather, social trends. MLflow tracked every experiment. Predictions refreshed daily and fed directly into their Snowflake inventory system via automated pipelines.',
+    outcomes: ['Forecast accuracy improved from 67% → 91%', 'Stockout rate reduced by 74%', '$2.4M recovered revenue in first 6 months', 'Inventory holding costs down 28%'],
+    tech: ['Databricks', 'MLflow', 'Mosaic AI', 'Snowflake', 'Python', 'LightGBM', 'FastAPI'],
+  },
 ];
 
-const categories = ['All', 'Databricks', 'Snowflake', 'Analytics'];
+const categories = ['All', 'Databricks', 'Snowflake', 'Analytics', 'AI/ML'];
 
 export default function CaseStudiesPage() {
   const [activeFilter, setActiveFilter] = useState('All');
