@@ -99,7 +99,7 @@ export default function Footer() {
           <div>
             <p style={{ ...LABEL, color: '#555', display: 'block', marginBottom: '20px' }}>Contact</p>
             <a
-              href="mailto:aureusglobalsystems@gmail.com"
+              href="mailto:info@aureusglobalsystems.com"
               style={{
                 fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem',
                 display: 'block', marginBottom: '16px', textDecoration: 'none',
@@ -108,7 +108,7 @@ export default function Footer() {
               onMouseEnter={e => (e.currentTarget.style.color = 'white')}
               onMouseLeave={e => (e.currentTarget.style.color = '#888')}
             >
-              aureusglobalsystems@gmail.com
+              info@aureusglobalsystems.com
             </a>
             <a
               href="/contact"

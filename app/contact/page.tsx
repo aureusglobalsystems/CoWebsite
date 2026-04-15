@@ -88,7 +88,7 @@ export default function Contact() {
                   <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: 'white', fontSize: '1.5rem' }}>✓</div>
                   <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '24px', letterSpacing: '-0.03em', marginBottom: '12px' }}>Message Received</h3>
                   <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', lineHeight: 1.6 }}>We'll be in touch within 24 hours.</p>
-                  <a href="mailto:aureusglobalsystems@gmail.com" style={{ display: 'inline-block', marginTop: '24px', fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', textDecoration: 'none' }}>
+                  <a href="mailto:info@aureusglobalsystems.com" style={{ display: 'inline-block', marginTop: '24px', fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', textDecoration: 'none' }}>
                     Or email us directly →
                   </a>
                 </div>
@@ -155,7 +155,7 @@ export default function Contact() {
 
                   {status === 'error' && (
                     <p style={{ fontFamily: 'Inter, sans-serif', color: '#ef4444', fontSize: '0.82rem' }}>
-                      Something went wrong. Email us at aureusglobalsystems@gmail.com
+                      Something went wrong. Email us at info@aureusglobalsystems.com
                     </p>
                   )}
 
@@ -171,8 +171,8 @@ export default function Contact() {
 
                   <p style={{ fontFamily: 'Inter, sans-serif', color: '#bbb', fontSize: '0.78rem', textAlign: 'center' }}>
                     Or email:{' '}
-                    <a href="mailto:aureusglobalsystems@gmail.com" style={{ color: '#888', textDecoration: 'underline' }}>
-                      aureusglobalsystems@gmail.com
+                    <a href="mailto:info@aureusglobalsystems.com" style={{ color: '#888', textDecoration: 'underline' }}>
+                      info@aureusglobalsystems.com
                     </a>
                   </p>
                 </form>
@@ -200,8 +200,8 @@ export default function Contact() {
                 <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem', marginTop: '4px' }}>Available across all time zones</p>
                 <div style={{ width: '48px', height: '1px', background: ACCENT, margin: '20px 0' }} />
                 <p style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', marginBottom: '8px' }}>Contact</p>
-                <a href="mailto:aureusglobalsystems@gmail.com" style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.9rem', color: '#111', textDecoration: 'none', transition: 'color 0.2s' }}>
-                  aureusglobalsystems@gmail.com
+                <a href="mailto:info@aureusglobalsystems.com" style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.9rem', color: '#111', textDecoration: 'none', transition: 'color 0.2s' }}>
+                  info@aureusglobalsystems.com
                 </a>
               </div>
             </div>
