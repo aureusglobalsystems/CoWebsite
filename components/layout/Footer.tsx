@@ -158,15 +158,15 @@ export default function Footer() {
           gap: '16px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ ...LABEL, color: '#444', fontSize: '0.5rem' }}>Est. 2024</span>
+            <span style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>Est. 2024</span>
             <div style={{ display: 'flex', gap: '6px' }}>
               {['#ff3366', '#ff6b35', '#ffd700', '#00d4aa', '#3366ff'].map((c) => (
                 <div key={c} style={{ width: '6px', height: '6px', borderRadius: '50%', background: c }} />
               ))}
             </div>
-            <span style={{ ...LABEL, color: '#444', fontSize: '0.5rem' }}>India Global Delivery</span>
+            <span style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>India Global Delivery</span>
           </div>
-          <p style={{ ...LABEL, color: '#444', fontSize: '0.5rem' }}>
+          <p style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>
             © {new Date().getFullYear()} Aureus Global Systems LLP. All rights reserved.
           </p>
         </div>
