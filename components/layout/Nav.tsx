@@ -56,18 +56,17 @@ export default function Nav() {
     const tip      = tipRef.current;
     if (!stroke || !fillRect || !tip) return;
 
-    const FULL_W = 132; // advance width of "Aureus" at Dancing Script 700 30px
-    const DASH   = 3000; // safely larger than any letter-outline perimeter
+    const FULL_W = 132;
+    const DASH   = 3000;
 
-    const ctx = gsap.context(() => {
-      // Initial state
-      gsap.set(stroke,   { strokeDasharray: DASH, strokeDashoffset: DASH, strokeWidth: 1.2 });
-      gsap.set(fillRect, { attr: { width: 0 } });
-      gsap.set(tip,      { attr: { cx: 4 }, opacity: 1 });
+    // Always set initial hidden state synchronously
+    gsap.set(stroke,   { strokeDasharray: DASH, strokeDashoffset: DASH, strokeWidth: 1.2 });
+    gsap.set(fillRect, { attr: { width: 0 } });
+    gsap.set(tip,      { attr: { cx: 4 }, opacity: 0 });
 
+    const play = () => {
+      gsap.set(tip, { opacity: 1 });
       const tl = gsap.timeline();
-
-      // All three layers start at t=0 and run in perfect sync
       tl.fromTo(stroke,
         { strokeDashoffset: DASH },
         { strokeDashoffset: 0, duration: 1.8, ease: 'power1.inOut' },
@@ -83,13 +82,18 @@ export default function Nav() {
         { attr: { width: FULL_W + 6 }, duration: 1.8, ease: 'power1.inOut' },
         0
       );
-
-      // Completion: pen tip disappears, stroke fades out
       tl.to(tip,    { opacity: 0, duration: 0.2, ease: 'power2.out' });
       tl.to(stroke, { strokeWidth: 0, duration: 0.25, ease: 'power2.out' }, '<');
-    });
+    };
 
-    return () => ctx.revert();
+    // Homepage has a loader — wait for its done signal before playing.
+    // All other pages have no loader, so play immediately.
+    if (document.querySelector('[data-ags-loader]')) {
+      window.addEventListener('agsLoaderDone', play, { once: true });
+      return () => window.removeEventListener('agsLoaderDone', play);
+    } else {
+      play();
+    }
   }, []);
 
   return (

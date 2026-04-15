@@ -14,14 +14,31 @@ export default function Signature() {
   const maskRectRef = useRef<SVGRectElement>(null);
   const underlineRef = useRef<SVGPathElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const sigStrokeRef = useRef<SVGTextElement>(null);
+  const sigTipRef = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
     if (!maskRectRef.current || !underlineRef.current) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
+    const DASH      = 12000; // safely larger than Caveat 130px text perimeter
+    const TIP_START = 80;    // left edge of text in viewBox units
+    const TIP_END   = 1420;  // right edge of text in viewBox units
+
     // Start fully hidden
     maskRectRef.current.setAttribute('width', '0');
+
+    // Stroke trace — start undrawn
+    if (sigStrokeRef.current) {
+      gsap.set(sigStrokeRef.current, { strokeDasharray: DASH, strokeDashoffset: DASH });
+    }
+
+    // Pen tip — start hidden at left edge
+    if (sigTipRef.current) {
+      sigTipRef.current.setAttribute('cx', String(TIP_START));
+      sigTipRef.current.setAttribute('opacity', '0');
+    }
 
     // Underline stroke animation
     const uLen = underlineRef.current.getTotalLength();
@@ -40,6 +57,18 @@ export default function Signature() {
         if (maskRectRef.current) {
           // Overshoot slightly to ensure trailing chars are fully uncovered
           maskRectRef.current.setAttribute('width', String(textP * (VB_W + 60)));
+        }
+
+        // Stroke trace synced with text reveal
+        if (sigStrokeRef.current) {
+          gsap.set(sigStrokeRef.current, { strokeDashoffset: DASH * (1 - textP) });
+        }
+
+        // Pen tip travels left → right, visible only while drawing
+        if (sigTipRef.current) {
+          const tipX = TIP_START + textP * (TIP_END - TIP_START);
+          sigTipRef.current.setAttribute('cx', String(tipX));
+          sigTipRef.current.setAttribute('opacity', textP > 0 && textP < 0.99 ? '1' : '0');
         }
 
         // Pink underline flourish: 70% → 100% of scroll travel
@@ -104,6 +133,10 @@ export default function Signature() {
             aria-label="Aureus Global Systems"
           >
             <defs>
+              <linearGradient id="sig-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#ff3366" />
+                <stop offset="100%" stopColor="#ff6b35" />
+              </linearGradient>
               {/* clipPath in userSpaceOnUse — units match the viewBox */}
               <clipPath id="sig-clip" clipPathUnits="userSpaceOnUse">
                 <rect
@@ -130,6 +163,27 @@ export default function Signature() {
             >
               Aureus Global Systems
             </text>
+
+            {/* Stroke trace — pen drawing effect, synced with clip reveal */}
+            <text
+              ref={sigStrokeRef}
+              x={VB_W / 2}
+              y="165"
+              textAnchor="middle"
+              fontFamily="Caveat, cursive"
+              fontSize="130"
+              fontWeight="700"
+              fill="transparent"
+              stroke="url(#sig-grad)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              Aureus Global Systems
+            </text>
+
+            {/* Pen tip dot — rides the leading edge */}
+            <circle ref={sigTipRef} r="5" cx="80" cy="155" fill="#ff3366" opacity="0" />
 
             {/* Ink text — revealed left-to-right by clipPath */}
             <g clipPath="url(#sig-clip)">

@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      {!loaded && <Loader onComplete={() => setLoaded(true)} />}
+      {!loaded && <Loader onComplete={() => { setLoaded(true); window.dispatchEvent(new CustomEvent('agsLoaderDone')); }} />}
       <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}>
         <Hero />
         <Marquee />

@@ -43,7 +43,7 @@ export default function Loader({ onComplete }: LoaderProps) {
   }, [onComplete]);
 
   return (
-    <div ref={overlayRef} style={{
+    <div ref={overlayRef} data-ags-loader="true" style={{
       position: 'fixed', inset: 0, zIndex: 100,
       background: 'white',
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
