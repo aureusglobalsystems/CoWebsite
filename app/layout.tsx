@@ -3,6 +3,7 @@ import './globals.css';
 import LenisProvider from '@/components/providers/LenisProvider';
 import Nav from '@/components/layout/Nav';
 import Footer from '@/components/layout/Footer';
+import ScrollToTop from '@/components/ui/ScrollToTop';
 
 export const metadata: Metadata = {
   title: 'Aureus Global Systems — Leading Data & AI Company',
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Nav />
           <main style={{ width: '100%', display: 'block' }}>{children}</main>
           <Footer />
+          <ScrollToTop />
         </LenisProvider>
       </body>
     </html>
