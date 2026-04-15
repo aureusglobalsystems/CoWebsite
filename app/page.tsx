@@ -6,6 +6,7 @@ import Hero from '@/components/home/Hero';
 import Marquee from '@/components/home/Marquee';
 import HardTruths from '@/components/home/HardTruths';
 import Services from '@/components/home/Services';
+import LeadMagnet from '@/components/home/LeadMagnet';
 import StickyProcess from '@/components/home/StickyProcess';
 import CaseStudies from '@/components/home/CaseStudies';
 import Testimonials from '@/components/home/Testimonials';
@@ -23,6 +24,7 @@ export default function Home() {
         <Marquee />
         <HardTruths />
         <Services />
+        <LeadMagnet />
         <StickyProcess />
         <CaseStudies />
         <Testimonials />
