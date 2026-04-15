@@ -80,7 +80,7 @@ export default function Testimonials() {
       }} />
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 2 }}>
-        <p style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#444', display: 'block', textAlign: 'center', marginBottom: '48px' }}>
+        <p style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#888', display: 'block', textAlign: 'center', marginBottom: '48px' }}>
           What Clients Say
         </p>
 
