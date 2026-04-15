@@ -39,23 +39,26 @@ export default function MagneticButton({
     };
 
     const move = (e: MouseEvent) => {
-      if (!hovered.current) return;
       const rect = el.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
       const dx = e.clientX - cx;
       const dy = e.clientY - cy;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < radius) {
+      if (dist < radius && hovered.current) {
         target.current.x = dx * strength;
         target.current.y = dy * strength;
+      } else {
+        target.current.x = 0;
+        target.current.y = 0;
       }
     };
 
     const enter = () => { hovered.current = true; };
     const leave = () => {
       hovered.current = false;
-      target.current = { x: 0, y: 0 };
+      target.current.x = 0;
+      target.current.y = 0;
     };
 
     window.addEventListener('mousemove', move);
