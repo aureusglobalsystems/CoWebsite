@@ -396,6 +396,7 @@ export default function LeadMagnet() {
                       placeholder="work@company.com"
                       value={form.email}
                       required
+                      suppressHydrationWarning
                       onFocus={() => setFocusedField('email')}
                       onBlur={() => setFocusedField('')}
                       onChange={e => setForm({ ...form, email: e.target.value })}
