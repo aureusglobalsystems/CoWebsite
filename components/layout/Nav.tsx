@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import MagneticButton from '@/components/ui/MagneticButton';
@@ -18,6 +20,10 @@ export default function Nav() {
   const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastScroll = useRef(0);
+  const strokeRef   = useRef<SVGTextElement>(null);
+  const fillRef     = useRef<SVGTextElement>(null);
+  const fillRectRef = useRef<SVGRectElement>(null);
+  const tipRef      = useRef<SVGCircleElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -43,6 +49,45 @@ export default function Nav() {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
+
+  useGSAP(() => {
+    const stroke   = strokeRef.current;
+    const fill     = fillRef.current;
+    const fillRect = fillRectRef.current;
+    const tip      = tipRef.current;
+    if (!stroke || !fill || !fillRect || !tip) return;
+
+    const FULL_W = 132; // advance width of "Aureus" at Dancing Script 700 30px
+    const DASH   = 3000; // safely larger than any letter-outline perimeter
+
+    // Initial state
+    gsap.set(stroke,   { strokeDasharray: DASH, strokeDashoffset: DASH, strokeWidth: 1.2 });
+    gsap.set(fillRect, { attr: { width: 0 } });
+    gsap.set(tip,      { attr: { cx: 4 }, opacity: 1 });
+
+    const tl = gsap.timeline();
+
+    // All three layers start at t=0 and run in perfect sync
+    tl.fromTo(stroke,
+      { strokeDashoffset: DASH },
+      { strokeDashoffset: 0, duration: 1.8, ease: 'power1.inOut' },
+      0
+    );
+    tl.fromTo(tip,
+      { attr: { cx: 4 } },
+      { attr: { cx: 4 + FULL_W }, duration: 1.8, ease: 'power1.inOut' },
+      0
+    );
+    tl.fromTo(fillRect,
+      { attr: { width: 0 } },
+      { attr: { width: FULL_W + 6 }, duration: 1.8, ease: 'power1.inOut' },
+      0
+    );
+
+    // Completion: pen tip disappears, stroke fades out
+    tl.to(tip,    { opacity: 0, duration: 0.2, ease: 'power2.out' });
+    tl.to(stroke, { strokeWidth: 0, duration: 0.25, ease: 'power2.out' }, '<');
+  }, []);
 
   return (
     <>
@@ -76,21 +121,53 @@ export default function Nav() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           {/* Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', zIndex: 60, position: 'relative' }}>
-            <div style={{
-              width: 32, height: 32, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #ff3366, #3366ff)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              flexShrink: 0,
-            }}>
-              <span style={{ color: 'white', fontSize: '12px', fontWeight: 700, fontFamily: 'Syne, sans-serif' }}>A</span>
-            </div>
-            <span style={{
-              fontFamily: 'Syne, sans-serif', fontWeight: 700,
-              fontSize: '14px', letterSpacing: '-0.02em', color: '#111',
-            }}>
-              Aureus Global
-            </span>
+          <Link href="/" style={{ textDecoration: 'none', zIndex: 60, position: 'relative', display: 'block' }}>
+            <svg
+              width="140" height="44" viewBox="0 0 140 44"
+              style={{ overflow: 'visible', display: 'block' }}
+              aria-label="Aureus"
+            >
+              <defs>
+                <linearGradient id="navPenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ff3366" />
+                  <stop offset="100%" stopColor="#ff6b35" />
+                </linearGradient>
+                <linearGradient id="navFillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ff3366" />
+                  <stop offset="100%" stopColor="#ff6b35" />
+                </linearGradient>
+                <clipPath id="navFillClip">
+                  <rect ref={fillRectRef} x="-2" y="0" width="0" height="44" />
+                </clipPath>
+              </defs>
+
+              {/* Layer 1 — stroke trace (pen drawing the letters) */}
+              <text
+                ref={strokeRef}
+                x="4" y="36"
+                fontFamily="'Dancing Script', cursive"
+                fontSize="30"
+                fontWeight="700"
+                fill="transparent"
+                stroke="url(#navPenGrad)"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >Aureus</text>
+
+              {/* Layer 2 — gradient fill revealed by sweeping clip rect */}
+              <text
+                ref={fillRef}
+                x="4" y="36"
+                fontFamily="'Dancing Script', cursive"
+                fontSize="30"
+                fontWeight="700"
+                fill="url(#navFillGrad)"
+                clipPath="url(#navFillClip)"
+              >Aureus</text>
+
+              {/* Pen tip dot — rides the leading edge */}
+              <circle ref={tipRef} r="1.8" cx="4" cy="26" fill="#ff3366" opacity="0" />
+            </svg>
           </Link>
 
           {/* Desktop nav links */}
