@@ -167,7 +167,7 @@ export default function Footer() {
             </div>
             <span style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>India Global Delivery</span>
           </div>
-          <p style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>
+          <p style={{ ...LABEL, color: '#aaa', fontSize: '0.5rem' }}>
             © {new Date().getFullYear()} Aureus Global Systems LLP. All rights reserved.
           </p>
         </div>
