@@ -120,9 +120,9 @@ export default function About() {
               <div>
                 <p style={S.label()}>Who We Are</p>
                 <p style={S.body}>
-                  Aureus Global Systems is an enterprise data engineering consultancy founded in 2024.
-                  We are a team of senior data engineers, architects, and analytics specialists who have
-                  collectively delivered over 50 enterprise data platforms across retail, fintech, healthcare,
+                  Aureus Global Systems is a leading data & AI company founded in 2024.
+                  We are a team of senior data engineers, AI architects, and analytics specialists who have
+                  collectively delivered over 50 data and AI platforms across retail, fintech, healthcare,
                   and manufacturing.
                 </p>
               </div>

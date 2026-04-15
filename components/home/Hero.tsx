@@ -157,7 +157,7 @@ export default function Hero() {
         paddingTop: '80px',
       }}>
         <p className="label" style={{ color: '#888', marginBottom: '24px', display: 'block' }}>
-          Enterprise Data Engineering · India — Global Delivery
+          Leading Data & AI Company · India — Global Delivery
         </p>
 
         <h1
@@ -203,7 +203,7 @@ export default function Hero() {
           marginBottom: '40px',
           opacity: 0,
         }}>
-          We architect, migrate, and scale enterprise data platforms —
+          We architect, migrate, and scale data & AI platforms —
           so your team spends time on insights, not infrastructure.
         </p>
 

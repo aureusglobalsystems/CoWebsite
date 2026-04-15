@@ -5,10 +5,10 @@ import Nav from '@/components/layout/Nav';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'Aureus Global Systems — Enterprise Data Engineering',
+  title: 'Aureus Global Systems — Leading Data & AI Company',
   description:
-    "We build the data platforms that power tomorrow's decisions. Databricks, Snowflake, Cloud, Analytics & BI — delivered by experts.",
-  keywords: ['data engineering', 'databricks', 'snowflake', 'analytics', 'BI', 'cloud'],
+    "We build the data and AI platforms that power tomorrow's decisions. Databricks, Snowflake, Cloud, Analytics & BI — delivered by experts.",
+  keywords: ['data engineering', 'AI', 'artificial intelligence', 'databricks', 'snowflake', 'analytics', 'BI', 'cloud'],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
