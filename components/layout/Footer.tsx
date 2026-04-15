@@ -132,9 +132,9 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label="Aureus Global Systems on LinkedIn"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                display: 'flex', alignItems: 'center', gap: '8px',
                 marginTop: '16px', color: '#555', textDecoration: 'none',
-                transition: 'color 0.2s',
+                transition: 'color 0.2s', width: 'fit-content',
               }}
               onMouseEnter={e => (e.currentTarget.style.color = 'white')}
               onMouseLeave={e => (e.currentTarget.style.color = '#555')}

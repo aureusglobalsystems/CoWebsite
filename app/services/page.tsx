@@ -19,31 +19,31 @@ const S = {
 
 const services = [
   {
-    number: '01', title: 'Databricks AI & Lakehouse', tagline: 'The data foundation your AI actually needs.', accent: '#ff3366', icon: '◈',
+    number: '01', slug: 'databricks', title: 'Databricks AI & Lakehouse', tagline: 'The data foundation your AI actually needs.', accent: '#ff3366', icon: '◈',
     description: "Databricks is where data and AI converge — and we've worked in it long enough to know exactly where teams go wrong. Whether you're migrating from Hadoop, a legacy warehouse, or a fragile Spark cluster, we build the Lakehouse architecture that handles both analytics workloads and machine learning pipelines without compromise. Delta Lake medallion design, Unity Catalog governance, Mosaic AI workspace, and MLflow — set up right from day one, so your team isn't refactoring six months later.",
     deliverables: ['Current-state audit and migration roadmap', 'Medallion architecture design (Bronze/Silver/Gold layers)', 'Delta Lake pipeline build and data migration', 'Unity Catalog governance and fine-grained access controls', 'Mosaic AI and ML workspace configuration', 'MLflow experiment tracking, model registry and serving', 'Databricks Vector Search for AI/ML retrieval workloads', 'Team training and full runbook documentation'],
     tech: ['Databricks', 'Delta Lake', 'Mosaic AI', 'MLflow', 'Unity Catalog', 'Apache Spark', 'Vector Search', 'Kafka'],
   },
   {
-    number: '02', title: 'AI & ML Engineering', tagline: "AI that runs on your data, not someone else's assumptions.", accent: '#8b5cf6', icon: '◆',
+    number: '02', slug: 'ai-ml', title: 'AI & ML Engineering', tagline: "AI that runs on your data, not someone else's assumptions.", accent: '#8b5cf6', icon: '◆',
     description: "Most AI projects fail not because of the model — but because the data feeding it is messy, ungoverned, or disconnected from reality. We build AI systems on top of solid data foundations: RAG pipelines grounded in your actual knowledge base, ML models trained on clean versioned datasets, and LLM integrations that connect to real-time operational data. The result is AI your team can trust, explain to a stakeholder, and maintain long after the first demo.",
     deliverables: ['RAG (Retrieval-Augmented Generation) pipeline design and build', 'LLM integration with enterprise data sources (Azure OpenAI, AWS Bedrock, Gemini)', 'Vector database setup and embedding pipeline (Databricks Vector Search, Pinecone, pgvector)', 'ML model development, training and versioning with MLflow', 'MLOps pipeline: automated retraining, monitoring and drift detection', 'Model serving infrastructure (Databricks Model Serving, FastAPI)', 'AI application development — intelligent search, document processing, internal tools', 'Evaluation frameworks and guardrails for production LLM systems'],
     tech: ['Mosaic AI', 'MLflow', 'LangChain', 'Azure OpenAI', 'AWS Bedrock', 'Pinecone', 'Python', 'FastAPI'],
   },
   {
-    number: '03', title: 'Snowflake Consulting', tagline: 'Scale without the surprise bills.', accent: '#29B5E8', icon: '❄',
+    number: '03', slug: 'snowflake', title: 'Snowflake Consulting', tagline: 'Scale without the surprise bills.', accent: '#29B5E8', icon: '❄',
     description: "Snowflake is powerful — and expensive when misused. We design Snowflake environments that scale efficiently, with Data Vault 2.0 modeling, dbt transformation layers, Snowpark for Python workloads, and aggressive cost governance.",
     deliverables: ['Snowflake architecture design and setup', 'Data Vault 2.0 or dimensional modeling', 'dbt transformation layer implementation', 'Snowpark Python workload migration', 'Zero-copy cloning for dev/test environments', 'Cost optimization and governance framework'],
     tech: ['Snowflake', 'dbt', 'Snowpark', 'Python', 'Airflow', 'Fivetran'],
   },
   {
-    number: '04', title: 'Analytics & BI', tagline: 'Dashboards your team will actually open.', accent: '#ffd700', icon: '◉',
+    number: '04', slug: 'analytics', title: 'Analytics & BI', tagline: 'Dashboards your team will actually open.', accent: '#ffd700', icon: '◉',
     description: "Most BI projects fail because the data isn't trusted. We start with the semantic layer — a single source of truth — then build Power BI or Tableau dashboards that connect directly to governed, certified data.",
     deliverables: ['Semantic layer design (dbt metrics, Cube, or AtScale)', 'Power BI Premium or Tableau deployment', 'Executive dashboard and operational reporting', 'Self-service analytics enablement', 'Data catalog and lineage documentation', 'User adoption and training program'],
     tech: ['Power BI', 'Tableau', 'Looker', 'dbt Metrics', 'Azure Synapse', 'Cube'],
   },
   {
-    number: '05', title: 'Staff Augmentation', tagline: 'Senior talent. Zero ramp-up. When you need it.', accent: '#00d4aa', icon: '◎',
+    number: '05', slug: 'staff-augmentation', title: 'Staff Augmentation', tagline: 'Senior talent. Zero ramp-up. When you need it.', accent: '#00d4aa', icon: '◎',
     description: "Sometimes you need hands — senior ones. We embed battle-tested data and AI engineers directly into your team, working in your tools, your sprint cycles, and your Slack.",
     deliverables: ['Senior data & AI engineer placement (1–5+ engineers)', 'Flexible engagement terms (3–12 months)', 'Skill alignment with your tech stack', 'Weekly progress reporting to stakeholders', 'Knowledge transfer and documentation standards', 'Optional extension or transition to managed team'],
     tech: ['Your Stack', 'Databricks', 'Snowflake', 'AWS/Azure/GCP', 'dbt', 'Airflow'],
@@ -87,7 +87,7 @@ export default function ServicesPage() {
 
       {/* Service Deep-Dives */}
       {services.map((svc, i) => (
-        <section key={i} style={{ width: '100%', background: i % 2 === 1 ? '#fafafa' : '#fff', padding: '96px 0', borderTop: '1px solid #f0f0f0' }}>
+        <section key={i} id={svc.slug} style={{ width: '100%', background: i % 2 === 1 ? '#fafafa' : '#fff', padding: '96px 0', borderTop: '1px solid #f0f0f0' }}>
           <div style={S.container}>
             <div className="rg-2" style={{ gap: '80px', alignItems: 'start', ...(i % 2 === 1 ? { direction: 'rtl' } : {}) }}>
               <div style={{ direction: 'ltr' }}>
