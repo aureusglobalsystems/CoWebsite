@@ -52,18 +52,18 @@ export default function Footer() {
         <div className="rg-footer">
           {/* Brand */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{
-                width: '32px', height: '32px', borderRadius: '50%',
-                background: 'linear-gradient(135deg, #ff3366, #3366ff)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ color: 'white', fontSize: '12px', fontWeight: 700, fontFamily: 'Syne, sans-serif' }}>A</span>
-              </div>
-              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '14px', letterSpacing: '-0.02em' }}>
-                Aureus Global Systems
-              </span>
-            </div>
+            <span style={{
+              fontFamily: "'Dancing Script', cursive",
+              fontSize: '32px',
+              fontWeight: 700,
+              background: 'linear-gradient(90deg, #ff3366, #ff6b35)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              lineHeight: 1,
+              display: 'block',
+              marginBottom: '16px',
+            }}>Aureus</span>
             <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem', lineHeight: 1.72, maxWidth: '280px' }}>
               Enterprise data engineering consultancy. We build the data platforms that power tomorrow's decisions.
             </p>
