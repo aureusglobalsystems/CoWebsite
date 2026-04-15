@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signature Section — Writing Animation Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Space+Mono:wght@400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f5f5f5;
+      font-family: 'Syne', sans-serif;
+      color: #111;
+    }
+
+    /* ── Label above ── */
+    .header {
+      padding: 28px 32px 20px;
+    }
+    .header h2 { font-weight: 800; font-size: 20px; letter-spacing: -0.04em; margin-bottom: 4px; }
+    .header p  { font-size: 12px; color: #666; }
+
+    /* ── Scroll container ── */
+    .scroll-outer {
+      height: 420px;
+      overflow-y: scroll;
+      background: white;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      position: relative;
+    }
+
+    /* ── Scroll hint ── */
+    .scroll-hint {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0 6px;
+      background: linear-gradient(to bottom, white 60%, transparent);
+      z-index: 10;
+      pointer-events: none;
+    }
+    .scroll-hint span {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #aaa;
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    /* ── Spacer to create scroll room ── */
+    .spacer { height: 180px; }
+    .spacer-bottom { height: 200px; }
+
+    /* ── Signature section (inside scroll) ── */
+    .sig-section {
+      padding: 60px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #888;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .sig-wrap {
+      width: 100%;
+      position: relative;
+      user-select: none;
+    }
+
+    #sig-svg { width: 100%; overflow: visible; }
+
+    /* ── Controls below ── */
+    .controls {
+      padding: 20px 32px 28px;
+      background: #f5f5f5;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .progress-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: #888;
+      white-space: nowrap;
+    }
+    .progress-track {
+      flex: 1;
+      height: 3px;
+      background: #e0e0e0;
+      border-radius: 2px;
+      position: relative;
+      cursor: pointer;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff3366, #ff6b35);
+      border-radius: 2px;
+      transition: none;
+    }
+    .progress-pct {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #ff3366;
+      width: 32px;
+      text-align: right;
+    }
+
+    .btn-row { display: flex; gap: 8px; }
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary { background: linear-gradient(135deg, #ff3366, #ff6b35); color: white; }
+    .btn-outline  { background: white; color: #111; border: 1px solid #ddd; }
+
+    .info-row {
+      margin-top: 14px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .info-text { font-size: 12px; color: #555; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>Signature Section — Writing Animation</h2>
+    <p>Scroll down inside the panel to see it, or drag the progress bar below.</p>
+  </div>
+
+  <!-- Scrollable panel simulating the page -->
+  <div class="scroll-outer" id="scrollPanel">
+    <div class="scroll-hint"><span>↓ scroll to see ↓</span></div>
+    <div class="spacer"></div>
+
+    <div class="sig-section">
+      <p class="tagline">We don't just build data platforms. We put our name on them.</p>
+
+      <div class="sig-wrap">
+        <svg id="sig-svg" viewBox="0 0 1500 220" aria-label="Aureus Global Systems">
+          <defs>
+            <linearGradient id="sigGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ff3366"/>
+              <stop offset="100%" stop-color="#ff6b35"/>
+            </linearGradient>
+
+            <!-- Clip for fill reveal (same as existing code) -->
+            <clipPath id="sig-clip" clipPathUnits="userSpaceOnUse">
+              <rect id="clipRect" x="0" y="-30" width="0" height="280"/>
+            </clipPath>
+          </defs>
+
+          <!-- Ghost guide — always visible (matches existing) -->
+          <text
+            x="750" y="165"
+            text-anchor="middle"
+            font-family="Caveat, cursive"
+            font-size="130"
+            font-weight="700"
+            fill="none"
+            stroke="#efefef"
+            stroke-width="1"
+          >Aureus Global Systems</text>
+
+          <!-- NEW: Stroke trace layer — pen drawing effect -->
+          <text
+            id="sigStroke"
+            x="750" y="165"
+            text-anchor="middle"
+            font-family="Caveat, cursive"
+            font-size="130"
+            font-weight="700"
+            fill="transparent"
+            stroke="url(#sigGrad)"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >Aureus Global Systems</text>
+
+          <!-- Ink text — revealed by clip (matches existing) -->
+          <g clip-path="url(#sig-clip)">
+            <text
+              x="750" y="165"
+              text-anchor="middle"
+              font-family="Caveat, cursive"
+              font-size="130"
+              font-weight="700"
+              fill="#111"
+            >Aureus Global Systems</text>
+          </g>
+
+          <!-- Pen tip dot -->
+          <circle id="sigTip" r="5" cx="0" cy="155" fill="#ff3366" opacity="0"/>
+
+          <!-- Pink underline flourish (matches existing) -->
+          <path
+            id="sigUnderline"
+            d="M 80 190 Q 375 208 750 200 Q 1125 192 1420 190"
+            fill="none"
+            stroke="#ff3366"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="spacer-bottom"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="progress-row">
+      <span class="progress-label">Scroll</span>
+      <div class="progress-track" id="progressTrack" onclick="seekTo(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="autoScroll()">▶ Auto-scroll</button>
+      <button class="btn btn-outline" onclick="resetView()">↺ Reset</button>
+    </div>
+    <div class="info-row">
+      <div class="dot" style="background:#ff3366"></div>
+      <div class="info-text"><strong>New stroke layer</strong> traces "Aureus Global Systems" in the gradient as you scroll — sits on top of the existing clip reveal, giving the feel of a pen drawing the signature in real time.</div>
+    </div>
+    <div class="info-row">
+      <div class="dot" style="background:#111"></div>
+      <div class="info-text"><strong>Existing elements</strong> (ghost guide, dark fill reveal, pink underline flourish) are all kept exactly as-is. This is purely additive.</div>
+    </div>
+  </div>
+
+  <script>
+    const DASH = 12000; // large enough for 130px Caveat text
+    const VB_W = 1500;
+    const START_X = 80; // left edge of text
+    const END_X   = 1420; // right edge of text
+
+    const stroke     = document.getElementById('sigStroke');
+    const clipRect   = document.getElementById('clipRect');
+    const tip        = document.getElementById('sigTip');
+    const underline  = document.getElementById('sigUnderline');
+    const panel      = document.getElementById('scrollPanel');
+    const fill       = document.getElementById('progressFill');
+    const pct        = document.getElementById('progressPct');
+
+    let uLen = 0;
+
+    function init() {
+      // Underline
+      uLen = underline.getTotalLength();
+      underline.style.strokeDasharray = uLen;
+      underline.style.strokeDashoffset = uLen;
+
+      // Stroke trace — start fully undrawn
+      stroke.style.strokeDasharray = DASH;
+      stroke.style.strokeDashoffset = DASH;
+
+      // Clip rect — start at 0 width
+      clipRect.setAttribute('width', '0');
+
+      // Tip
+      tip.setAttribute('cx', START_X);
+      tip.setAttribute('opacity', '0');
+    }
+
+    function update(p) {
+      // p: 0 → 1 scroll progress through the section
+
+      // ── Text reveal: 0% → 85% of scroll ──
+      const textP = Math.min(p / 0.85, 1);
+      const revealW = textP * (VB_W + 60);
+      clipRect.setAttribute('width', String(revealW));
+
+      // Stroke trace synced with text reveal
+      stroke.style.strokeDashoffset = DASH * (1 - textP);
+
+      // Pen tip X position
+      const tipX = START_X + textP * (END_X - START_X);
+      tip.setAttribute('cx', String(tipX));
+      tip.setAttribute('opacity', textP > 0 && textP < 1 ? '1' : '0');
+
+      // ── Underline flourish: 70% → 100% ──
+      const underP = Math.max(0, (p - 0.70) / 0.30);
+      underline.style.strokeDashoffset = String(uLen * (1 - underP));
+
+      // UI
+      fill.style.width = (p * 100) + '%';
+      pct.textContent = Math.round(p * 100) + '%';
+    }
+
+    // Listen to actual scroll inside panel
+    let scrollRAF = null;
+    panel.addEventListener('scroll', () => {
+      if (scrollRAF) cancelAnimationFrame(scrollRAF);
+      scrollRAF = requestAnimationFrame(() => {
+        const scrollEl = panel;
+        // Section starts after first spacer (~180px)
+        const sectionStart = 180;
+        const sectionHeight = 340; // approx height of sig-section
+        const scrolled = scrollEl.scrollTop - sectionStart;
+        const p = Math.max(0, Math.min(1, scrolled / sectionHeight));
+        update(p);
+      });
+    });
+
+    // Manual scrub via progress bar
+    function seekTo(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const sectionStart = 180;
+      const sectionHeight = 340;
+      panel.scrollTop = sectionStart + p * sectionHeight;
+      update(p);
+    }
+
+    // Auto-scroll button
+    let autoTween = null;
+    function autoScroll() {
+      resetView();
+      const sectionStart = 180;
+      const sectionHeight = 340;
+      const target = sectionStart + sectionHeight;
+      let start = null;
+      const duration = 3000;
+
+      function step(ts) {
+        if (!start) start = ts;
+        const elapsed = ts - start;
+        const p = Math.min(elapsed / duration, 1);
+        // ease in-out
+        const eased = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+        panel.scrollTop = eased * target;
+        if (p < 1) autoTween = requestAnimationFrame(step);
+      }
+      autoTween = requestAnimationFrame(step);
+    }
+
+    function resetView() {
+      if (autoTween) cancelAnimationFrame(autoTween);
+      panel.scrollTop = 0;
+      init();
+      fill.style.width = '0%';
+      pct.textContent = '0%';
+    }
+
+    // Boot
+    document.fonts.ready.then(() => {
+      init();
+    });
+  </script>
+</body>
+</html>

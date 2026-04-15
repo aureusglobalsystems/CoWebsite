@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aureus Logo Options</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Pacifico&family=Satisfy&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f5f5;
+      font-family: 'Syne', sans-serif;
+      color: #111;
+      padding: 32px 24px 48px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-family: 'Syne', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    .nav-preview {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .nav-preview:hover {
+      border-color: #111;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .nav-preview.selected {
+      border-color: #ff3366;
+      box-shadow: 0 0 0 2px rgba(255,51,102,0.15);
+    }
+
+    .nav-preview.selected::after {
+      content: '✓ Selected';
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 11px;
+      font-family: 'Syne', sans-serif;
+      color: #ff3366;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+    }
+
+    .fake-links {
+      display: flex;
+      gap: 24px;
+      opacity: 0.35;
+    }
+
+    .fake-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    .option-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 6px;
+      margin-top: 4px;
+    }
+
+    /* Option A — Caveat (already loaded) */
+    .logo-a {
+      font-family: 'Caveat', cursive;
+      font-size: 26px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1;
+    }
+
+    /* Option B — Dancing Script */
+    .logo-b {
+      font-family: 'Dancing Script', cursive;
+      font-size: 26px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1;
+    }
+
+    /* Option C — Great Vibes */
+    .logo-c {
+      font-family: 'Great Vibes', cursive;
+      font-size: 30px;
+      font-weight: 400;
+      color: #111;
+      line-height: 1;
+    }
+
+    /* Option D — Satisfy */
+    .logo-d {
+      font-family: 'Satisfy', cursive;
+      font-size: 24px;
+      font-weight: 400;
+      color: #111;
+      line-height: 1;
+    }
+
+    /* Option E — Dancing Script with gradient */
+    .logo-e {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff3366, #ff6b35);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid #e8e8e8;
+      margin: 28px 0 20px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 14px;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+  </style>
+</head>
+<body>
+
+  <h2>Which logo style feels right?</h2>
+  <p class="subtitle">Click an option to select it. Each shows how "Aureus" would look in the navigation bar.</p>
+
+  <div class="section-title">— Handwritten / casual</div>
+
+  <p class="option-label">A — Caveat (already loaded in the project)</p>
+  <div class="nav-preview" data-choice="a" onclick="select(this)">
+    <div class="logo-area">
+      <span class="logo-a">Aureus</span>
+    </div>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+  </div>
+
+  <p class="option-label">B — Satisfy (clean, confident signature)</p>
+  <div class="nav-preview" data-choice="b" onclick="select(this)">
+    <div class="logo-area">
+      <span class="logo-d">Aureus</span>
+    </div>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-title">— Elegant / formal script</div>
+
+  <p class="option-label">C — Dancing Script (polished, flowing)</p>
+  <div class="nav-preview" data-choice="c" onclick="select(this)">
+    <div class="logo-area">
+      <span class="logo-b">Aureus</span>
+    </div>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+  </div>
+
+  <p class="option-label">D — Great Vibes (high-end, editorial)</p>
+  <div class="nav-preview" data-choice="d" onclick="select(this)">
+    <div class="logo-area">
+      <span class="logo-c">Aureus</span>
+    </div>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+  <div class="section-title">— With brand accent</div>
+
+  <p class="option-label">E — Dancing Script + spectrum gradient (matches site accent)</p>
+  <div class="nav-preview" data-choice="e" onclick="select(this)">
+    <div class="logo-area">
+      <span class="logo-e">Aureus</span>
+    </div>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+  </div>
+
+  <script>
+    let selected = null;
+    function select(el) {
+      if (selected) selected.classList.remove('selected');
+      el.classList.add('selected');
+      selected = el;
+      // record for state_dir/events
+      try {
+        fetch('/__select', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({type:'click', choice: el.dataset.choice, text: el.querySelector('[class^="logo-"]')?.textContent + ' — ' + el.querySelector('.option-label, p')?.textContent})
+        });
+      } catch(e) {}
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aureus Logo — Letter by Letter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Syne:wght@700;800&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f5f5f5;
+      font-family: 'Syne', sans-serif;
+      color: #111;
+      padding: 32px 24px 48px;
+    }
+    h2 { font-weight: 800; font-size: 22px; letter-spacing: -0.04em; margin-bottom: 6px; }
+    .subtitle { font-size: 13px; color: #666; margin-bottom: 28px; }
+
+    .nav-mockup {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .fake-links { display: flex; gap: 28px; }
+    .fake-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #111;
+      opacity: 0.35;
+    }
+    .fake-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: white;
+      background: linear-gradient(135deg, #ff3366, #ff6b35);
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    #logo-svg { overflow: visible; display: block; }
+
+    .controls { display: flex; gap: 10px; margin-bottom: 24px; align-items: center; }
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary { background: linear-gradient(135deg, #ff3366, #ff6b35); color: white; }
+    .btn-outline { background: white; color: #111; border: 1px solid #ddd; }
+
+    .info-box {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .info-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .step-row { display: flex; gap: 10px; margin-bottom: 7px; align-items: flex-start; }
+    .step-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: white;
+      background: #ff3366;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text { font-size: 13px; color: #444; line-height: 1.5; }
+
+    .speed-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip.active { background: #111; color: white; border-color: #111; }
+    .chip:hover:not(.active) { border-color: #888; }
+
+    .status-bar {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #aaa;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+    }
+    .status-bar span { color: #ff3366; }
+  </style>
+</head>
+<body>
+
+  <h2>Letter-by-Letter Writing Animation</h2>
+  <p class="subtitle">Each character is drawn sequentially — A → u → r → e → u → s — like a real pen.</p>
+
+  <div class="nav-mockup">
+    <svg id="logo-svg" width="130" height="44" viewBox="0 0 130 44">
+      <defs>
+        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff3366"/>
+          <stop offset="100%" stop-color="#ff6b35"/>
+        </linearGradient>
+      </defs>
+      <!-- Each letter is a separate text element, positioned manually -->
+      <!-- Using x offsets matched to Dancing Script 30px bold metrics -->
+      <text id="l0" font-family="'Dancing Script', cursive" font-size="30" font-weight="700" y="34" x="2">A</text>
+      <text id="l1" font-family="'Dancing Script', cursive" font-size="30" font-weight="700" y="34" x="21">u</text>
+      <text id="l2" font-family="'Dancing Script', cursive" font-size="30" font-weight="700" y="34" x="36">r</text>
+      <text id="l3" font-family="'Dancing Script', cursive" font-size="30" font-weight="700" y="34" x="46">e</text>
+      <text id="l4" font-family="'Dancing Script', cursive" font-size="30" font-weight="700" y="34" x="60">u</text>
+      <text id="l5" font-family="'Dancing Script', cursive" font-size="30" font-weight="700" y="34" x="76">s</text>
+    </svg>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+    <span class="fake-cta">Get Started</span>
+  </div>
+
+  <div class="status-bar" id="status">Ready — press Play</div>
+
+  <div class="controls">
+    <button class="btn btn-primary" onclick="playAnimation()">▶ Play</button>
+    <button class="btn btn-outline" onclick="resetAnimation()">↺ Reset</button>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Animation sequence</div>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Draw stroke</strong> — each letter's outline is traced by the stroke, simulating a pen tip writing the character</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Fill solidifies</strong> — gradient fill fades in on the finished letter while pen moves to next</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Repeat</strong> — A → u → r → e → u → s, each with its own timing, then done</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Speed per letter</div>
+    <div class="speed-row">
+      <span class="chip" onclick="setSpeed(0.08, this)">Fast — 0.08s</span>
+      <span class="chip active" onclick="setSpeed(0.18, this)">Default — 0.18s</span>
+      <span class="chip" onclick="setSpeed(0.32, this)">Careful — 0.32s</span>
+    </div>
+  </div>
+
+  <script>
+    const letters = ['l0','l1','l2','l3','l4','l5'];
+    const chars   = ['A','u','r','e','u','s'];
+    let perLetter = 0.18;
+    let isPlaying = false;
+    let tl = null;
+
+    function initLetters() {
+      letters.forEach(id => {
+        const el = document.getElementById(id);
+        el.style.fill = 'transparent';
+        el.style.stroke = 'url(#g1)';
+        el.style.strokeWidth = '0.8px';
+        el.style.strokeLinecap = 'round';
+        el.style.strokeLinejoin = 'round';
+        el.style.strokeDasharray = '600';
+        el.style.strokeDashoffset = '600';
+      });
+    }
+
+    function resetAnimation() {
+      if (tl) { tl.kill(); tl = null; }
+      isPlaying = false;
+      document.getElementById('status').innerHTML = 'Ready — press Play';
+      initLetters();
+    }
+
+    async function playAnimation() {
+      if (isPlaying) return;
+      isPlaying = true;
+
+      await document.fonts.ready;
+      resetAnimation();
+      isPlaying = true;
+
+      tl = gsap.timeline({ onComplete: () => { isPlaying = false; } });
+
+      letters.forEach((id, i) => {
+        const el = document.getElementById(id);
+        const char = chars[i];
+
+        // Draw the stroke for this letter
+        tl.to(el, {
+          strokeDashoffset: 0,
+          duration: perLetter,
+          ease: 'none',
+          onStart: () => {
+            document.getElementById('status').innerHTML =
+              `Drawing <span>${char}</span> (${i+1}/${letters.length})`;
+          }
+        });
+
+        // Solidify fill, fade stroke
+        tl.to(el, {
+          fill: 'url(#g1)',
+          strokeWidth: 0,
+          duration: perLetter * 0.5,
+          ease: 'power2.out',
+        });
+      });
+
+      tl.eventCallback('onComplete', () => {
+        document.getElementById('status').innerHTML = 'Done ✓';
+        isPlaying = false;
+      });
+    }
+
+    function setSpeed(s, el) {
+      perLetter = s;
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    document.fonts.ready.then(() => {
+      initLetters();
+      setTimeout(playAnimation, 500);
+    });
+  </script>
+
+</body>
+</html>

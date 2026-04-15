@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aureus Logo Animation Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Syne:wght@700;800&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f5f5;
+      font-family: 'Syne', sans-serif;
+      color: #111;
+      padding: 32px 24px 48px;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.04em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    /* ─── Nav mockup ─── */
+    .nav-mockup {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    .fake-links {
+      display: flex;
+      gap: 28px;
+    }
+    .fake-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #111;
+      opacity: 0.4;
+    }
+
+    .fake-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: white;
+      background: linear-gradient(135deg, #ff3366, #ff6b35);
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    /* ─── Logo SVG ─── */
+    #logo-svg {
+      overflow: visible;
+    }
+
+    #logo-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      font-weight: 700;
+      fill: transparent;
+      stroke: url(#logoGrad);
+      stroke-width: 1px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ─── Controls ─── */
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary {
+      background: linear-gradient(135deg, #ff3366, #ff6b35);
+      color: white;
+    }
+    .btn-outline {
+      background: white;
+      color: #111;
+      border: 1px solid #ddd;
+    }
+
+    /* ─── Info section ─── */
+    .info-box {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .info-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .info-text {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    /* ─── Speed options ─── */
+    .speed-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .speed-chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .speed-chip.active {
+      background: #111;
+      color: white;
+      border-color: #111;
+    }
+    .speed-chip:hover:not(.active) {
+      border-color: #888;
+    }
+    .speed-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Logo Animation Preview</h2>
+  <p class="subtitle">Press "Play" to watch the signature draw in. Adjust speed below.</p>
+
+  <!-- Nav mockup -->
+  <div class="nav-mockup">
+    <svg id="logo-svg" width="110" height="40" viewBox="0 0 110 40">
+      <defs>
+        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff3366"/>
+          <stop offset="100%" stop-color="#ff6b35"/>
+        </linearGradient>
+      </defs>
+      <text id="logo-text" x="4" y="32">Aureus</text>
+    </svg>
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+    <span class="fake-cta">Get Started</span>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-primary" onclick="playAnimation()">▶ Play</button>
+    <button class="btn btn-outline" onclick="resetAnimation()">↺ Reset</button>
+  </div>
+
+  <!-- Speed selector -->
+  <div class="info-box">
+    <div class="info-title">Animation speed</div>
+    <div class="speed-label">How long should the drawing take?</div>
+    <div class="speed-row">
+      <span class="speed-chip" onclick="setSpeed(0.6, this)">Quick — 0.6s</span>
+      <span class="speed-chip active" onclick="setSpeed(1.2, this)">Default — 1.2s</span>
+      <span class="speed-chip" onclick="setSpeed(2.0, this)">Leisurely — 2s</span>
+    </div>
+  </div>
+
+  <!-- What's happening -->
+  <div class="info-box">
+    <div class="info-title">How it works</div>
+    <div class="info-row">
+      <div class="dot" style="background:#ff3366"></div>
+      <div class="info-text"><strong>Phase 1:</strong> SVG stroke traces "Aureus" — like a pen drawing each letter</div>
+    </div>
+    <div class="info-row">
+      <div class="dot" style="background:#ff6b35"></div>
+      <div class="info-text"><strong>Phase 2:</strong> Gradient fill fades in as stroke fades out — the signature solidifies</div>
+    </div>
+    <div class="info-row">
+      <div class="dot" style="background:#ffd700"></div>
+      <div class="info-text"><strong>Plays once</strong> on page load. GSAP handles timing — no jank, no flash.</div>
+    </div>
+  </div>
+
+  <script>
+    let speed = 1.2;
+    let isAnimating = false;
+
+    function waitForFont() {
+      return document.fonts.ready;
+    }
+
+    function init() {
+      const text = document.getElementById('logo-text');
+      // Use a large dasharray so it covers any text perimeter
+      const len = 2000;
+      text.style.strokeDasharray = len;
+      text.style.strokeDashoffset = len;
+      text.style.fill = 'transparent';
+      text.style.stroke = 'url(#logoGrad)';
+      text.style.strokeWidth = '1px';
+    }
+
+    async function playAnimation() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      await waitForFont();
+      resetAnimation();
+
+      const text = document.getElementById('logo-text');
+
+      // Phase 1: draw the stroke
+      gsap.fromTo(text,
+        { strokeDashoffset: 2000 },
+        {
+          strokeDashoffset: 0,
+          duration: speed,
+          ease: 'none',
+          onComplete: () => {
+            // Phase 2: fill solidifies, stroke fades
+            gsap.to(text, {
+              fill: 'url(#logoGrad)',
+              strokeWidth: 0,
+              duration: 0.4,
+              ease: 'power2.out',
+              onComplete: () => { isAnimating = false; }
+            });
+          }
+        }
+      );
+    }
+
+    function resetAnimation() {
+      const text = document.getElementById('logo-text');
+      gsap.killTweensOf(text);
+      text.style.strokeDashoffset = 2000;
+      text.style.fill = 'transparent';
+      text.style.stroke = 'url(#logoGrad)';
+      text.style.strokeWidth = '1px';
+      isAnimating = false;
+    }
+
+    function setSpeed(s, el) {
+      speed = s;
+      document.querySelectorAll('.speed-chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Init on load
+    document.fonts.ready.then(() => {
+      init();
+      // Auto-play once on load
+      setTimeout(playAnimation, 400);
+    });
+  </script>
+
+</body>
+</html>

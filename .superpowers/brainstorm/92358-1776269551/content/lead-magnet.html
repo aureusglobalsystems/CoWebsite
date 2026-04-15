@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mid-Funnel Lead Magnet — How It Works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f0f0f0; font-family: 'Inter', sans-serif; color: #111; }
+
+    /* ── Layout ── */
+    .page { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; }
+    h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.04em; margin-bottom: 4px; }
+    .intro { font-size: 12px; color: #666; margin-bottom: 32px; line-height: 1.6; }
+
+    /* ── Step labels ── */
+    .step-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: #aaa;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+    }
+    .step-label::after { content: ''; flex: 1; height: 1px; background: #e0e0e0; }
+
+    /* ── Website strip ── */
+    .site-strip {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e8e8e8;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .site-nav {
+      height: 48px; border-bottom: 1px solid #f0f0f0;
+      display: flex; align-items: center; padding: 0 24px;
+      justify-content: space-between;
+    }
+    .site-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; background: linear-gradient(90deg,#ff3366,#ff6b35); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-link { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; }
+    .nav-cta { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: white; background: linear-gradient(135deg,#ff3366,#ff6b35); padding: 6px 12px; border-radius: 100px; }
+
+    /* fake page sections */
+    .fake-section { padding: 20px 24px; border-bottom: 1px solid #f8f8f8; }
+    .fake-section-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #ccc; margin-bottom: 6px; }
+    .fake-section-heading { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.04em; color: #111; }
+    .fake-cards { display: flex; gap: 10px; margin-top: 12px; }
+    .fake-card { flex: 1; height: 60px; background: #f8f8f8; border-radius: 8px; border: 1px solid #f0f0f0; }
+
+    /* ── THE LEAD MAGNET SECTION ── */
+    .magnet-section {
+      background: #111;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .magnet-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.1; pointer-events: none; mix-blend-mode: overlay;
+    }
+    .magnet-rainbow { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,#ff3366,#ff6b35,#ffd700,#00d4aa,#3366ff); }
+    .magnet-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 40px; }
+    .magnet-left { flex: 1; }
+    .magnet-eyebrow { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: #555; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .magnet-eyebrow::before { content: ''; width: 20px; height: 1px; background: #ff3366; }
+    .magnet-headline { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.04em; color: white; line-height: 1.1; margin-bottom: 10px; }
+    .magnet-sub { font-family: 'Inter', sans-serif; font-size: 11px; color: #666; line-height: 1.6; max-width: 320px; }
+    .magnet-doc {
+      flex-shrink: 0; width: 100px; height: 130px;
+      background: white; border-radius: 6px;
+      box-shadow: 4px 6px 24px rgba(0,0,0,0.4);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      transform: rotate(-2deg);
+    }
+    .magnet-doc-header { height: 24px; background: linear-gradient(135deg,#ff3366,#ff6b35); display: flex; align-items: center; padding: 0 8px; }
+    .magnet-doc-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 8px; color: white; }
+    .magnet-doc-body { padding: 8px; flex: 1; }
+    .magnet-doc-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 7px; letter-spacing: -0.02em; color: #111; margin-bottom: 6px; line-height: 1.3; }
+    .magnet-doc-line { height: 3px; background: #f0f0f0; border-radius: 2px; margin-bottom: 4px; }
+    .magnet-doc-line.short { width: 60%; }
+    .magnet-doc-check { display: flex; gap: 4px; align-items: center; margin-bottom: 3px; }
+    .magnet-doc-dot { width: 4px; height: 4px; background: #ff3366; border-radius: 50%; flex-shrink: 0; }
+    .magnet-doc-checkline { height: 2px; background: #f0f0f0; border-radius: 2px; flex: 1; }
+
+    .magnet-right { flex-shrink: 0; width: 280px; }
+    .magnet-form { display: flex; flex-direction: column; gap: 10px; }
+    .magnet-input {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif; font-size: 11px; color: white;
+      outline: none;
+    }
+    .magnet-input::placeholder { color: #555; }
+    .magnet-btn {
+      width: 100%; padding: 11px;
+      background: linear-gradient(135deg,#ff3366,#ff6b35);
+      border: none; border-radius: 8px;
+      font-family: 'Space Mono', monospace; font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: white; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .magnet-btn:hover { opacity: 0.85; }
+    .magnet-privacy { font-family: 'Inter', sans-serif; font-size: 9px; color: #444; text-align: center; }
+
+    /* fake section below */
+    .fake-section-after { padding: 20px 24px; }
+
+    /* ── Arrow connector ── */
+    .arrow-connector {
+      text-align: center; padding: 8px 0;
+      font-size: 20px; color: #ccc;
+    }
+
+    /* ── Email mockup ── */
+    .email-card {
+      background: white; border-radius: 16px;
+      border: 1px solid #e8e8e8;
+      overflow: hidden; margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .email-header { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+    .email-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+    .email-from { font-family: 'Space Mono', monospace; font-size: 9px; color: #888; }
+    .email-badge { background: #f0f0f0; border-radius: 4px; padding: 2px 6px; font-family: 'Space Mono', monospace; font-size: 8px; color: #aaa; }
+    .email-subject { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -0.02em; color: #111; }
+    .email-body { padding: 24px; }
+    .email-greeting { font-size: 13px; color: #111; margin-bottom: 12px; line-height: 1.6; }
+    .email-cta-box { background: #f8f8f8; border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 12px; }
+    .email-cta-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+    .email-cta-btn { display: inline-block; padding: 10px 24px; background: linear-gradient(135deg,#ff3366,#ff6b35); border-radius: 100px; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: white; }
+    .email-ps { font-size: 11px; color: #888; line-height: 1.6; }
+
+    /* ── Nurture sequence ── */
+    .nurture-track {
+      background: white; border-radius: 16px;
+      border: 1px solid #e8e8e8;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nurture-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.03em; margin-bottom: 20px; }
+    .nurture-row { display: flex; gap: 0; }
+    .nurture-step { flex: 1; text-align: center; position: relative; }
+    .nurture-step::after { content: '→'; position: absolute; right: -8px; top: 12px; color: #ddd; font-size: 14px; }
+    .nurture-step:last-child::after { display: none; }
+    .nurture-dot { width: 28px; height: 28px; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; }
+    .nurture-day { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.1em; color: #aaa; text-transform: uppercase; margin-bottom: 4px; }
+    .nurture-label { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; color: #111; line-height: 1.3; }
+
+    /* ── Tools note ── */
+    .tools-box { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 20px 24px; margin-bottom: 12px; }
+    .tools-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .tools-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tool-chip { padding: 6px 12px; border-radius: 100px; background: #f8f8f8; border: 1px solid #eee; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: #555; }
+    .tool-chip.free { border-color: #00d4aa30; background: #00d4aa08; color: #00d4aa; }
+
+    .section-gap { height: 32px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Mid-Funnel Lead Magnet — How It Works</h1>
+  <p class="intro">
+    A visitor finds your site but isn't ready to hire yet. A lead magnet gives them something valuable to take away — and puts them in your pipeline for when they are ready. Here's the full flow.
+  </p>
+
+  <!-- STEP 1 -->
+  <div class="step-label">Step 1 — Visitor sees the offer on your homepage (between Services and Case Studies)</div>
+  <div class="site-strip">
+    <div class="site-nav">
+      <div class="site-logo">Aureus</div>
+      <div class="nav-links">
+        <span class="nav-link">Services</span>
+        <span class="nav-link">Case Studies</span>
+        <span class="nav-link">About</span>
+      </div>
+      <span class="nav-cta">Get Started</span>
+    </div>
+
+    <!-- fake services section above -->
+    <div class="fake-section">
+      <div class="fake-section-label">What We Do</div>
+      <div class="fake-section-heading">Data & AI Engineering Services</div>
+      <div class="fake-cards">
+        <div class="fake-card"></div>
+        <div class="fake-card"></div>
+        <div class="fake-card"></div>
+      </div>
+    </div>
+
+    <!-- THE MAGNET SECTION -->
+    <div class="magnet-section">
+      <div class="magnet-rainbow"></div>
+      <div class="magnet-grain"></div>
+      <div class="magnet-inner">
+
+        <!-- Document preview -->
+        <div class="magnet-doc">
+          <div class="magnet-doc-header"><span class="magnet-doc-logo">AGS</span></div>
+          <div class="magnet-doc-body">
+            <div class="magnet-doc-title">Data Platform Readiness Assessment</div>
+            <div class="magnet-doc-line"></div>
+            <div class="magnet-doc-line short"></div>
+            <div style="margin-top:6px">
+              <div class="magnet-doc-check"><div class="magnet-doc-dot"></div><div class="magnet-doc-checkline"></div></div>
+              <div class="magnet-doc-check"><div class="magnet-doc-dot"></div><div class="magnet-doc-checkline short" style="width:50%"></div></div>
+              <div class="magnet-doc-check"><div class="magnet-doc-dot"></div><div class="magnet-doc-checkline"></div></div>
+              <div class="magnet-doc-check"><div class="magnet-doc-dot"></div><div class="magnet-doc-checkline short" style="width:70%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="magnet-left">
+          <div class="magnet-eyebrow">Free Resource</div>
+          <div class="magnet-headline">Is Your Data Platform<br>Ready for AI?</div>
+          <div class="magnet-sub">
+            A practical 20-question assessment built from 50+ platform builds. Find out exactly where your stack stands — and what to fix first. Free, instant, no fluff.
+          </div>
+        </div>
+
+        <div class="magnet-right">
+          <div class="magnet-form">
+            <input class="magnet-input" placeholder="Work email" type="email">
+            <input class="magnet-input" placeholder="Your name">
+            <button class="magnet-btn">Send Me the Assessment →</button>
+            <div class="magnet-privacy">No spam. Unsubscribe any time.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- fake case studies section below -->
+    <div class="fake-section-after">
+      <div class="fake-section-label">Case Studies</div>
+      <div class="fake-section-heading">Proof, Not Promises.</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="arrow-connector">↓</div>
+  <div class="step-label">Step 2 — They get an instant email with the PDF + a warm personal note</div>
+
+  <div class="email-card">
+    <div class="email-header">
+      <div class="email-meta">
+        <span class="email-from">from: team@aureusglobalsystems.com</span>
+        <span class="email-badge">Inbox</span>
+      </div>
+      <div class="email-subject">Your Data Platform Readiness Assessment 📊</div>
+    </div>
+    <div class="email-body">
+      <div class="email-greeting">
+        Hi [Name], thanks for downloading — here's your copy.<br><br>
+        Most teams who go through this find 2–3 areas they hadn't considered. If anything jumps out that you'd like to talk through, just reply to this email — happy to give you 20 minutes, no pitch involved.
+      </div>
+      <div class="email-cta-box">
+        <div class="email-cta-label">Your free resource</div>
+        <div class="email-cta-btn">Download Assessment PDF →</div>
+      </div>
+      <div class="email-ps">— The Aureus Team<br><span style="color:#bbb;font-size:10px">Aureus Global Systems · India — Global Delivery · info@aureusglobalsystems.com</span></div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="arrow-connector">↓</div>
+  <div class="step-label">Step 3 — A short nurture sequence keeps you top of mind over the next few weeks</div>
+
+  <div class="nurture-track">
+    <div class="nurture-title">Automated email sequence (3 emails over 3 weeks)</div>
+    <div class="nurture-row">
+      <div class="nurture-step">
+        <div class="nurture-dot" style="background:#ff3366">1</div>
+        <div class="nurture-day">Day 0</div>
+        <div class="nurture-label">Assessment PDF delivered + personal note</div>
+      </div>
+      <div class="nurture-step">
+        <div class="nurture-dot" style="background:#ff6b35">2</div>
+        <div class="nurture-day">Day 7</div>
+        <div class="nurture-label">"3 things we see broken in every platform" — short useful email</div>
+      </div>
+      <div class="nurture-step">
+        <div class="nurture-dot" style="background:#8b5cf6">3</div>
+        <div class="nurture-day">Day 21</div>
+        <div class="nurture-label">One relevant case study + soft CTA: "Is this your situation?"</div>
+      </div>
+      <div class="nurture-step">
+        <div class="nurture-dot" style="background:#00d4aa">4</div>
+        <div class="nurture-day">Day 42</div>
+        <div class="nurture-label">Light check-in: "Still thinking about your platform? Happy to talk."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-gap"></div>
+
+  <!-- TOOLS -->
+  <div class="step-label">What you need to set this up</div>
+  <div class="tools-box">
+    <div class="tools-title">Tools (all free or near-free to start)</div>
+    <div class="tools-row">
+      <span class="tool-chip free">Mailchimp — free tier</span>
+      <span class="tool-chip free">ConvertKit — free tier</span>
+      <span class="tool-chip">Formspree (already on site)</span>
+      <span class="tool-chip">Google Docs → PDF for the resource</span>
+      <span class="tool-chip">Notion for drafting emails</span>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:#888;line-height:1.6">
+      The website change is a single new section added to the homepage — an email capture form that sends to Mailchimp or ConvertKit, which then auto-delivers the PDF and queues the follow-up emails. No complex tech. The hardest part is writing the 20-question assessment — which takes one afternoon if you know your clients.
+    </div>
+  </div>
+
+  <div class="step-label">Why this works</div>
+  <div style="background:white;border-radius:12px;border:1px solid #e8e8e8;padding:20px 24px;font-size:12px;color:#555;line-height:1.8">
+    <strong style="color:#111;font-family:'Syne',sans-serif">95% of your visitors aren't ready to hire today.</strong> They're researching, building a business case, or waiting for budget. Without a lead magnet, they leave and you never know they existed. With one, you capture their email, deliver real value upfront, and stay in their inbox until the moment they're ready — at which point Aureus is the name they already trust.
+    <br><br>
+    <strong style="color:#111;font-family:'Syne',sans-serif">The assessment idea works particularly well for B2B data & AI</strong> because it's genuinely useful (helps them think through their platform), positions you as the expert, and surfaces the exact pain points your sales conversation would anyway.
+  </div>
+
+</div>
+</body>
+</html>

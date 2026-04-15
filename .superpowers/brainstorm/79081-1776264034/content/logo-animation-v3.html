@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aureus — Continuous Writing Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Syne:wght@700;800&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f5f5f5;
+      font-family: 'Syne', sans-serif;
+      color: #111;
+      padding: 32px 24px 48px;
+    }
+    h2 { font-weight: 800; font-size: 22px; letter-spacing: -0.04em; margin-bottom: 6px; }
+    .subtitle { font-size: 13px; color: #666; margin-bottom: 28px; }
+
+    .nav-mockup {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .fake-links { display: flex; gap: 28px; }
+    .fake-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #111;
+      opacity: 0.35;
+    }
+    .fake-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: white;
+      background: linear-gradient(135deg, #ff3366, #ff6b35);
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    #logo-wrap { position: relative; display: flex; align-items: center; }
+    #logo-svg { overflow: visible; display: block; }
+
+    /* The reveal layer: text drawn via clip-path sweep */
+    #logo-text-stroke {
+      font-family: 'Dancing Script', cursive;
+      font-size: 30px;
+      font-weight: 700;
+      fill: transparent;
+      stroke: url(#penGrad);
+      stroke-width: 1.2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* Filled version revealed by clipPath */
+    #logo-text-fill {
+      font-family: 'Dancing Script', cursive;
+      font-size: 30px;
+      font-weight: 700;
+      fill: url(#fillGrad);
+    }
+
+    /* Pen-tip dot that travels along the leading edge */
+    #pen-tip {
+      fill: #ff3366;
+      opacity: 0;
+    }
+
+    .controls { display: flex; gap: 10px; margin-bottom: 24px; align-items: center; }
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary { background: linear-gradient(135deg, #ff3366, #ff6b35); color: white; }
+    .btn-outline { background: white; color: #111; border: 1px solid #ddd; }
+
+    .info-box {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .info-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    .speed-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip.active { background: #111; color: white; border-color: #111; }
+    .chip:hover:not(.active) { border-color: #888; }
+
+    .ease-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .note { font-size: 12px; color: #666; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+  <h2>Continuous Writing Flow</h2>
+  <p class="subtitle">One unbroken stroke — pen never lifts — A through s.</p>
+
+  <div class="nav-mockup">
+    <svg id="logo-svg" width="140" height="44" viewBox="0 0 140 44">
+      <defs>
+        <!-- Gradient for the stroke (pen ink colour) -->
+        <linearGradient id="penGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff3366"/>
+          <stop offset="100%" stop-color="#ff6b35"/>
+        </linearGradient>
+        <!-- Gradient for the final fill -->
+        <linearGradient id="fillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ff3366"/>
+          <stop offset="100%" stop-color="#ff6b35"/>
+        </linearGradient>
+        <!-- Clip rect that sweeps left → right to reveal fill -->
+        <clipPath id="fillClip">
+          <rect id="fillRect" x="-2" y="0" width="0" height="44"/>
+        </clipPath>
+      </defs>
+
+      <!-- Layer 1: stroke that animates continuously (dashoffset) -->
+      <text id="logo-text-stroke" x="4" y="36">Aureus</text>
+
+      <!-- Layer 2: fill revealed by sweeping clip rect -->
+      <text id="logo-text-fill" x="4" y="36" clip-path="url(#fillClip)" opacity="0">Aureus</text>
+
+      <!-- Pen tip dot, sits at the leading edge of the clip -->
+      <circle id="pen-tip" r="1.8" cx="4" cy="20"/>
+    </svg>
+
+    <div class="fake-links">
+      <span class="fake-link">Home</span>
+      <span class="fake-link">About</span>
+      <span class="fake-link">Services</span>
+      <span class="fake-link">Contact</span>
+    </div>
+    <span class="fake-cta">Get Started</span>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" onclick="playAnimation()">▶ Play</button>
+    <button class="btn btn-outline" onclick="resetAnimation()">↺ Reset</button>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Total duration</div>
+    <div class="speed-row">
+      <span class="chip" onclick="setDuration(0.5, this)">Snappy — 0.5s</span>
+      <span class="chip active" onclick="setDuration(1.0, this)">Balanced — 1.0s</span>
+      <span class="chip" onclick="setDuration(1.8, this)">Elegant — 1.8s</span>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Easing feel</div>
+    <p class="note">How does the pen accelerate?</p>
+    <div class="ease-row">
+      <span class="chip active" onclick="setEase('none', this)">Linear (constant)</span>
+      <span class="chip" onclick="setEase('power1.inOut', this)">Ease in-out (natural)</span>
+      <span class="chip" onclick="setEase('power2.out', this)">Ease out (decelerate)</span>
+    </div>
+  </div>
+
+  <script>
+    let duration = 1.0;
+    let ease = 'none';
+    let isPlaying = false;
+    let tl = null;
+
+    const FULL_WIDTH = 132; // width of "Aureus" in SVG units at this font size
+    const DASH = 3000;      // safely larger than any letter-outline perimeter
+
+    function reset() {
+      if (tl) { tl.kill(); tl = null; }
+      isPlaying = false;
+
+      const stroke = document.getElementById('logo-text-stroke');
+      stroke.style.strokeDasharray = DASH;
+      stroke.style.strokeDashoffset = DASH;
+      stroke.style.strokeWidth = '1.2px';
+      stroke.style.stroke = 'url(#penGrad)';
+
+      const fill = document.getElementById('logo-text-fill');
+      fill.setAttribute('opacity', '0');
+
+      gsap.set('#fillRect', { attr: { width: 0 } });
+
+      const tip = document.getElementById('pen-tip');
+      tip.style.opacity = '0';
+      gsap.set(tip, { attr: { cx: 4, cy: 28 } });
+    }
+
+    function resetAnimation() { reset(); }
+
+    async function playAnimation() {
+      if (isPlaying) return;
+      isPlaying = true;
+      await document.fonts.ready;
+      reset();
+      isPlaying = true;
+
+      const stroke = document.getElementById('logo-text-stroke');
+      const fill   = document.getElementById('logo-text-fill');
+      const tip    = document.getElementById('pen-tip');
+
+      tl = gsap.timeline({
+        onComplete: () => { isPlaying = false; }
+      });
+
+      // Show pen tip
+      tl.set(tip, { opacity: 1 }, 0);
+
+      // ── Phase 1: continuous stroke sweep + pen tip + fill reveal, all in sync ──
+      tl.fromTo(stroke,
+        { strokeDashoffset: DASH },
+        { strokeDashoffset: 0, duration, ease },
+        0
+      );
+
+      // Pen tip travels left → right across the text width
+      tl.fromTo(tip,
+        { attr: { cx: 4 } },
+        { attr: { cx: 4 + FULL_WIDTH }, duration, ease },
+        0
+      );
+
+      // Fill reveals in sync — clip rect sweeps left → right
+      tl.fromTo('#fillRect',
+        { attr: { width: 0 } },
+        { attr: { width: FULL_WIDTH + 4 }, duration, ease },
+        0
+      );
+      tl.set(fill, { opacity: 1 }, 0);
+
+      // ── Phase 2: pen tip disappears, stroke fades out (fill already there) ──
+      tl.to(tip, { opacity: 0, duration: 0.2, ease: 'power2.out' });
+      tl.to(stroke, { strokeWidth: 0, duration: 0.25, ease: 'power2.out' }, '<');
+    }
+
+    function setDuration(d, el) {
+      duration = d;
+      document.querySelectorAll('.info-box:first-of-type .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function setEase(e, el) {
+      ease = e;
+      document.querySelectorAll('.ease-row .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    document.fonts.ready.then(() => {
+      reset();
+      setTimeout(playAnimation, 500);
+    });
+  </script>
+
+</body>
+</html>
