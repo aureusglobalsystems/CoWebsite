@@ -10,7 +10,12 @@ export const SITE_NAME = 'Aureus Global Systems';
 // When set, "Book a call" buttons appear next to the contact CTAs.
 export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || '';
 
-// Optional Google Analytics 4 measurement ID, e.g. G-XXXXXXXXXX.
+// Google Tag Manager container (the site's Google tag). Override in Vercel if it changes;
+// set NEXT_PUBLIC_GTM_ID to "off" to disable.
+const gtm = process.env.NEXT_PUBLIC_GTM_ID ?? 'GTM-T7R8N782';
+export const GTM_ID = gtm === 'off' ? '' : gtm;
+
+// Direct GA4 measurement ID — only used when no Tag Manager container is set.
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
 
 // Optional search-engine verification codes (Search Console / Bing Webmaster Tools).

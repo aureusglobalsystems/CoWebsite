@@ -30,7 +30,8 @@ All are optional — the site works without them; each one switches a feature on
 | Variable | Example | Turns on |
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | `https://aureusglobalsystems.com` | Canonical URLs, sitemap, structured data. **Set this to the exact live domain** (with `www.` if the site redirects to www). |
-| `NEXT_PUBLIC_GA_ID` | `G-XXXXXXXXXX` | Google Analytics 4 + the conversion events above |
+| `NEXT_PUBLIC_GTM_ID` | `GTM-T7R8N782` (already the default) | Google Tag Manager container on every page. Set to `off` to disable. |
+| `NEXT_PUBLIC_GA_ID` | `G-XXXXXXXXXX` | Direct GA4 install — **only used if Tag Manager is turned off**. With Tag Manager, add GA4 inside the container instead. |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | the `content` value from Search Console's HTML-tag method | Search Console ownership |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | the `content` value from Bing's meta-tag method | Bing Webmaster Tools (also feeds ChatGPT search and Copilot) |
 | `NEXT_PUBLIC_BOOKING_URL` | `https://calendly.com/aureus/30min` | "Book a 30-min call" buttons on every service page |
@@ -43,7 +44,10 @@ Redeploy after adding them.
 
 1. **Google Search Console** — add the domain property, verify (DNS or the env var above), submit `https://<domain>/sitemap.xml`. Then use *URL Inspection → Request indexing* on the six service pages.
 2. **Bing Webmaster Tools** — import from Search Console (one click), submit the sitemap. Bing powers ChatGPT search, Copilot and DuckDuckGo, so it matters for AEO.
-3. **Google Analytics 4** — create a property, set `NEXT_PUBLIC_GA_ID`, then in *Admin → Events* mark `generate_lead` as a **key event** (and optionally `book_call_click`).
+3. **Google Analytics 4 via Tag Manager** (container `GTM-T7R8N782` is installed on every page):
+   - In Tag Manager add a **Google tag** with your GA4 measurement ID (`G-…`), trigger *Initialization – All Pages*.
+   - The site pushes these events to the dataLayer: `generate_lead` (contact form sent), `cta_click`, `hire_engineers_click`, `lead_magnet_click`, `book_call_click`, with parameters such as `service` and `location`. For each one, add a *Custom Event* trigger with that exact name and a **GA4 Event** tag that forwards it (add `service` / `location` as event parameters).
+   - Publish the container, then in GA4 *Admin → Events* mark `generate_lead` as a **key event**.
 4. **Google Business Profile** — create a profile for the company (service-area business), category "Software company" / "Computer consultant", link to the site.
 
 ---

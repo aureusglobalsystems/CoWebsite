@@ -4,7 +4,7 @@ import LenisProvider from '@/components/providers/LenisProvider';
 import Nav from '@/components/layout/Nav';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/ui/ScrollToTop';
-import Analytics from '@/components/Analytics';
+import { GoogleTagHead, GoogleTagBody } from '@/components/Analytics';
 import JsonLd from '@/components/seo/JsonLd';
 import { SITE_URL, SITE_NAME, GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION } from '@/lib/site';
 import { serviceNav } from '@/lib/services-nav';
@@ -81,18 +81,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        <GoogleTagHead />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <JsonLd data={orgJsonLd} />
       </head>
       <body style={{ width: '100%', overflowX: 'hidden' }}>
+        <GoogleTagBody />
         <LenisProvider>
           <Nav />
           <main style={{ width: '100%', display: 'block' }}>{children}</main>
           <Footer />
           <ScrollToTop />
         </LenisProvider>
-        <Analytics />
       </body>
     </html>
   );
