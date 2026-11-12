@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { serviceNav } from '@/lib/services-nav';
 
 const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
   { href: '/case-studies', label: 'Case Studies' },
+  { href: '/insights', label: 'Insights' },
   { href: '/assessment', label: 'Assessment' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -66,7 +68,7 @@ export default function Footer() {
               marginBottom: '16px',
             }}>Aureus</span>
             <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem', lineHeight: 1.72, maxWidth: '280px' }}>
-              Leading data & AI company. We build the platforms that power tomorrow's decisions.
+              Leading data & AI company. We build the platforms that power tomorrow&apos;s decisions.
             </p>
             <p style={{ ...LABEL, color: '#555', marginTop: '12px', display: 'block' }}>India — Global Delivery</p>
           </div>
@@ -92,6 +94,16 @@ export default function Footer() {
                 >
                   {link.label}
                 </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Services */}
+          <div>
+            <p style={{ ...LABEL, color: '#555', display: 'block', marginBottom: '20px' }}>Services</p>
+            <nav aria-label="Services" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {serviceNav.map((svc) => (
+                <Link key={svc.slug} href={svc.href} className="footer-link">{svc.title}</Link>
               ))}
             </nav>
           </div>

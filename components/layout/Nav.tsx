@@ -6,12 +6,14 @@ import gsap from 'gsap';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import MagneticButton from '@/components/ui/MagneticButton';
+import { serviceNav } from '@/lib/services-nav';
 
 const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
   { href: '/case-studies', label: 'Case Studies' },
+  { href: '/insights', label: 'Insights' },
   { href: '/assessment', label: 'Assessment' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -181,8 +183,8 @@ export default function Nav() {
           {/* Desktop nav links */}
           <div className="nav-desktop-links">
             {links.map((link) => {
-              const active = pathname === link.href;
-              return (
+              const active = link.href === '/' ? pathname === '/' : pathname.startsWith(link.href);
+              const linkEl = (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -205,7 +207,34 @@ export default function Nav() {
                       background: 'linear-gradient(90deg, #ff3366, #ff6b35)',
                     }} />
                   )}
+                  {link.href === '/services' && <span aria-hidden style={{ marginLeft: '6px', fontSize: '0.5rem' }}>▾</span>}
                 </Link>
+              );
+              if (link.href !== '/services') return linkEl;
+              return (
+                <div key={link.href} className="nav-dropdown">
+                  {linkEl}
+                  <div className="nav-dropdown-panel" role="menu">
+                    <div className="nav-dropdown-grid">
+                      {serviceNav.map((svc) => (
+                        <Link key={svc.slug} href={svc.href} role="menuitem" className="nav-dropdown-item" style={{ ['--accent' as string]: svc.accent }}>
+                          <span style={{ color: svc.accent, fontSize: '1.1rem', lineHeight: 1 }}>{svc.icon}</span>
+                          <span>
+                            <span className="nav-dropdown-title">
+                              {svc.title}
+                              {svc.isNew && <span className="nav-new-pill" style={{ background: svc.accent }}>New</span>}
+                            </span>
+                            <span className="nav-dropdown-short">{svc.short}</span>
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="nav-dropdown-foot">
+                      <Link href="/services">All services overview →</Link>
+                      <Link href="/contact?service=Staff%20Augmentation">Hire engineers →</Link>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -248,13 +277,23 @@ export default function Nav() {
         </div>
 
         {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`mobile-nav-link${pathname === link.href ? ' active' : ''}`}
-          >
-            {link.label}
-          </Link>
+          <div key={link.href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Link
+              href={link.href}
+              className={`mobile-nav-link${pathname === link.href ? ' active' : ''}`}
+            >
+              {link.label}
+            </Link>
+            {link.href === '/services' && (
+              <div className="mobile-nav-sub">
+                {serviceNav.map((svc) => (
+                  <Link key={svc.slug} href={svc.href} style={{ color: pathname === svc.href ? svc.accent : undefined }}>
+                    <span style={{ color: svc.accent }}>{svc.icon}</span> {svc.title}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
 
         <Link

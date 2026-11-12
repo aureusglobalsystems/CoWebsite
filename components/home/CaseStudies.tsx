@@ -3,11 +3,12 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import TiltCard from '@/components/ui/TiltCard';
 
 const caseStudies = [
   {
-    tag: 'Databricks Migration', tagColor: '#ff3366', client: 'Global Retail Chain',
+    tag: 'Databricks Migration', tagColor: '#ff3366', client: 'Global Retail Chain', slug: 'databricks-lakehouse-migration-retail',
     title: 'From Data Swamp to Lakehouse in 90 Days',
     challenge: "Legacy Hadoop cluster couldn't handle 10TB/day of transaction data. Queries took hours. Zero real-time capability.",
     solution: 'Migrated to Databricks Lakehouse with Delta Lake medallion architecture. Built streaming pipelines with Kafka + Spark Streaming.',
@@ -15,7 +16,7 @@ const caseStudies = [
     tech: ['Databricks', 'Delta Lake', 'Kafka', 'Apache Spark'],
   },
   {
-    tag: 'Snowflake Consulting', tagColor: '#29B5E8', client: 'FinTech Platform',
+    tag: 'Snowflake Consulting', tagColor: '#29B5E8', client: 'FinTech Platform', slug: 'snowflake-fintech-500m-transactions',
     title: 'Snowflake at Scale — 500M Daily Transactions',
     challenge: 'Growing from 10M to 500M daily transactions with a fragile warehouse that could not scale cost-efficiently.',
     solution: 'Redesigned data architecture with Data Vault 2.0, dbt transformations, and zero-copy cloning for dev/test environments.',
@@ -23,7 +24,7 @@ const caseStudies = [
     tech: ['Snowflake', 'dbt', 'Python', 'Airflow'],
   },
   {
-    tag: 'Analytics & BI', tagColor: '#00d4aa', client: 'Healthcare Network',
+    tag: 'Analytics & BI', tagColor: '#00d4aa', client: 'Healthcare Network', slug: 'healthcare-analytics-semantic-layer',
     title: 'One Source of Truth for 120 Hospitals',
     challenge: '120 hospitals each using different KPIs and Excel reports. C-suite could not make data-driven decisions.',
     solution: 'Built a unified semantic layer on Azure Synapse, with Power BI Premium reports rolling up to executive dashboards.',
@@ -110,6 +111,11 @@ export default function CaseStudies() {
                       <span key={t} style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.45rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '4px 8px', background: '#f8f8f8', color: '#888', borderRadius: '4px' }}>{t}</span>
                     ))}
                   </div>
+
+                  <Link href={`/case-studies/${cs.slug}`} style={{
+                    display: 'inline-block', marginTop: '20px', fontFamily: 'Space Mono, monospace', fontSize: '0.52rem',
+                    letterSpacing: '0.14em', textTransform: 'uppercase', color: cs.tagColor, textDecoration: 'none',
+                  }}>Read the case study →</Link>
                 </div>
               </div>
             </TiltCard>

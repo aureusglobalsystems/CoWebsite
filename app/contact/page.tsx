@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import { trackEvent } from '@/lib/analytics';
 
 const ACCENT = '#8b5cf6';
 
@@ -21,7 +22,7 @@ const S = {
   } as React.CSSProperties,
 };
 
-const serviceOptions = ['Databricks AI & Lakehouse', 'AI & ML Engineering', 'Snowflake Consulting', 'Analytics & BI', 'Staff Augmentation', 'Not Sure Yet'];
+const serviceOptions = ['Databricks AI & Lakehouse', 'AI & ML Engineering', 'AI Inference Engineering', 'Snowflake Consulting', 'Analytics & BI', 'Staff Augmentation', 'Not Sure Yet'];
 const timelineOptions = ['ASAP — urgent need', '1-3 months', '3-6 months', '6+ months', 'Just exploring'];
 
 const nextSteps = [
@@ -39,6 +40,9 @@ export default function Contact() {
 
   useEffect(() => {
     gsap.fromTo(heroRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.2 });
+    // Pre-select a service when linked as /contact?service=...
+    const preset = new URLSearchParams(window.location.search).get('service');
+    if (preset && serviceOptions.includes(preset)) setForm(f => ({ ...f, service: preset }));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -52,6 +56,7 @@ export default function Contact() {
       });
       if (res.ok) {
         setStatus('success');
+        trackEvent('generate_lead', { service: form.service || 'unspecified', timeline: form.timeline || 'unspecified' });
         gsap.fromTo('.success-msg', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
       } else { setStatus('error'); }
     } catch { setStatus('error'); }

@@ -1,115 +1,27 @@
 'use client';
 
-import { useRef, useEffect, useMemo } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import * as THREE from 'three';
+import { useRef, useEffect } from 'react';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import LazyCanvas from '@/components/ui/LazyCanvas';
+import { trackEvent } from '@/lib/analytics';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '@/components/ui/MagneticButton';
 
-const SPECTRUM = [
-  new THREE.Color('#ff3366'),
-  new THREE.Color('#ff6b35'),
-  new THREE.Color('#ffd700'),
-  new THREE.Color('#00d4aa'),
-  new THREE.Color('#3366ff'),
-];
-
-function Particles({ count = 2500 }: { count?: number }) {
-  const meshRef = useRef<THREE.Points>(null);
-  const { size, viewport } = useThree();
-  const mouse = useRef(new THREE.Vector2(0, 0));
-  const scrollProgress = useRef(0);
-
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      mouse.current.x = (e.clientX / size.width) * 2 - 1;
-      mouse.current.y = -((e.clientY / size.height) * 2 - 1);
-    };
-    window.addEventListener('mousemove', move);
-    const onScroll = () => {
-      scrollProgress.current = Math.min(window.scrollY / window.innerHeight, 1);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('mousemove', move);
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [size]);
-
-  const [positions, colors, originalPositions] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    const orig = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 10;
-      const y = (Math.random() - 0.5) * 6;
-      const z = (Math.random() - 0.5) * 4;
-      pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z;
-      orig[i * 3] = x; orig[i * 3 + 1] = y; orig[i * 3 + 2] = z;
-      const c = SPECTRUM[Math.floor(Math.random() * SPECTRUM.length)];
-      col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
-    }
-    return [pos, col, orig];
-  }, [count]);
-
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    return geo;
-  }, [positions, colors]);
-
-  const material = useMemo(
-    () => new THREE.PointsMaterial({ size: 0.04, vertexColors: true, transparent: true, opacity: 0.85, sizeAttenuation: true }),
-    []
-  );
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const pos = meshRef.current.geometry.attributes.position;
-    const time = state.clock.elapsedTime;
-    const repulseRadius = 1.5;
-    for (let i = 0; i < count; i++) {
-      const ox = originalPositions[i * 3];
-      const oy = originalPositions[i * 3 + 1];
-      const oz = originalPositions[i * 3 + 2];
-      let x = ox + Math.sin(time * 0.3 + i * 0.01) * 0.05;
-      let y = oy + Math.cos(time * 0.2 + i * 0.01) * 0.05;
-      const mx = mouse.current.x * viewport.width * 0.5;
-      const my = mouse.current.y * viewport.height * 0.5;
-      const dx = x - mx;
-      const dy = y - my;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < repulseRadius && dist > 0) {
-        const force = (repulseRadius - dist) / repulseRadius;
-        x += (dx / dist) * force * 0.8;
-        y += (dy / dist) * force * 0.8;
-      }
-      const sp = scrollProgress.current;
-      if (sp > 0) {
-        x += ox * sp * 0.25;
-        y += oy * sp * 0.25;
-      }
-      pos.setXYZ(i, x, y, oz);
-    }
-    pos.needsUpdate = true;
-    material.opacity = Math.max(0, 0.85 - scrollProgress.current * 1.5);
-    meshRef.current.rotation.y = time * 0.03;
-  });
-
-  return <points ref={meshRef} geometry={geometry} material={material} />;
-}
+const HeroScene = dynamic(() => import('./HeroScene'), { ssr: false });
 
 export default function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const tl = gsap.timeline({ delay: 2.6 });
+    // Start the intro once the loader is gone (or straight away when it isn't shown).
+    const tl = gsap.timeline({ paused: true, delay: 0.15 });
 
     if (headingRef.current) {
       const words = headingRef.current.querySelectorAll('.word');
@@ -120,18 +32,26 @@ export default function Hero() {
         0
       );
     }
+    tl.fromTo(badgeRef.current, { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.3);
     tl.fromTo(subRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.5)
       .fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7)
       .fromTo(scrollHintRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.0);
 
-    return () => { tl.kill(); };
+    const play = () => tl.play();
+    if (document.querySelector('[data-ags-loader]')) {
+      window.addEventListener('agsLoaderDone', play, { once: true });
+    } else {
+      play();
+    }
+    return () => { window.removeEventListener('agsLoaderDone', play); tl.kill(); };
   }, []);
 
   return (
     <section style={{
       position: 'relative',
       width: '100%',
-      height: '100vh',
+      minHeight: '100vh',
+      paddingBottom: '64px',
       overflow: 'hidden',
       display: 'flex',
       alignItems: 'center',
@@ -140,11 +60,9 @@ export default function Hero() {
       backgroundColor: '#fff',
     }}>
       {/* R3F Canvas */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }} gl={{ antialias: false, alpha: true }} style={{ background: 'transparent' }}>
-          <Particles count={2500} />
-        </Canvas>
-      </div>
+      <LazyCanvas style={{ zIndex: 0 }}>
+        <HeroScene />
+      </LazyCanvas>
 
       {/* Content */}
       <div style={{
@@ -156,8 +74,32 @@ export default function Hero() {
         padding: '0 24px',
         paddingTop: '80px',
       }}>
+        <a
+          ref={badgeRef}
+          href="/services/ai-inference-engineering"
+          className="hero-badge"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '10px',
+            padding: '7px 14px 7px 10px', marginBottom: '20px',
+            borderRadius: '100px', border: '1px solid #3366ff33',
+            background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(6px)',
+            textDecoration: 'none', opacity: 0,
+          }}
+        >
+          <span style={{ position: 'relative', width: '8px', height: '8px', flexShrink: 0 }}>
+            <span className="hero-badge-ping" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#3366ff' }} />
+            <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#3366ff' }} />
+          </span>
+          <span className="label" style={{ color: '#3366ff', fontWeight: 700 }}>New</span>
+          <span style={{ width: '1px', height: '12px', background: '#3366ff33' }} />
+          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: '#111', fontWeight: 500 }}>
+            AI Inference Engineering<span className="hide-mobile"> — self-host open LLMs, cut GPU costs</span>
+          </span>
+          <span className="hero-badge-arrow" style={{ color: '#3366ff', fontSize: '0.85rem' }}>→</span>
+        </a>
+
         <p className="label" style={{ color: '#888', marginBottom: '24px', display: 'block' }}>
-          Leading Data & AI Company · India — Global Delivery
+          Data & AI Engineering Company · India — Global Delivery
         </p>
 
         <h1
@@ -172,13 +114,14 @@ export default function Hero() {
             perspective: '800px',
           }}
         >
-          {['Your', 'Data.'].map((word, i) => (
+          <span className="sr-only">Aureus Global Systems, a data and AI engineering company: </span>
+          {['Data', 'First.'].map((word, i) => (
             <span key={i} className="word" style={{ display: 'inline-block', marginRight: '0.25em', transformStyle: 'preserve-3d' }}>
               {word}
             </span>
           ))}
           <br />
-          {['Your', 'Edge.'].map((word, i) => (
+          {['AI', 'Ready.'].map((word, i) => (
             <span key={i} className="word" style={{ display: 'inline-block', marginRight: '0.25em', transformStyle: 'preserve-3d' }}>
               {word}
             </span>
@@ -198,16 +141,19 @@ export default function Hero() {
           fontFamily: 'Inter, sans-serif',
           color: '#888',
           fontSize: '1rem',
-          maxWidth: '420px',
+          maxWidth: '500px',
           lineHeight: 1.72,
           marginBottom: '40px',
           opacity: 0,
         }}>
-          We architect, migrate, and scale data & AI platforms —
-          so your team spends time on insights, not infrastructure.
+          We design, build and run the data platforms, AI applications and LLM
+          infrastructure behind modern businesses — as projects we deliver end-to-end,
+          or as senior engineers who join your team.
         </p>
 
-        <div ref={ctaRef} className="hero-cta-row" style={{ display: 'flex', alignItems: 'center', gap: '24px', opacity: 0 }}>
+        <div ref={ctaRef} style={{ opacity: 0 }}>
+        <div className="hero-cta-row" style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
+          <span onClick={() => trackEvent('cta_click', { location: 'home_hero' })}>
           <MagneticButton
             href="/contact"
             style={{
@@ -222,8 +168,27 @@ export default function Hero() {
               textDecoration: 'none',
             }}
           >
-            Start Your Project
+            Start a Project
           </MagneticButton>
+          </span>
+          <Link
+            href="/contact?service=Staff%20Augmentation"
+            onClick={() => trackEvent('hire_engineers_click', { location: 'home_hero' })}
+            style={{
+              padding: '15px 28px',
+              borderRadius: '100px',
+              border: '1px solid #111',
+              background: 'rgba(255,255,255,0.7)',
+              color: '#111',
+              fontFamily: 'Space Mono, monospace',
+              fontSize: '0.6rem',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+            }}
+          >
+            Hire Engineers
+          </Link>
           <a
             href="/services"
             style={{
@@ -236,8 +201,10 @@ export default function Hero() {
               textUnderlineOffset: '4px',
             }}
           >
-            Our Services
+            All Services
           </a>
+        </div>
+
         </div>
       </div>
 

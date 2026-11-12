@@ -1,36 +1,20 @@
-'use client';
-
-import { useState } from 'react';
-import Loader from '@/components/home/Loader';
-import Hero from '@/components/home/Hero';
-import Marquee from '@/components/home/Marquee';
-import HardTruths from '@/components/home/HardTruths';
-import Services from '@/components/home/Services';
-import LeadMagnet from '@/components/home/LeadMagnet';
-import StickyProcess from '@/components/home/StickyProcess';
-import CaseStudies from '@/components/home/CaseStudies';
-import Testimonials from '@/components/home/Testimonials';
-import Stats from '@/components/home/Stats';
-import Signature from '@/components/home/Signature';
+import HomeClient from '@/components/home/HomeClient';
+import JsonLd from '@/components/seo/JsonLd';
+import { homeFaqs } from '@/lib/home-content';
+import { posts } from '@/lib/posts';
 
 export default function Home() {
-  const [loaded, setLoaded] = useState(false);
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  };
+  const insights = posts.slice(0, 3).map(({ slug, title, summary, readingMinutes }) => ({ slug, title, summary, readingMinutes }));
 
   return (
     <>
-      {!loaded && <Loader onComplete={() => { setLoaded(true); window.dispatchEvent(new CustomEvent('agsLoaderDone')); }} />}
-      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}>
-        <Hero />
-        <Marquee />
-        <HardTruths />
-        <Services />
-        <LeadMagnet />
-        <StickyProcess />
-        <CaseStudies />
-        <Testimonials />
-        <Stats />
-        <Signature />
-      </div>
+      <JsonLd data={faqJsonLd} />
+      <HomeClient insights={insights} />
     </>
   );
 }

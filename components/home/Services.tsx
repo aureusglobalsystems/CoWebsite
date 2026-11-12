@@ -7,11 +7,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TiltCard from '@/components/ui/TiltCard';
 
 const services = [
-  { number: '01', slug: 'databricks', title: 'Databricks AI & Lakehouse', description: 'Your data and AI foundation, built right. We migrate legacy systems to Databricks Lakehouse, architect Delta Lake pipelines, and configure the ML infrastructure your data science team needs to move fast — without accumulating debt.', tags: ['Delta Lake', 'Mosaic AI', 'MLflow', 'Unity Catalog', 'Apache Spark'], accent: '#ff3366', icon: '◈' },
-  { number: '02', slug: 'ai-ml', title: 'AI & ML Engineering', description: 'Production AI built on your data — not generic APIs. We design and deploy ML pipelines, RAG systems, and LLM integrations that connect directly to your governed data layer. Accurate, explainable, and maintained by a team that understands what\'s underneath.', tags: ['RAG', 'MLOps', 'LangChain', 'Azure OpenAI', 'Vector Search'], accent: '#8b5cf6', icon: '◆' },
-  { number: '03', slug: 'snowflake', title: 'Snowflake Consulting', description: 'Design, implement, and optimize your Snowflake environment. From schema design and data modeling to cost optimization and performance tuning at enterprise scale.', tags: ['Data Vault', 'dbt', 'Snowpark', 'Cost Optimization'], accent: '#29B5E8', icon: '❄' },
-  { number: '04', slug: 'analytics', title: 'Analytics & BI', description: 'Build analytics platforms your business teams actually use. From semantic layers to Power BI and Tableau dashboards — connected, fast, and trustworthy.', tags: ['Power BI', 'Tableau', 'Looker', 'Semantic Layer'], accent: '#ffd700', icon: '◉' },
-  { number: '05', slug: 'staff-augmentation', title: 'Staff Augmentation', description: 'Embed battle-tested data and AI engineers directly into your team. Senior talent, production mindset, and zero ramp-up time — exactly when you need it.', tags: ['Senior Engineers', 'Flexible Terms', 'Global'], accent: '#00d4aa', icon: '◎' },
+  { number: '01', slug: 'databricks', href: '/services/databricks-consulting', title: 'Databricks AI & Lakehouse', description: 'Your data and AI foundation, built right. We migrate legacy systems to Databricks Lakehouse, architect Delta Lake pipelines, and configure the ML infrastructure your data science team needs to move fast — without accumulating debt.', tags: ['Delta Lake', 'Mosaic AI', 'MLflow', 'Unity Catalog', 'Apache Spark'], accent: '#ff3366', icon: '◈' },
+  { number: '02', slug: 'ai-ml', href: '/services/ai-ml-engineering', title: 'AI & ML Engineering', description: 'Production AI built on your data — not generic APIs. We design and deploy ML pipelines, RAG systems, and LLM integrations that connect directly to your governed data layer. Accurate, explainable, and maintained by a team that understands what\'s underneath.', tags: ['RAG', 'MLOps', 'LangChain', 'Azure OpenAI', 'Vector Search'], accent: '#8b5cf6', icon: '◆' },
+  { number: '03', slug: 'ai-inference-engineering', href: '/services/ai-inference-engineering', title: 'AI Inference Engineering', description: 'Self-host open-source LLMs in your own cloud and cut GPU costs. We deploy and tune Llama, Mistral, Qwen and DeepSeek on vLLM, TensorRT-LLM and Kubernetes — faster responses, lower cost per token, and your data never leaves your environment.', tags: ['vLLM', 'TensorRT-LLM', 'Open LLMs', 'GPU Cost', 'Kubernetes'], accent: '#3366ff', icon: '◇', badge: 'New' },
+  { number: '04', slug: 'snowflake', href: '/services/snowflake-consulting', title: 'Snowflake Consulting', description: 'Design, implement, and optimize your Snowflake environment. From schema design and data modeling to cost optimization and performance tuning at enterprise scale.', tags: ['Data Vault', 'dbt', 'Snowpark', 'Cost Optimization'], accent: '#29B5E8', icon: '❄' },
+  { number: '05', slug: 'analytics', href: '/services/analytics-bi-consulting', title: 'Analytics & BI', description: 'Build analytics platforms your business teams actually use. From semantic layers to Power BI and Tableau dashboards — connected, fast, and trustworthy.', tags: ['Power BI', 'Tableau', 'Looker', 'Semantic Layer'], accent: '#ffd700', icon: '◉' },
+  { number: '06', slug: 'staff-augmentation', href: '/services/data-engineering-staff-augmentation', title: 'Staff Augmentation', description: 'Embed battle-tested data and AI engineers directly into your team. Senior talent, production mindset, and zero ramp-up time — exactly when you need it.', tags: ['Senior Engineers', 'Flexible Terms', 'Global'], accent: '#00d4aa', icon: '◎' },
 ];
 
 export default function Services() {
@@ -122,7 +123,12 @@ export default function Services() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
                 <span style={{ fontSize: '2rem', color: svc.accent }}>{svc.icon}</span>
-                <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', color: '#ccc', letterSpacing: '0.1em' }}>{svc.number}</span>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  {'badge' in svc && svc.badge && (
+                    <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.48rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'white', background: svc.accent, padding: '4px 8px', borderRadius: '100px' }}>{svc.badge}</span>
+                  )}
+                  <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', color: '#ccc', letterSpacing: '0.1em' }}>{svc.number}</span>
+                </span>
               </div>
 
               <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '20px', letterSpacing: '-0.03em', lineHeight: 1.2, marginBottom: '12px', color: '#111' }}>{svc.title}</h3>
@@ -141,7 +147,7 @@ export default function Services() {
               </div>
 
               <Link
-                href={`/services#${svc.slug}`}
+                href={svc.href}
                 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', color: '#888', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.color = svc.accent)}
                 onMouseLeave={e => (e.currentTarget.style.color = '#888')}

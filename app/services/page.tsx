@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import MagneticButton from '@/components/ui/MagneticButton';
 
 const ACCENT = '#f59e0b';
@@ -19,31 +20,37 @@ const S = {
 
 const services = [
   {
-    number: '01', slug: 'databricks', title: 'Databricks AI & Lakehouse', tagline: 'The data foundation your AI actually needs.', accent: '#ff3366', icon: '◈',
+    number: '01', slug: 'databricks', href: '/services/databricks-consulting', title: 'Databricks AI & Lakehouse', tagline: 'The data foundation your AI actually needs.', accent: '#ff3366', icon: '◈',
     description: "Databricks is where data and AI converge — and we've worked in it long enough to know exactly where teams go wrong. Whether you're migrating from Hadoop, a legacy warehouse, or a fragile Spark cluster, we build the Lakehouse architecture that handles both analytics workloads and machine learning pipelines without compromise. Delta Lake medallion design, Unity Catalog governance, Mosaic AI workspace, and MLflow — set up right from day one, so your team isn't refactoring six months later.",
     deliverables: ['Current-state audit and migration roadmap', 'Medallion architecture design (Bronze/Silver/Gold layers)', 'Delta Lake pipeline build and data migration', 'Unity Catalog governance and fine-grained access controls', 'Mosaic AI and ML workspace configuration', 'MLflow experiment tracking, model registry and serving', 'Databricks Vector Search for AI/ML retrieval workloads', 'Team training and full runbook documentation'],
     tech: ['Databricks', 'Delta Lake', 'Mosaic AI', 'MLflow', 'Unity Catalog', 'Apache Spark', 'Vector Search', 'Kafka'],
   },
   {
-    number: '02', slug: 'ai-ml', title: 'AI & ML Engineering', tagline: "AI that runs on your data, not someone else's assumptions.", accent: '#8b5cf6', icon: '◆',
+    number: '02', slug: 'ai-ml', href: '/services/ai-ml-engineering', title: 'AI & ML Engineering', tagline: "AI that runs on your data, not someone else's assumptions.", accent: '#8b5cf6', icon: '◆',
     description: "Most AI projects fail not because of the model — but because the data feeding it is messy, ungoverned, or disconnected from reality. We build AI systems on top of solid data foundations: RAG pipelines grounded in your actual knowledge base, ML models trained on clean versioned datasets, and LLM integrations that connect to real-time operational data. The result is AI your team can trust, explain to a stakeholder, and maintain long after the first demo.",
     deliverables: ['RAG (Retrieval-Augmented Generation) pipeline design and build', 'LLM integration with enterprise data sources (Azure OpenAI, AWS Bedrock, Gemini)', 'Vector database setup and embedding pipeline (Databricks Vector Search, Pinecone, pgvector)', 'ML model development, training and versioning with MLflow', 'MLOps pipeline: automated retraining, monitoring and drift detection', 'Model serving infrastructure (Databricks Model Serving, FastAPI)', 'AI application development — intelligent search, document processing, internal tools', 'Evaluation frameworks and guardrails for production LLM systems'],
     tech: ['Mosaic AI', 'MLflow', 'LangChain', 'Azure OpenAI', 'AWS Bedrock', 'Pinecone', 'Python', 'FastAPI'],
   },
   {
-    number: '03', slug: 'snowflake', title: 'Snowflake Consulting', tagline: 'Scale without the surprise bills.', accent: '#29B5E8', icon: '❄',
+    number: '03', slug: 'ai-inference-engineering', href: '/services/ai-inference-engineering', title: 'AI Inference Engineering', tagline: 'Your models. Your GPUs. Your costs, under control.', accent: '#3366ff', icon: '◇',
+    description: "Paying per token for every request, or running GPUs that sit half idle? We help teams self-host open-source LLMs — Llama, Mistral, Qwen, DeepSeek — inside their own cloud, served with vLLM, TensorRT-LLM or Triton on Kubernetes or Databricks. Then we cut the cost of every token with quantization, continuous batching, caching and right-sized, autoscaling GPU capacity. Faster responses, predictable spend, and your data never leaves your environment.",
+    deliverables: ['Inference cost and latency assessment', 'Open model selection and benchmarking on your data', 'Self-hosted LLM serving with an OpenAI-compatible API', 'GPU cost optimization: quantization, batching, autoscaling, spot', 'Kubernetes (EKS / AKS / GKE) or Databricks Model Serving deployment', 'Latency, throughput and cost-per-token monitoring', 'API-to-self-hosted migration with safe rollback'],
+    tech: ['vLLM', 'TensorRT-LLM', 'Triton', 'SGLang', 'Llama', 'Mistral', 'Kubernetes', 'Databricks'],
+  },
+  {
+    number: '04', slug: 'snowflake', href: '/services/snowflake-consulting', title: 'Snowflake Consulting', tagline: 'Scale without the surprise bills.', accent: '#29B5E8', icon: '❄',
     description: "Snowflake is powerful — and expensive when misused. We design Snowflake environments that scale efficiently, with Data Vault 2.0 modeling, dbt transformation layers, Snowpark for Python workloads, and aggressive cost governance.",
     deliverables: ['Snowflake architecture design and setup', 'Data Vault 2.0 or dimensional modeling', 'dbt transformation layer implementation', 'Snowpark Python workload migration', 'Zero-copy cloning for dev/test environments', 'Cost optimization and governance framework'],
     tech: ['Snowflake', 'dbt', 'Snowpark', 'Python', 'Airflow', 'Fivetran'],
   },
   {
-    number: '04', slug: 'analytics', title: 'Analytics & BI', tagline: 'Dashboards your team will actually open.', accent: '#ffd700', icon: '◉',
+    number: '05', slug: 'analytics', href: '/services/analytics-bi-consulting', title: 'Analytics & BI', tagline: 'Dashboards your team will actually open.', accent: '#ffd700', icon: '◉',
     description: "Most BI projects fail because the data isn't trusted. We start with the semantic layer — a single source of truth — then build Power BI or Tableau dashboards that connect directly to governed, certified data.",
     deliverables: ['Semantic layer design (dbt metrics, Cube, or AtScale)', 'Power BI Premium or Tableau deployment', 'Executive dashboard and operational reporting', 'Self-service analytics enablement', 'Data catalog and lineage documentation', 'User adoption and training program'],
     tech: ['Power BI', 'Tableau', 'Looker', 'dbt Metrics', 'Azure Synapse', 'Cube'],
   },
   {
-    number: '05', slug: 'staff-augmentation', title: 'Staff Augmentation', tagline: 'Senior talent. Zero ramp-up. When you need it.', accent: '#00d4aa', icon: '◎',
+    number: '06', slug: 'staff-augmentation', href: '/services/data-engineering-staff-augmentation', title: 'Staff Augmentation', tagline: 'Senior talent. Zero ramp-up. When you need it.', accent: '#00d4aa', icon: '◎',
     description: "Sometimes you need hands — senior ones. We embed battle-tested data and AI engineers directly into your team, working in your tools, your sprint cycles, and your Slack.",
     deliverables: ['Senior data & AI engineer placement (1–5+ engineers)', 'Flexible engagement terms (3–12 months)', 'Skill alignment with your tech stack', 'Weekly progress reporting to stakeholders', 'Knowledge transfer and documentation standards', 'Optional extension or transition to managed team'],
     tech: ['Your Stack', 'Databricks', 'Snowflake', 'AWS/Azure/GCP', 'dbt', 'Airflow'],
@@ -79,7 +86,7 @@ export default function ServicesPage() {
               <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>Services.</span>
             </h1>
             <p style={{ ...S.body, maxWidth: '480px', marginTop: '24px' }}>
-              Five core service lines built for the data & AI era. Production-grade engineering, honest communication, and results that hold up after we're gone.
+              Six core service lines covering everything data & AI — from the platform underneath to the models on top. Engage us for a project, or hire our engineers into your team. Production-grade engineering, honest communication, and results that hold up after we're gone.
             </p>
           </div>
         </div>
@@ -100,6 +107,15 @@ export default function ServicesPage() {
                 </h2>
                 <p style={{ color: svc.accent, fontFamily: 'Inter, sans-serif', marginBottom: '24px', fontSize: '0.95rem' }}>{svc.tagline}</p>
                 <p style={{ ...S.body, marginBottom: '32px' }}>{svc.description}</p>
+                {svc.href && (
+                  <Link href={svc.href} style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '28px',
+                    fontFamily: 'Space Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase',
+                    color: svc.accent, textDecoration: 'none', borderBottom: `1px solid ${svc.accent}55`, paddingBottom: '4px',
+                  }}>
+                    Explore {svc.title} →
+                  </Link>
+                )}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {svc.tech.map((t) => (
                     <span key={t} style={{
