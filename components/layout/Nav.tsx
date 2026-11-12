@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import MagneticButton from '@/components/ui/MagneticButton';
 import { serviceNav } from '@/lib/services-nav';
+import AgsLogo from '@/components/brand/AgsLogo';
+import { industryNav as industries } from '@/lib/industries-nav';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -23,10 +25,7 @@ export default function Nav() {
   const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const lastScroll = useRef(0);
-  const strokeRef   = useRef<SVGTextElement>(null);
-  const fillRef     = useRef<SVGTextElement>(null);
-  const fillRectRef = useRef<SVGRectElement>(null);
-  const tipRef      = useRef<SVGCircleElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -53,50 +52,18 @@ export default function Nav() {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
+  // Logo entrance: the spectrum bar sweeps in under AGS.
+  // Home has an intro loader — wait for it; other pages play immediately.
   useGSAP(() => {
-    const stroke   = strokeRef.current;
-    const fillRect = fillRectRef.current;
-    const tip      = tipRef.current;
-    if (!stroke || !fillRect || !tip) return;
-
-    const FULL_W = 132;
-    const DASH   = 3000;
-
-    // Always set initial hidden state synchronously
-    gsap.set(stroke,   { strokeDasharray: DASH, strokeDashoffset: DASH, strokeWidth: 1.2 });
-    gsap.set(fillRect, { attr: { width: 0 } });
-    gsap.set(tip,      { attr: { cx: 4 }, opacity: 0 });
-
-    const play = () => {
-      gsap.set(tip, { opacity: 1 });
-      const tl = gsap.timeline();
-      tl.fromTo(stroke,
-        { strokeDashoffset: DASH },
-        { strokeDashoffset: 0, duration: 1.8, ease: 'power1.inOut' },
-        0
-      );
-      tl.fromTo(tip,
-        { attr: { cx: 4 } },
-        { attr: { cx: 4 + FULL_W }, duration: 1.8, ease: 'power1.inOut' },
-        0
-      );
-      tl.fromTo(fillRect,
-        { attr: { width: 0 } },
-        { attr: { width: FULL_W + 6 }, duration: 1.8, ease: 'power1.inOut' },
-        0
-      );
-      tl.to(tip,    { opacity: 0, duration: 0.2, ease: 'power2.out' });
-      tl.to(stroke, { strokeWidth: 0, duration: 0.25, ease: 'power2.out' }, '<');
-    };
-
-    // Homepage has a loader — wait for its done signal before playing.
-    // All other pages have no loader, so play immediately.
+    const bar = logoRef.current?.querySelector('.ags-bar');
+    if (!bar) return;
+    gsap.set(bar, { scaleX: 0 });
+    const play = () => gsap.to(bar, { scaleX: 1, duration: 1.1, ease: 'power3.inOut', delay: 0.15 });
     if (document.querySelector('[data-ags-loader]')) {
       window.addEventListener('agsLoaderDone', play, { once: true });
       return () => window.removeEventListener('agsLoaderDone', play);
-    } else {
-      play();
     }
+    play();
   }, []);
 
   return (
@@ -131,53 +98,8 @@ export default function Nav() {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           {/* Logo */}
-          <Link href="/" style={{ textDecoration: 'none', zIndex: 60, position: 'relative', display: 'block' }}>
-            <svg
-              width="140" height="44" viewBox="0 0 140 44"
-              style={{ overflow: 'visible', display: 'block' }}
-              aria-label="Aureus"
-            >
-              <defs>
-                <linearGradient id="navPenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#ff3366" />
-                  <stop offset="100%" stopColor="#ff6b35" />
-                </linearGradient>
-                <linearGradient id="navFillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#ff3366" />
-                  <stop offset="100%" stopColor="#ff6b35" />
-                </linearGradient>
-                <clipPath id="navFillClip">
-                  <rect ref={fillRectRef} x="-2" y="0" width="0" height="44" />
-                </clipPath>
-              </defs>
-
-              {/* Layer 1 — stroke trace (pen drawing the letters) */}
-              <text
-                ref={strokeRef}
-                x="4" y="36"
-                fontFamily="'Dancing Script', cursive"
-                fontSize="30"
-                fontWeight="700"
-                fill="transparent"
-                stroke="url(#navPenGrad)"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >Aureus</text>
-
-              {/* Layer 2 — gradient fill revealed by sweeping clip rect */}
-              <text
-                ref={fillRef}
-                x="4" y="36"
-                fontFamily="'Dancing Script', cursive"
-                fontSize="30"
-                fontWeight="700"
-                fill="url(#navFillGrad)"
-                clipPath="url(#navFillClip)"
-              >Aureus</text>
-
-              {/* Pen tip dot — rides the leading edge */}
-              <circle ref={tipRef} r="1.8" cx="4" cy="26" fill="#ff3366" opacity="0" />
-            </svg>
+          <Link ref={logoRef} href="/" aria-label="Aureus Global Systems — home" style={{ textDecoration: 'none', zIndex: 60, position: 'relative', display: 'block' }}>
+            <AgsLogo height={30} withName barClassName="ags-bar" idSuffix="nav" className="nav-logo" />
           </Link>
 
           {/* Desktop nav links */}
@@ -227,6 +149,12 @@ export default function Nav() {
                             <span className="nav-dropdown-short">{svc.short}</span>
                           </span>
                         </Link>
+                      ))}
+                    </div>
+                    <div className="nav-dropdown-industries">
+                      <span className="label">Industries</span>
+                      {industries.map((ind) => (
+                        <Link key={ind.slug} href={`/industries/${ind.slug}`}>{ind.name}</Link>
                       ))}
                     </div>
                     <div className="nav-dropdown-foot">
@@ -291,6 +219,7 @@ export default function Nav() {
                     <span style={{ color: svc.accent }}>{svc.icon}</span> {svc.title}
                   </Link>
                 ))}
+                <Link href="/industries" style={{ marginTop: '6px', color: '#999' }}>Industries →</Link>
               </div>
             )}
           </div>

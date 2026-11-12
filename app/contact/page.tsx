@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { trackEvent } from '@/lib/analytics';
+import { BOOKING_URL } from '@/lib/site';
 
 const ACCENT = '#8b5cf6';
 
@@ -23,6 +24,11 @@ const S = {
 };
 
 const serviceOptions = ['Databricks AI & Lakehouse', 'AI & ML Engineering', 'AI Inference Engineering', 'Snowflake Consulting', 'Analytics & BI', 'Staff Augmentation', 'Not Sure Yet'];
+const needOptions = [
+  { value: 'Start a project', hint: 'We deliver the outcome', icon: '◈' },
+  { value: 'Hire engineers', hint: 'Senior engineers join your team', icon: '◎' },
+  { value: 'Not sure yet', hint: "Let's talk it through", icon: '◇' },
+];
 const timelineOptions = ['ASAP — urgent need', '1-3 months', '3-6 months', '6+ months', 'Just exploring'];
 
 const nextSteps = [
@@ -36,13 +42,17 @@ export default function Contact() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [focused, setFocused] = useState('');
-  const [form, setForm] = useState({ name: '', email: '', company: '', phone: '', service: '', timeline: '', message: '' });
+  const [form, setForm] = useState({ need: '', name: '', email: '', company: '', phone: '', service: '', timeline: '', message: '' });
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     gsap.fromTo(heroRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.2 });
     // Pre-select a service when linked as /contact?service=...
     const preset = new URLSearchParams(window.location.search).get('service');
-    if (preset && serviceOptions.includes(preset)) setForm(f => ({ ...f, service: preset }));
+    if (preset && serviceOptions.includes(preset)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- the URL is only readable after mount
+      setForm(f => ({ ...f, service: preset, need: preset === 'Staff Augmentation' ? 'Hire engineers' : 'Start a project' }));
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,7 +66,7 @@ export default function Contact() {
       });
       if (res.ok) {
         setStatus('success');
-        trackEvent('generate_lead', { service: form.service || 'unspecified', timeline: form.timeline || 'unspecified' });
+        trackEvent('generate_lead', { need: form.need || 'unspecified', service: form.service || 'unspecified', timeline: form.timeline || 'unspecified' });
         gsap.fromTo('.success-msg', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
       } else { setStatus('error'); }
     } catch { setStatus('error'); }
@@ -72,113 +82,135 @@ export default function Contact() {
       {/* Hero */}
       <section style={{ width: '100%', padding: '120px 0 80px' }}>
         <div style={S.container}>
-          <div ref={heroRef} style={{ opacity: 0, marginBottom: '80px' }}>
+          <div ref={heroRef} style={{ opacity: 0, marginBottom: 'clamp(40px, 7vw, 80px)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
               <div style={{ width: '32px', height: '1px', background: ACCENT }} />
               <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT }}>Get in Touch</span>
             </div>
-            <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 112px)', letterSpacing: '-0.04em', lineHeight: 0.93, color: '#111' }}>
-              Let's Build<br />
+            <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(34px, 8.6vw, 112px)', letterSpacing: '-0.04em', lineHeight: 0.93, color: '#111' }}>
+              Let&apos;s Build<br />
               <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>Something</span><br />
               <span style={{ color: ACCENT }}>Exceptional.</span>
             </h1>
           </div>
 
           {/* Split layout */}
-          <div className="rg-2 contact-grid" style={{ gap: '80px', alignItems: 'start' }}>
+          <div className="rg-2 contact-grid" style={{ gap: 'clamp(48px, 7vw, 80px)', alignItems: 'start' }}>
             {/* Form */}
             <div>
               {status === 'success' ? (
                 <div className="success-msg" style={{ padding: '80px 0', textAlign: 'center', opacity: 0 }}>
                   <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', color: 'white', fontSize: '1.5rem' }}>✓</div>
                   <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '24px', letterSpacing: '-0.03em', marginBottom: '12px' }}>Message Received</h3>
-                  <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', lineHeight: 1.6 }}>We'll be in touch within 24 hours.</p>
+                  <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', lineHeight: 1.6 }}>A senior engineer will reply within one business day.</p>
                   <a href="mailto:info@aureusglobalsystems.com" style={{ display: 'inline-block', marginTop: '24px', fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', textDecoration: 'none' }}>
                     Or email us directly →
                   </a>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <legend style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>What do you need? *</legend>
+                    <div className="need-options">
+                      {needOptions.map(o => (
+                        <button type="button" key={o.value} aria-pressed={form.need === o.value}
+                          className={`need-option${form.need === o.value ? ' selected' : ''}`}
+                          onClick={() => setForm({ ...form, need: o.value, service: o.value === 'Hire engineers' && !form.service ? 'Staff Augmentation' : form.service })}>
+                          <span className="need-icon">{o.icon}</span>
+                          <span><strong>{o.value}</strong><small>{o.hint}</small></span>
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
+
+                  <div className="form-row">
                     <div>
-                      <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Name *</label>
-                      <input style={inputStyle('name')} placeholder="Your name" value={form.name}
+                      <label htmlFor="f-name" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Name *</label>
+                      <input id="f-name" autoComplete="name" style={inputStyle('name')} placeholder="Your name" value={form.name}
                         onFocus={() => setFocused('name')} onBlur={() => setFocused('')}
                         onChange={e => setForm({ ...form, name: e.target.value })} required />
                     </div>
                     <div>
-                      <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Email *</label>
-                      <input type="email" style={inputStyle('email')} placeholder="work@company.com" value={form.email}
+                      <label htmlFor="f-email" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Work email *</label>
+                      <input id="f-email" type="email" autoComplete="email" inputMode="email" style={inputStyle('email')} placeholder="you@company.com" value={form.email}
                         onFocus={() => setFocused('email')} onBlur={() => setFocused('')}
-                        onChange={e => setForm({ ...form, email: e.target.value })} required />
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                    <div>
-                      <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Company</label>
-                      <input style={inputStyle('company')} placeholder="Company name" value={form.company}
-                        onFocus={() => setFocused('company')} onBlur={() => setFocused('')}
-                        onChange={e => setForm({ ...form, company: e.target.value })} />
-                    </div>
-                    <div>
-                      <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Phone</label>
-                      <input style={inputStyle('phone')} placeholder="+1 555 000 0000" value={form.phone}
-                        onFocus={() => setFocused('phone')} onBlur={() => setFocused('')}
-                        onChange={e => setForm({ ...form, phone: e.target.value })} />
+                        onChange={e => setForm({ ...form, email: e.target.value })} required suppressHydrationWarning />
                     </div>
                   </div>
 
                   <div>
-                    <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Service Interest</label>
-                    <select style={{ ...inputStyle('service'), appearance: 'none' }} value={form.service}
+                    <label htmlFor="f-service" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Area</label>
+                    <select id="f-service" style={{ ...inputStyle('service'), appearance: 'none' }} value={form.service}
                       onFocus={() => setFocused('service')} onBlur={() => setFocused('')}
                       onChange={e => setForm({ ...form, service: e.target.value })}>
-                      <option value="">Select a service...</option>
+                      <option value="">Select an area (optional)…</option>
                       {serviceOptions.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
 
                   <div>
-                    <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Timeline</label>
-                    <select style={{ ...inputStyle('timeline'), appearance: 'none' }} value={form.timeline}
-                      onFocus={() => setFocused('timeline')} onBlur={() => setFocused('')}
-                      onChange={e => setForm({ ...form, timeline: e.target.value })}>
-                      <option value="">When do you need this?</option>
-                      {timelineOptions.map(t => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Tell Us About Your Project *</label>
-                    <textarea style={{ ...inputStyle('message'), height: '128px', resize: 'none' as const }}
-                      placeholder="What are you trying to build or fix? What's broken today? What does success look like?"
+                    <label htmlFor="f-message" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Anything we should know?</label>
+                    <textarea id="f-message" style={{ ...inputStyle('message'), height: '108px', resize: 'none' as const }}
+                      placeholder="A line or two is plenty — what you're building, fixing or hiring for."
                       value={form.message}
                       onFocus={() => setFocused('message')} onBlur={() => setFocused('')}
-                      onChange={e => setForm({ ...form, message: e.target.value })} required />
+                      onChange={e => setForm({ ...form, message: e.target.value })} />
                   </div>
 
+                  <button type="button" className="form-more-toggle" aria-expanded={showMore} onClick={() => setShowMore(v => !v)}>
+                    {showMore ? '− Hide details' : '+ Add company, phone & timeline (optional)'}
+                  </button>
+
+                  {showMore && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      <div className="form-row">
+                        <div>
+                          <label htmlFor="f-company" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Company</label>
+                          <input id="f-company" autoComplete="organization" style={inputStyle('company')} placeholder="Company name" value={form.company}
+                            onFocus={() => setFocused('company')} onBlur={() => setFocused('')}
+                            onChange={e => setForm({ ...form, company: e.target.value })} />
+                        </div>
+                        <div>
+                          <label htmlFor="f-phone" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Phone / WhatsApp</label>
+                          <input id="f-phone" type="tel" autoComplete="tel" inputMode="tel" style={inputStyle('phone')} placeholder="+91 98765 43210" value={form.phone}
+                            onFocus={() => setFocused('phone')} onBlur={() => setFocused('')}
+                            onChange={e => setForm({ ...form, phone: e.target.value })} />
+                        </div>
+                      </div>
+                      <div>
+                        <label htmlFor="f-timeline" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>Timeline</label>
+                        <select id="f-timeline" style={{ ...inputStyle('timeline'), appearance: 'none' }} value={form.timeline}
+                          onFocus={() => setFocused('timeline')} onBlur={() => setFocused('')}
+                          onChange={e => setForm({ ...form, timeline: e.target.value })}>
+                          <option value="">When do you need this?</option>
+                          {timelineOptions.map(t => <option key={t} value={t}>{t}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                  )}
+
                   {status === 'error' && (
-                    <p style={{ fontFamily: 'Inter, sans-serif', color: '#ef4444', fontSize: '0.82rem' }}>
+                    <p role="alert" style={{ fontFamily: 'Inter, sans-serif', color: '#ef4444', fontSize: '0.82rem' }}>
                       Something went wrong. Email us at info@aureusglobalsystems.com
                     </p>
                   )}
 
-                  <button type="submit" disabled={status === 'submitting'} style={{
-                    padding: '16px', borderRadius: '12px', border: 'none',
-                    background: `linear-gradient(135deg, ${ACCENT}, #3366ff)`,
+                  <button type="submit" disabled={status === 'submitting' || !form.need} style={{
+                    padding: '17px', borderRadius: '12px', border: 'none',
+                    background: `linear-gradient(135deg, #ff3366, #ff6b35)`,
                     color: 'white', fontFamily: 'Space Mono, monospace',
-                    fontSize: '0.62rem', letterSpacing: '0.16em', textTransform: 'uppercase',
-                    cursor: 'pointer', opacity: status === 'submitting' ? 0.6 : 1, transition: 'opacity 0.2s',
+                    fontSize: '0.64rem', letterSpacing: '0.16em', textTransform: 'uppercase',
+                    cursor: form.need ? 'pointer' : 'not-allowed', opacity: status === 'submitting' || !form.need ? 0.55 : 1, transition: 'opacity 0.2s',
                   }}>
-                    {status === 'submitting' ? 'Sending...' : 'Send Message →'}
+                    {status === 'submitting' ? 'Sending…' : !form.need ? 'Choose what you need above' : 'Send — we reply within one business day →'}
                   </button>
 
-                  <p style={{ fontFamily: 'Inter, sans-serif', color: '#bbb', fontSize: '0.78rem', textAlign: 'center' }}>
-                    Or email:{' '}
-                    <a href="mailto:info@aureusglobalsystems.com" style={{ color: '#888', textDecoration: 'underline' }}>
-                      info@aureusglobalsystems.com
-                    </a>
+                  <p style={{ fontFamily: 'Inter, sans-serif', color: '#aaa', fontSize: '0.78rem', textAlign: 'center' }}>
+                    {BOOKING_URL ? (
+                      <>Prefer to talk? <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('book_call_click', { location: 'contact' })} style={{ color: '#111', textDecoration: 'underline' }}>Book a 30-min call</a> · </>
+                    ) : null}
+                    Or email{' '}
+                    <a href="mailto:info@aureusglobalsystems.com" style={{ color: '#888', textDecoration: 'underline' }}>info@aureusglobalsystems.com</a>
                   </p>
                 </form>
               )}

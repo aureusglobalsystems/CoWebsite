@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Loader from '@/components/home/Loader';
 import Hero from '@/components/home/Hero';
 import HardTruths from '@/components/home/HardTruths';
@@ -25,16 +25,6 @@ export default function HomeClient({ insights }: { insights: HomeInsight[] }) {
     window.dispatchEvent(new CustomEvent('agsLoaderDone'));
   };
 
-  // The intro plays once per browser session; repeat visits go straight to the content.
-  useEffect(() => {
-    let seen = false;
-    try { seen = sessionStorage.getItem(INTRO_KEY) === '1'; } catch { /* ignore */ }
-    if (seen) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- reading browser-only state after mount
-      setLoaded(true);
-      window.dispatchEvent(new CustomEvent('agsLoaderDone'));
-    }
-  }, []);
 
   return (
     <>

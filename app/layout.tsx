@@ -1,9 +1,10 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import LenisProvider from '@/components/providers/LenisProvider';
 import Nav from '@/components/layout/Nav';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/ui/ScrollToTop';
+import MobileCtaBar from '@/components/layout/MobileCtaBar';
 import { GoogleTagHead, GoogleTagBody } from '@/components/Analytics';
 import JsonLd from '@/components/seo/JsonLd';
 import { SITE_URL, SITE_NAME, GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION } from '@/lib/site';
@@ -36,6 +37,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#ffffff',
+};
+
 // Sitewide entity data — tells search engines and AI assistants who we are and what we do.
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -46,7 +54,8 @@ const orgJsonLd = {
       name: SITE_NAME,
       alternateName: ['Aureus', 'AGS', 'Aureus Global Systems LLP'],
       url: SITE_URL,
-      logo: `${SITE_URL}/icon.svg`,
+      logo: `${SITE_URL}/brand/ags-icon.svg`,
+      image: `${SITE_URL}/brand/ags-mark.svg`,
       email: 'info@aureusglobalsystems.com',
       description,
       address: { '@type': 'PostalAddress', addressCountry: 'IN' },
@@ -93,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main style={{ width: '100%', display: 'block' }}>{children}</main>
           <Footer />
           <ScrollToTop />
+          <MobileCtaBar />
         </LenisProvider>
       </body>
     </html>

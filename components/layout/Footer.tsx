@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 import { serviceNav } from '@/lib/services-nav';
+import AgsLogo from '@/components/brand/AgsLogo';
 
 const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/services', label: 'Services' },
+  { href: '/industries', label: 'Industries' },
   { href: '/case-studies', label: 'Case Studies' },
   { href: '/insights', label: 'Insights' },
   { href: '/assessment', label: 'Assessment' },
@@ -55,20 +57,11 @@ export default function Footer() {
         <div className="rg-footer">
           {/* Brand */}
           <div>
-            <span style={{
-              fontFamily: "'Dancing Script', cursive",
-              fontSize: '32px',
-              fontWeight: 700,
-              background: 'linear-gradient(90deg, #ff3366, #ff6b35)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              lineHeight: 1,
-              display: 'block',
-              marginBottom: '16px',
-            }}>Aureus</span>
+            <div style={{ marginBottom: '20px' }}>
+              <AgsLogo height={34} tone="white" withName idSuffix="footer" />
+            </div>
             <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem', lineHeight: 1.72, maxWidth: '280px' }}>
-              Leading data & AI company. We build the platforms that power tomorrow&apos;s decisions.
+              Data & AI engineering company. We build the platforms that power tomorrow&apos;s decisions.
             </p>
             <p style={{ ...LABEL, color: '#555', marginTop: '12px', display: 'block' }}>India — Global Delivery</p>
           </div>

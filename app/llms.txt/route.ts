@@ -7,6 +7,7 @@ import { services } from '@/lib/services';
 import { caseStudies } from '@/lib/case-studies';
 import { posts } from '@/lib/posts';
 import { INFERENCE_ANSWER } from '@/lib/inference-content';
+import { industries } from '@/lib/industries';
 
 export const dynamic = 'force-static';
 
@@ -26,6 +27,9 @@ Contact: info@aureusglobalsystems.com · ${SITE_URL}/contact
 
 ## Services
 ${svcLines.join('\n')}
+
+## Industries
+${industries.map((i) => `- [${i.name}](${SITE_URL}/industries/${i.slug}): ${i.answer}`).join('\n')}
 
 ## Case studies
 ${caseStudies.map((c) => `- [${c.title}](${SITE_URL}/case-studies/${c.slug}): ${c.tag}, ${c.industry}. ${c.outcomes.slice(0, 2).join('; ')}.`).join('\n')}
