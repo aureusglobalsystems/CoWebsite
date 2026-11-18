@@ -8,7 +8,9 @@ export const SITE_NAME = 'Aureus Global Systems';
 
 // Optional call-booking link (Calendly, Cal.com, HubSpot meetings…).
 // When set, "Book a call" buttons appear next to the contact CTAs.
-export const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || '';
+export const BOOKING_URL =
+  process.env.NEXT_PUBLIC_BOOKING_URL ||
+  'https://calendar.zoho.in/zc/view/slot-booking/0802123e6c1ed48dff4a541ee998a2780000cedb1f3c129ed60556e12f790c2a3fe76ab34d91c37af23091543690d1d584385c7b217bf5c77048dfab3b123ceb0079';
 
 // Google Tag Manager container (the site's Google tag). Override in Vercel if it changes;
 // set NEXT_PUBLIC_GTM_ID to "off" to disable.

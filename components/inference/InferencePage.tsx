@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 import LazyCanvas from '@/components/ui/LazyCanvas';
 import { RelatedInsights, type InsightItem } from '@/components/service/Sections';
 import { trackEvent } from '@/lib/analytics';
+import { BOOKING_URL } from '@/lib/site';
 
 const InferenceScene = dynamic(() => import('./InferenceScene'), { ssr: false });
 import { INFERENCE_ACCENT as ACCENT, INFERENCE_ANSWER, problems, offerings, steps, stack, tech, faqs } from '@/lib/inference-content';
@@ -335,8 +336,15 @@ export default function InferencePage({ insights = [] }: { insights?: InsightIte
             Tell us what you run today — models, traffic and spend. We&apos;ll come back with a self-hosting plan,
             a cost comparison and the quickest wins.
           </p>
-          <div className="reveal" style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="reveal" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '28px', flexWrap: 'wrap' }}>
             <MagneticButton href={CONTACT_HREF} style={S.ctaBtn}>Talk to an Inference Engineer</MagneticButton>
+            {BOOKING_URL && (
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"
+                onClick={() => trackEvent('book_call_click', { service: 'ai-inference-engineering' })}
+                style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'white', textDecoration: 'underline', textUnderlineOffset: '4px' }}>
+                Book a 30-min call ↗
+              </a>
+            )}
           </div>
         </div>
       </section>
