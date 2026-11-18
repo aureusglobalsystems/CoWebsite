@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META, clip } from '@/lib/seo-meta';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { posts, postBySlug } from '@/lib/posts';
@@ -18,8 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = postBySlug(slug);
   if (!post) return {};
   return {
-    title: `${post.title} | Aureus`,
-    description: post.description,
+    title: SEO_META[`/insights/${slug}`]?.title ?? `${post.title} | Aureus`,
+    description: clip(SEO_META[`/insights/${slug}`]?.description ?? post.description),
     keywords: post.tags,
     alternates: { canonical: `/insights/${slug}` },
     openGraph: {

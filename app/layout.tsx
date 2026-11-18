@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import './globals.css';
 import LenisProvider from '@/components/providers/LenisProvider';
 import Nav from '@/components/layout/Nav';
@@ -17,8 +18,8 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Aureus Global Systems — Data & AI Engineering Company | Databricks, Snowflake, AI',
-  description,
+  title: SEO_META['/'].title,
+  description: SEO_META['/'].description,
   applicationName: SITE_NAME,
   keywords: [
     'data and AI company', 'data engineering company', 'AI engineering services', 'data engineering consulting',

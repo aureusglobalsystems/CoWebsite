@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 
 export const metadata: Metadata = {
-  title: 'Free Data & AI Readiness Assessment — Score Your Data Platform',
+  title: SEO_META['/assessment'].title,
   description: 'Take the free data & AI readiness assessment from Aureus Global Systems. Score your data platform, governance and AI maturity and get practical next steps.',
   alternates: { canonical: '/assessment' },
-  openGraph: { title: 'Free Data & AI Readiness Assessment — Score Your Data Platform', description: 'Take the free data & AI readiness assessment from Aureus Global Systems. Score your data platform, governance and AI maturity and get practical next steps.', url: '/assessment', type: 'website' },
+  openGraph: { title: 'Free Data & AI Readiness Assessment — Score Your Data Platform', description: 'Take the free data & AI readiness assessment from Aureus Global Systems. Score your data platform, governance and AI maturity and get practical next steps.', url: '/assessment', type: 'website', images: [{ url: '/opengraph-image', width: 1200, height: 630 }] },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

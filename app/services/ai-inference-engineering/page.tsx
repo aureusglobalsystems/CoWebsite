@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import InferencePage from '@/components/inference/InferencePage';
 import { faqs, offerings, INFERENCE_PATH, INFERENCE_ANSWER } from '@/lib/inference-content';
 import { posts } from '@/lib/posts';
@@ -9,8 +10,8 @@ const description =
   'AI inference engineering consultancy. We self-host open-source LLMs (Llama, Mistral, Qwen, DeepSeek) on vLLM, TensorRT-LLM and Kubernetes in your cloud, and cut GPU inference costs with quantization, batching and autoscaling.';
 
 export const metadata: Metadata = {
-  title: `${title} | Aureus`,
-  description,
+  title: SEO_META[INFERENCE_PATH].title,
+  description: SEO_META[INFERENCE_PATH].description,
   keywords: [
     'AI inference engineering', 'inference engineering services', 'LLM inference optimization',
     'self-host open source LLM', 'self-hosted LLM consulting', 'reduce GPU inference costs',

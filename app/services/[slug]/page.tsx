@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import { notFound } from 'next/navigation';
 import ServicePage from '@/components/service/ServicePage';
 import { services, serviceContentBySlug } from '@/lib/services';
@@ -21,8 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!svc) return {};
   const path = `/services/${slug}`;
   return {
-    title: `${svc.seo.title} | Aureus`,
-    description: svc.seo.description,
+    title: SEO_META[path]?.title ?? `${svc.seo.title} | Aureus`,
+    description: SEO_META[path]?.description ?? svc.seo.description,
     keywords: svc.seo.keywords,
     alternates: { canonical: path },
     openGraph: { title: svc.seo.title, description: svc.seo.description, url: path, siteName: SITE_NAME, type: 'website' },

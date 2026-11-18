@@ -1,15 +1,16 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import Link from 'next/link';
 import { industries } from '@/lib/industries';
 import { SITE_URL } from '@/lib/site';
 import JsonLd from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Industries — Data & AI for Banking, Retail, Healthcare & Manufacturing | Aureus',
+  title: SEO_META['/industries'].title,
   description:
     'Data & AI engineering for banking and financial services, retail and e-commerce, healthcare and life sciences, and manufacturing — projects or senior engineers.',
   alternates: { canonical: '/industries' },
-  openGraph: { title: 'Industries we serve — Aureus Global Systems', url: '/industries', type: 'website' },
+  openGraph: { title: 'Industries we serve — Aureus Global Systems', url: '/industries', type: 'website', images: [{ url: '/opengraph-image', width: 1200, height: 630 }] },
 };
 
 export default function IndustriesPage() {

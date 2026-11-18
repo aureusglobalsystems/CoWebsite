@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import Link from 'next/link';
 import CostCalculator from '@/components/tools/CostCalculator';
 import { Faq } from '@/components/service/Sections';
@@ -14,8 +15,8 @@ const DESCRIPTION =
 const ACCENT = '#3366ff';
 
 export const metadata: Metadata = {
-  title: `${TITLE} | Aureus`,
-  description: DESCRIPTION,
+  title: SEO_META[CALC_PATH].title,
+  description: SEO_META[CALC_PATH].description,
   keywords: [
     'LLM cost calculator', 'self-hosted LLM cost', 'AI inference cost', 'OpenAI API cost vs self hosting',
     'GPU cost calculator LLM', 'open source LLM hosting cost', 'vLLM cost', 'reduce LLM API costs',

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import Link from 'next/link';
 import { posts } from '@/lib/posts';
 import { serviceBySlug } from '@/lib/services-nav';
@@ -6,11 +7,11 @@ import { SITE_URL } from '@/lib/site';
 import JsonLd from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
-  title: 'Insights — Data Engineering, AI & LLM Inference Guides | Aureus',
+  title: SEO_META['/insights'].title,
   description:
     'Practical guides on data engineering, Databricks, Snowflake, AI/ML and LLM inference from the engineers at Aureus Global Systems. Costs, trade-offs and how-tos.',
   alternates: { canonical: '/insights' },
-  openGraph: { title: 'Insights from Aureus Global Systems', url: '/insights', type: 'website' },
+  openGraph: { title: 'Insights from Aureus Global Systems', url: '/insights', type: 'website', images: [{ url: '/opengraph-image', width: 1200, height: 630 }] },
 };
 
 const fmt = (d: string) => new Date(d + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });

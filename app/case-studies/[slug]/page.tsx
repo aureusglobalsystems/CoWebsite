@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META, clip } from '@/lib/seo-meta';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { caseStudies, caseStudyBySlug } from '@/lib/case-studies';
@@ -16,10 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const cs = caseStudyBySlug(slug);
   if (!cs) return {};
-  const description = `${cs.tag} case study (${cs.industry}): ${cs.outcomes.slice(0, 2).join('; ')}. How Aureus Global Systems delivered it in ${cs.duration}.`.slice(0, 160);
+  const description = `${cs.tag} case study (${cs.industry}): ${cs.outcomes.slice(0, 2).join('; ')}. How Aureus Global Systems delivered it in ${cs.duration}.`;
+  const path = `/case-studies/${slug}`;
   return {
-    title: `${cs.title} — ${cs.tag} Case Study | Aureus`,
-    description,
+    title: SEO_META[path]?.title ?? `${cs.title} | Aureus`,
+    description: clip(description),
     alternates: { canonical: `/case-studies/${slug}` },
     openGraph: { title: cs.title, description, url: `/case-studies/${slug}`, siteName: SITE_NAME, type: 'article' },
   };

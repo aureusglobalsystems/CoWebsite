@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SEO_META } from '@/lib/seo-meta';
 import { notFound } from 'next/navigation';
 import IndustryPage from '@/components/industry/IndustryPage';
 import JsonLd from '@/components/seo/JsonLd';
@@ -27,8 +28,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!ind) return {};
   const path = `/industries/${slug}`;
   return {
-    title: `${ind.seo.title} | Aureus`,
-    description: ind.seo.description,
+    title: SEO_META[path]?.title ?? `${ind.seo.title} | Aureus`,
+    description: SEO_META[path]?.description ?? ind.seo.description,
     keywords: ind.seo.keywords,
     alternates: { canonical: path },
     openGraph: { title: ind.seo.title, description: ind.seo.description, url: path, siteName: SITE_NAME, type: 'website' },
