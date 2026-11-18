@@ -8,7 +8,9 @@ export type PostBlock =
   | { type: 'ol'; items: string[] }
   | { type: 'callout'; text: string }
   /** simple comparison table; first row is the header */
-  | { type: 'table'; rows: string[][] };
+  | { type: 'table'; rows: string[][] }
+  /** highlighted card linking to an internal page (tool, service) */
+  | { type: 'link'; text: string; label: string; href: string };
 
 export type Post = {
   slug: string;

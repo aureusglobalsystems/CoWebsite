@@ -115,6 +115,10 @@ export default function Page() {
             These are conservative planning numbers, not a quote. Throughput on your own prompts can be higher or lower —
             that is what an <Link href="/services/ai-inference-engineering" style={{ color: ACCENT }}>inference audit</Link> measures before you commit.
           </p>
+          <p style={{ ...body, marginTop: '12px' }}>
+            Planning a move? Read our step-by-step{' '}
+            <Link href="/insights/migrate-openai-to-open-source-llm-playbook" style={{ color: ACCENT }}>playbook for migrating from OpenAI APIs to open-source LLMs</Link>.
+          </p>
         </div>
       </section>
 

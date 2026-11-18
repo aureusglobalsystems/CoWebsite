@@ -1,5 +1,6 @@
 // Insights articles. Sorted newest first.
 import type { Post } from '@/lib/post-types';
+import { openaiToOpenSourcePlaybook } from '@/lib/post-openai-playbook';
 
 const selfHostingVsApi: Post = {
   slug: 'self-hosting-llms-vs-api-cost',
@@ -458,7 +459,7 @@ const databricksVsSnowflake: Post = {
   ],
 };
 
-export const posts: Post[] = [selfHostingVsApi, inferenceEngines, databricksVsSnowflake].sort((a, b) =>
+export const posts: Post[] = [openaiToOpenSourcePlaybook, selfHostingVsApi, inferenceEngines, databricksVsSnowflake].sort((a, b) =>
   b.date.localeCompare(a.date),
 );
 

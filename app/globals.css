@@ -864,3 +864,5 @@ html.lenis body {
   .calc-mobile-pct { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb; text-align: right; }
 }
 @media (max-width: 520px) { .calc-step { font-size: 1rem; } }
+.article-link-card { display: flex; flex-direction: column; gap: 10px; }
+.article-link-card a { font-family: 'Inter', sans-serif; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }

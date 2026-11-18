@@ -40,6 +40,12 @@ function Block({ b, accent }: { b: PostBlock; accent: string }) {
     case 'ul': return <ul className="article-list">{b.items.map((i) => <li key={i}>{i}</li>)}</ul>;
     case 'ol': return <ol className="article-list">{b.items.map((i) => <li key={i}>{i}</li>)}</ol>;
     case 'callout': return <aside className="article-callout" style={{ borderColor: accent, background: accent + '0d' }}>{b.text}</aside>;
+    case 'link': return (
+      <aside className="article-callout article-link-card" style={{ borderColor: accent, background: accent + '0d' }}>
+        <span>{b.text}</span>
+        <Link href={b.href} style={{ color: accent }}>{b.label} →</Link>
+      </aside>
+    );
     case 'table': {
       const [head, ...rows] = b.rows;
       return (

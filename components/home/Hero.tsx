@@ -103,9 +103,9 @@ export default function Hero() {
         <div>
           <Link
             ref={badgeRef}
-            href="/services/ai-inference-engineering"
+            href="/tools/ai-inference-cost-calculator"
             className="hero-badge"
-            onClick={() => trackEvent('cta_click', { location: 'home_hero_badge' })}
+            onClick={() => trackEvent('calculator_link_click', { location: 'home_hero_badge' })}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '10px',
               padding: '7px 14px 7px 10px', marginBottom: '28px',
@@ -121,7 +121,7 @@ export default function Hero() {
             <span className="label" style={{ color: '#3366ff', fontWeight: 700 }}>New</span>
             <span style={{ width: '1px', height: '12px', background: '#3366ff33' }} />
             <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.8rem', color: '#111', fontWeight: 500 }}>
-              AI Inference Engineering<span className="hide-mobile"> — cut GPU costs</span>
+              AI inference cost calculator<span className="hide-mobile"> — API vs self-hosted</span>
             </span>
             <span className="hero-badge-arrow" style={{ color: '#3366ff', fontSize: '0.85rem' }}>→</span>
           </Link>
