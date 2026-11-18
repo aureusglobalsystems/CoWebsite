@@ -8,7 +8,7 @@ import { trackEvent } from '@/lib/analytics';
 /**
  * Phone-only bar pinned to the bottom of the screen once the visitor scrolls
  * past the first screen, so "Start a project" is always one tap away.
- * Hidden on the contact page (they're already there).
+ * Hidden on the contact page (they're already there) and on tools pages (they have their own bar).
  */
 export default function MobileCtaBar() {
   const pathname = usePathname();
@@ -26,7 +26,8 @@ export default function MobileCtaBar() {
     return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
   }, [pathname]);
 
-  if (pathname.startsWith('/contact')) return null;
+  // The calculator has its own sticky result bar on mobile.
+  if (pathname.startsWith('/contact') || pathname.startsWith('/tools/')) return null;
 
   return (
     <div className={`mobile-cta-bar${show ? ' show' : ''}`} aria-hidden={!show}>

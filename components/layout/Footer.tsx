@@ -98,6 +98,7 @@ export default function Footer() {
               {serviceNav.map((svc) => (
                 <Link key={svc.slug} href={svc.href} className="footer-link">{svc.title}</Link>
               ))}
+              <Link href="/tools/ai-inference-cost-calculator" className="footer-link">Inference cost calculator</Link>
             </nav>
           </div>
 

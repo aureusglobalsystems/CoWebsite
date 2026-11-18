@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('', 1, 'weekly'),
     page('/services', 0.9),
     ...serviceNav.map((s) => page(s.href, 0.9)),
+    page('/tools/ai-inference-cost-calculator', 0.8),
     page('/industries', 0.8),
     ...industries.map((i) => page(`/industries/${i.slug}`, 0.8)),
     page('/case-studies', 0.8),

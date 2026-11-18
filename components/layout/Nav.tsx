@@ -159,6 +159,7 @@ export default function Nav() {
                     </div>
                     <div className="nav-dropdown-foot">
                       <Link href="/services">All services overview →</Link>
+                      <Link href="/tools/ai-inference-cost-calculator">Inference cost calculator →</Link>
                       <Link href="/contact?service=Staff%20Augmentation">Hire engineers →</Link>
                     </div>
                   </div>

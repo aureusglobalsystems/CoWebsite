@@ -124,10 +124,10 @@ export default function InferencePage({ insights = [] }: { insights?: InsightIte
               fontFamily: 'Space Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.16em',
               textTransform: 'uppercase', color: '#555', textDecoration: 'underline', textUnderlineOffset: '4px',
             }}>Or hire inference engineers →</Link>
-            <a href="#what-we-do" style={{
+            <Link href="/tools/ai-inference-cost-calculator" onClick={() => trackEvent('calculator_link_click', { location: 'inference_hero' })} style={{
               fontFamily: 'Space Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.16em',
-              textTransform: 'uppercase', color: '#888', textDecoration: 'underline', textUnderlineOffset: '4px',
-            }}>What We Do</a>
+              textTransform: 'uppercase', color: ACCENT, textDecoration: 'underline', textUnderlineOffset: '4px',
+            }}>Estimate your savings →</Link>
           </div>
         </div>
       </section>

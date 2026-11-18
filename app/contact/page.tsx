@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { trackEvent } from '@/lib/analytics';
+import { readFirstTouch } from '@/components/FirstTouch';
 import { BOOKING_URL } from '@/lib/site';
 
 const ACCENT = '#8b5cf6';
@@ -24,6 +25,15 @@ const S = {
 };
 
 const serviceOptions = ['Databricks AI & Lakehouse', 'AI & ML Engineering', 'AI Inference Engineering', 'Snowflake Consulting', 'Analytics & BI', 'Staff Augmentation', 'Not Sure Yet'];
+const heardOptions = [
+  'Google search',
+  'ChatGPT / AI assistant',
+  'LinkedIn',
+  'Referral / word of mouth',
+  'Event or community',
+  'Other',
+];
+
 const needOptions = [
   { value: 'Start a project', hint: 'We deliver the outcome', icon: '◈' },
   { value: 'Hire engineers', hint: 'Senior engineers join your team', icon: '◎' },
@@ -42,7 +52,7 @@ export default function Contact() {
   const heroRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [focused, setFocused] = useState('');
-  const [form, setForm] = useState({ need: '', name: '', email: '', company: '', phone: '', service: '', timeline: '', message: '' });
+  const [form, setForm] = useState({ need: '', name: '', email: '', company: '', phone: '', service: '', timeline: '', message: '', heard: '' });
   const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
@@ -62,11 +72,11 @@ export default function Contact() {
       const res = await fetch('https://formspree.io/f/xqeyppdp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, ...readFirstTouch() }),
       });
       if (res.ok) {
         setStatus('success');
-        trackEvent('generate_lead', { need: form.need || 'unspecified', service: form.service || 'unspecified', timeline: form.timeline || 'unspecified' });
+        trackEvent('generate_lead', { need: form.need || 'unspecified', service: form.service || 'unspecified', timeline: form.timeline || 'unspecified', heard: form.heard || 'unspecified' });
         gsap.fromTo('.success-msg', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
       } else { setStatus('error'); }
     } catch { setStatus('error'); }
@@ -155,6 +165,16 @@ export default function Contact() {
                       value={form.message}
                       onFocus={() => setFocused('message')} onBlur={() => setFocused('')}
                       onChange={e => setForm({ ...form, message: e.target.value })} />
+                  </div>
+
+                  <div>
+                    <label htmlFor="f-heard" style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' }}>How did you hear about us?</label>
+                    <select id="f-heard" style={{ ...inputStyle('heard'), appearance: 'none' }} value={form.heard}
+                      onFocus={() => setFocused('heard')} onBlur={() => setFocused('')}
+                      onChange={e => setForm({ ...form, heard: e.target.value })}>
+                      <option value="">Select one (optional)…</option>
+                      {heardOptions.map(h => <option key={h} value={h}>{h}</option>)}
+                    </select>
                   </div>
 
                   <button type="button" className="form-more-toggle" aria-expanded={showMore} onClick={() => setShowMore(v => !v)}>

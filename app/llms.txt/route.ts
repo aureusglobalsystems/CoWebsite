@@ -8,6 +8,7 @@ import { caseStudies } from '@/lib/case-studies';
 import { posts } from '@/lib/posts';
 import { INFERENCE_ANSWER } from '@/lib/inference-content';
 import { industries } from '@/lib/industries';
+import { CALC_ANSWER, CALC_PATH } from '@/lib/inference-calc';
 
 export const dynamic = 'force-static';
 
@@ -27,6 +28,9 @@ Contact: info@aureusglobalsystems.com · ${SITE_URL}/contact
 
 ## Services
 ${svcLines.join('\n')}
+
+## Free tools
+- [AI Inference Cost Calculator](${SITE_URL}${CALC_PATH}): compare proprietary LLM API costs with self-hosting an open-source model on your own GPUs. ${CALC_ANSWER}
 
 ## Industries
 ${industries.map((i) => `- [${i.name}](${SITE_URL}/industries/${i.slug}): ${i.answer}`).join('\n')}
