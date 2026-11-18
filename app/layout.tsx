@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/ui/ScrollToTop';
 import MobileCtaBar from '@/components/layout/MobileCtaBar';
 import { GoogleTagHead, GoogleTagBody } from '@/components/Analytics';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
 import JsonLd from '@/components/seo/JsonLd';
 import { SITE_URL, SITE_NAME, GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION } from '@/lib/site';
 import { serviceNav } from '@/lib/services-nav';
@@ -104,6 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ScrollToTop />
           <MobileCtaBar />
         </LenisProvider>
+        <VercelAnalytics />
       </body>
     </html>
   );
