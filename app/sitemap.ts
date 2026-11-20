@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...posts.map((p) => page(`/insights/${p.slug}`, 0.7, 'monthly', new Date(p.date))),
     page('/about', 0.6),
     page('/assessment', 0.6),
+    page('/careers', 0.6),
     page('/contact', 0.7),
   ];
 }

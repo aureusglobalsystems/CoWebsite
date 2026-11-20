@@ -866,3 +866,13 @@ html.lenis body {
 @media (max-width: 520px) { .calc-step { font-size: 1rem; } }
 .article-link-card { display: flex; flex-direction: column; gap: 10px; }
 .article-link-card a { font-family: 'Inter', sans-serif; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+
+/* Careers / talent network */
+.talent-levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 760px) { .talent-levels { grid-template-columns: 1fr 1fr; } }
+.careers-tracks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.careers-track { background: white; border: 1px solid #ececec; border-radius: 16px; padding: 28px; }
+.careers-levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.careers-level { border-top: 2px solid #00a884; padding-top: 16px; }
+@media (max-width: 900px) { .careers-tracks { grid-template-columns: 1fr; } .careers-levels { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .careers-levels { grid-template-columns: 1fr; } }

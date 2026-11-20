@@ -27,7 +27,7 @@ export default function MobileCtaBar() {
   }, [pathname]);
 
   // The calculator has its own sticky result bar on mobile.
-  if (pathname.startsWith('/contact') || pathname.startsWith('/tools/')) return null;
+  if (pathname.startsWith('/contact') || pathname.startsWith('/tools/') || pathname.startsWith('/careers')) return null;
 
   return (
     <div className={`mobile-cta-bar${show ? ' show' : ''}`} aria-hidden={!show}>

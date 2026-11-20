@@ -45,6 +45,7 @@ ${posts.map((p) => `- [${p.title}](${SITE_URL}/insights/${p.slug}): ${p.summary}
 - [About](${SITE_URL}/about)
 - [All services](${SITE_URL}/services)
 - [Free data & AI readiness assessment](${SITE_URL}/assessment)
+- [Careers: remote Databricks data engineer network (Azure, AWS, GCP)](${SITE_URL}/careers)
 - [Contact / start a project / hire engineers](${SITE_URL}/contact)
 `;
 
