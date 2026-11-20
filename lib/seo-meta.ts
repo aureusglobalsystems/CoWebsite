@@ -58,9 +58,9 @@ export const SEO_META: Record<string, SeoMeta> = {
   '/insights/databricks-vs-snowflake-2026': { title: 'Databricks vs Snowflake in 2026: How to Choose' },
   '/assessment': { title: 'Free Data & AI Readiness Assessment | Aureus' },
   '/careers': {
-    title: 'Remote Databricks Data Engineer Roles | Aureus',
+    title: 'Remote Data Engineer & Databricks Roles | Aureus',
     description:
-      'Join the AGS network for remote Databricks contract work on Azure, AWS and GCP: Data Engineer, Senior, Lead and Solutions Architect roles.',
+      'Remote contract roles for data and AI engineers: Databricks on Azure, AWS and GCP, plus Snowflake, BI and AI/ML. Join the AGS consultant network.',
   },
   '/contact': { title: 'Contact Us: Data & AI Projects or Hire Engineers' },
 };

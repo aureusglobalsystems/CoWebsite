@@ -45,7 +45,7 @@ const nextSteps = [
   { number: '01', title: 'We Review', body: 'We review your message and match you with the right team member — usually within 24 hours.' },
   { number: '02', title: 'Discovery Call', body: 'A 45-minute no-commitment call to understand your situation, goals, and what success looks like.' },
   { number: '03', title: 'Proposal', body: 'A clear, detailed proposal — scope, approach, timeline, and pricing. No surprises.' },
-  { number: '04', title: 'We Build', body: 'We kick off, embedded in your team or leading the project. Delivery starts immediately.' },
+  { number: '04', title: 'We Build', body: 'We kick off, embedded in your team or leading the project. Delivery starts on the agreed date.' },
 ];
 
 export default function Contact() {
@@ -222,8 +222,12 @@ export default function Contact() {
                     fontSize: '0.64rem', letterSpacing: '0.16em', textTransform: 'uppercase',
                     cursor: form.need ? 'pointer' : 'not-allowed', opacity: status === 'submitting' || !form.need ? 0.55 : 1, transition: 'opacity 0.2s',
                   }}>
-                    {status === 'submitting' ? 'Sending…' : !form.need ? 'Choose what you need above' : 'Send — we reply within one business day →'}
+                    {status === 'submitting' ? 'Sending…' : !form.need ? 'Choose what you need above' : 'Send — we aim to reply within one business day →'}
                   </button>
+
+                  <p style={{ fontFamily: 'Inter, sans-serif', color: '#aaa', fontSize: '0.74rem', textAlign: 'center', lineHeight: 1.6 }}>
+                    By sending, you agree to our <a href="/privacy" style={{ color: '#888', textDecoration: 'underline' }}>privacy policy</a>. We use your details only to respond to your enquiry.
+                  </p>
 
                   <p style={{ fontFamily: 'Inter, sans-serif', color: '#aaa', fontSize: '0.78rem', textAlign: 'center' }}>
                     {BOOKING_URL ? (
@@ -254,7 +258,7 @@ export default function Contact() {
               <div style={{ border: '1px solid #f0f0f0', borderRadius: '16px', padding: '28px' }}>
                 <p style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', marginBottom: '12px' }}>Location</p>
                 <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '15px', letterSpacing: '-0.02em', color: '#111' }}>India — Global Delivery</p>
-                <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem', marginTop: '4px' }}>Available across all time zones</p>
+                <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.82rem', marginTop: '4px' }}>Overlap hours agreed for your time zone</p>
                 <div style={{ width: '48px', height: '1px', background: ACCENT, margin: '20px 0' }} />
                 <p style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', marginBottom: '8px' }}>Contact</p>
                 <a href="mailto:info@aureusglobalsystems.com" style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.9rem', color: '#111', textDecoration: 'none', transition: 'color 0.2s' }}>

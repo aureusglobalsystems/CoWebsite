@@ -9,8 +9,6 @@ import EngageModels from '@/components/home/EngageModels';
 import LeadMagnet from '@/components/home/LeadMagnet';
 import StickyProcess from '@/components/home/StickyProcess';
 import CaseStudies from '@/components/home/CaseStudies';
-import Testimonials from '@/components/home/Testimonials';
-import Stats from '@/components/home/Stats';
 import HomeFaq, { type HomeInsight } from '@/components/home/HomeFaq';
 import Signature from '@/components/home/Signature';
 
@@ -37,8 +35,6 @@ export default function HomeClient({ insights }: { insights: HomeInsight[] }) {
         <LeadMagnet />
         <StickyProcess />
         <CaseStudies />
-        <Testimonials />
-        <Stats />
         <HomeFaq insights={insights} />
         <Signature />
       </div>

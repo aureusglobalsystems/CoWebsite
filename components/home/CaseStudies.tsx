@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import { CASE_STUDY_NOTE } from '@/lib/case-studies';
 import TiltCard from '@/components/ui/TiltCard';
 
 const caseStudies = [
@@ -28,7 +29,7 @@ const caseStudies = [
     title: 'One Source of Truth for 120 Hospitals',
     challenge: '120 hospitals each using different KPIs and Excel reports. C-suite could not make data-driven decisions.',
     solution: 'Built a unified semantic layer on Azure Synapse, with Power BI Premium reports rolling up to executive dashboards.',
-    outcomes: ['Single dashboard for 5,000 users', '3-day to 3-hour reporting cycle', '100% data trust achieved'],
+    outcomes: ['Single dashboard for 5,000 users', '3-day to 3-hour reporting cycle', 'Standardised KPI definitions'],
     tech: ['Azure Synapse', 'Power BI', 'dbt', 'Azure Data Factory'],
   },
 ];
@@ -56,7 +57,7 @@ export default function CaseStudies() {
             Case Studies
           </p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 52px)', letterSpacing: '-0.04em', lineHeight: 1.0, color: '#111' }}>
-            Proof, Not Promises.
+            How We Work, In Practice.
           </h2>
         </div>
 
@@ -135,6 +136,7 @@ export default function CaseStudies() {
             See all case studies <span>→</span>
           </a>
         </div>
+        <p style={{ fontFamily: 'Inter, sans-serif', color: '#999', fontSize: '0.74rem', lineHeight: 1.6, marginTop: '24px', maxWidth: '720px' }}>{CASE_STUDY_NOTE}</p>
       </div>
     </section>
   );

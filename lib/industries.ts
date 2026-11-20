@@ -120,7 +120,7 @@ export const industries: IndustryContent[] = [
       },
       {
         q: 'Can we start with a project or hire AGS engineers into our team?',
-        a: 'Both. You can hand us a defined outcome, such as a lakehouse migration or a regulatory reporting pipeline, as a managed project, or embed senior AGS data and ML engineers into your own team to work in your tools and sprints. Many clients start with one model and move to the other later.',
+        a: 'Both. You can hand us a defined outcome, such as a lakehouse migration or a regulatory reporting pipeline, as a managed project, or embed senior AGS data and ML engineers into your own team to work in your tools and sprints. You can start with one model and move to the other later.',
       },
     ],
   },
@@ -229,7 +229,7 @@ export const industries: IndustryContent[] = [
       },
       {
         q: 'Can we start with a project or hire AGS engineers into our team?',
-        a: 'Both. You can give us a defined outcome, such as a customer 360 build or a forecasting model, as a managed project, or embed senior AGS data and ML engineers in your own team for a replatform or peak season. Many clients start with one model and switch later.',
+        a: 'Both. You can give us a defined outcome, such as a customer 360 build or a forecasting model, as a managed project, or embed senior AGS data and ML engineers in your own team for a replatform or peak season. You can start with one model and switch later.',
       },
     ],
   },
@@ -254,7 +254,7 @@ export const industries: IndustryContent[] = [
         'HL7 FHIR data integration',
         'clinical data analytics',
         'life sciences data platform',
-        'HIPAA compliant data platform',
+        'HIPAA-aligned healthcare data platform',
         'healthcare lakehouse',
         'real-world evidence data',
       ],
@@ -346,7 +346,7 @@ export const industries: IndustryContent[] = [
       },
       {
         q: 'Can we start with a project or hire AGS engineers into our team?',
-        a: 'Both. You can hand us a defined outcome, such as a FHIR integration or an analytics platform, as a managed project, or embed senior AGS data and ML engineers directly in your team. Many clients start with one model and move to the other as the work grows.',
+        a: 'Both. You can hand us a defined outcome, such as a FHIR integration or an analytics platform, as a managed project, or embed senior AGS data and ML engineers directly in your team. You can start with one model and move to the other as the work grows.',
       },
     ],
   },
@@ -462,7 +462,7 @@ export const industries: IndustryContent[] = [
       },
       {
         q: 'Can we start with a project or hire AGS engineers into our team?',
-        a: 'Both. You can hand us a defined outcome, such as a predictive maintenance pilot on one line or an IoT data platform, as a managed project, or embed senior AGS data and ML engineers in your team. Many clients start with a single plant and scale from there.',
+        a: 'Both. You can hand us a defined outcome, such as a predictive maintenance pilot on one line or an IoT data platform, as a managed project, or embed senior AGS data and ML engineers in your team. You can start with a single plant and scale from there.',
       },
     ],
   },

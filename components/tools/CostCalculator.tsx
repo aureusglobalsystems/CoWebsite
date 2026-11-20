@@ -147,7 +147,7 @@ export default function CostCalculator() {
               <NumberInput id="c-pout" prefix="$" value={v.apiOut} step={0.1} onChange={(n) => { setTier(''); set('apiOut', n); }} />
             </Field>
           </div>
-          <p className="calc-note">Tier prices are illustrative. Enter the rates on your current invoice for a real comparison.</p>
+          <p className="calc-note">Tier prices are illustrative and indicative as of November 2026. Enter the rates on your current invoice for a real comparison. Results are planning estimates, not a quote or financial advice.</p>
         </fieldset>
 
         <fieldset className="calc-group">

@@ -186,7 +186,7 @@ export default function Hero() {
 
             <ul className="hero-trust">
               <li><span>✓</span>Senior engineers only</li>
-              <li><span>✓</span>Reply within one business day</li>
+              <li><span>✓</span>We aim to reply within one business day</li>
               <li><span>✓</span>India-based · global delivery</li>
             </ul>
           </div>

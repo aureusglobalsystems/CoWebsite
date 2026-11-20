@@ -64,12 +64,12 @@ const S = {
 const beliefs = [
   { quote: 'Production is the only measure that matters.', body: "We don't celebrate green tests on staging. We celebrate data that moves decisions in production." },
   { quote: 'Complexity is a failure of clarity.', body: "The best architecture is the simplest one that meets your scale. We resist complexity for its own sake." },
-  { quote: 'We inherit your outcomes, not just your tickets.', body: "When we build your platform, we're accountable for its performance — long after deployment." },
+  { quote: 'We inherit your outcomes, not just your tickets.', body: "We design your platform to perform in production, and we stand behind the work we agree to deliver." },
 ];
 
 const expertise = [
-  { icon: '◈', title: 'Databricks & Delta Lake', body: "Medallion architecture, Unity Catalog, MLflow, AutoML. We've built Lakehouse platforms processing petabytes daily." },
-  { icon: '❄', title: 'Snowflake', body: "Data Vault 2.0, Snowpark, zero-copy cloning, cost optimization. From startup to enterprise — we've scaled it all." },
+  { icon: '◈', title: 'Databricks & Delta Lake', body: "Medallion architecture, Unity Catalog, MLflow, AutoML. Lakehouse platforms designed to scale with your data." },
+  { icon: '❄', title: 'Snowflake', body: "Data Vault 2.0, Snowpark, zero-copy cloning, cost optimization. Built for startups and enterprises alike." },
   { icon: '☁', title: 'Cloud Data Platforms', body: "AWS, Azure, and GCP native services. Data Factory, Glue, BigQuery — multi-cloud by design." },
   { icon: '◉', title: 'Analytics & BI', body: "Semantic layers, Power BI Premium, Tableau, Looker. We build dashboards that people actually open every morning." },
 ];
@@ -77,7 +77,7 @@ const expertise = [
 const whyUs = [
   { title: 'Outcome-Driven', body: 'We measure success by business impact, not deliverables. KPIs first, architecture second.' },
   { title: 'Production-First', body: 'Every decision we make is through the lens of "will this hold in production at 3am?"' },
-  { title: 'Enterprise Standards', body: 'SOC2-ready data ops, full documentation, and handoffs that stick.' },
+  { title: 'Enterprise Standards', body: 'Security-conscious delivery, full documentation, and handoffs that stick.' },
   { title: 'Transparent Partners', body: "Weekly stakeholder updates, no black boxes, and we say no when something won't work." },
 ];
 
@@ -120,9 +120,9 @@ export default function About() {
               <div>
                 <p style={S.label()}>Who We Are</p>
                 <p style={S.body}>
-                  Aureus Global Systems is a leading data & AI company founded in 2024.
-                  We are a team of senior data engineers, AI architects, and analytics specialists who have
-                  collectively delivered over 50 data and AI platforms across retail, fintech, healthcare,
+                  Aureus Global Systems is a data & AI engineering company founded in 2024.
+                  We are a team of senior data engineers, AI architects, and analytics specialists whose
+                  engineers bring hands-on experience across retail, fintech, healthcare
                   and manufacturing.
                 </p>
               </div>
@@ -130,7 +130,7 @@ export default function About() {
                 <p style={S.label()}>Our Mission</p>
                 <p style={S.body}>
                   To give every organization — regardless of size — access to the same data engineering
-                  excellence that powers the world's most data-driven companies. Production-grade,
+                  standards used by mature, data-driven companies. Production-grade,
                   enterprise-standard, and built to scale.
                 </p>
               </div>
@@ -147,7 +147,7 @@ export default function About() {
             {[
               { title: 'Outcome-Driven', icon: '→', body: 'Every architectural choice traces back to a business metric. We start with the KPI, then choose the technology.' },
               { title: 'Production-First', icon: '◉', body: "We build as if we're the ones on call at 3am. Monitoring, alerting, and runbooks are day-one requirements." },
-              { title: 'Enterprise Standards', icon: '◈', body: "Full documentation, clean handoffs, SOC2-compatible data operations. Your security team will be satisfied." },
+              { title: 'Enterprise Standards', icon: '◈', body: "Full documentation, clean handoffs, and delivery practices designed to fit your security and compliance requirements." },
             ].map((item, i) => (
               <div key={i} ref={addRef(i) as any} style={{ ...S.card, opacity: 0 }}>
                 <span style={{ fontSize: '1.5rem', color: ACCENT, display: 'block', marginBottom: '16px' }}>{item.icon}</span>

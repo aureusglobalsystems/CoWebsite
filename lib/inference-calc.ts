@@ -14,6 +14,7 @@ export const MODELS: { id: ModelSize; label: string; hint: string }[] = [
   { id: '70b', label: '70B', hint: 'Near-frontier quality, chat' },
 ];
 
+// Indicative on-demand $/GPU-hour, November 2026. Prices vary by provider, region and contract.
 export const GPUS: { id: GpuId; label: string; price: number }[] = [
   { id: 'l4', label: 'NVIDIA L4 (24 GB)', price: 0.8 },
   { id: 'a10g', label: 'NVIDIA A10G (24 GB)', price: 1.0 },

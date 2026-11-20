@@ -277,7 +277,7 @@ export default function LeadMagnet() {
             maxWidth: '440px',
             marginBottom: '48px',
           }}>
-            A practical 20-question assessment built from 50+ real platform engagements.
+            A practical 20-question assessment based on common data platform patterns.
             Find out exactly where your stack stands — and what to fix first.
           </p>
 
@@ -444,7 +444,7 @@ export default function LeadMagnet() {
                     textAlign: 'center',
                     marginTop: '4px',
                   }}>
-                    No spam. Unsubscribe any time.
+                    We only email you about this assessment. See our <a href="/privacy" style={{ color: '#888', textDecoration: 'underline' }}>privacy policy</a>.
                   </p>
                 </form>
               </>
@@ -477,7 +477,7 @@ export default function LeadMagnet() {
               fontSize: '0.78rem',
               lineHeight: 1.4,
             }}>
-              Used by <span style={{ color: 'white' }}>50+ data teams</span> to identify platform gaps
+              Free · 5 minutes · instant score
             </p>
           </div>
         </div>

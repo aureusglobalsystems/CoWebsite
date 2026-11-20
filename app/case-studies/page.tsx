@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import TiltCard from '@/components/ui/TiltCard';
-import { caseStudies as allCaseStudies } from '@/lib/case-studies';
+import { caseStudies as allCaseStudies, CASE_STUDY_NOTE } from '@/lib/case-studies';
 
 const ACCENT = '#00d4aa';
 
@@ -37,14 +37,14 @@ export default function CaseStudiesPage() {
           <div ref={heroRef} style={{ opacity: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
               <div style={{ width: '32px', height: '1px', background: ACCENT }} />
-              <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT }}>Proof</span>
+              <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT }}>Case studies</span>
             </div>
             <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 112px)', letterSpacing: '-0.04em', lineHeight: 0.93, color: '#111', marginBottom: '24px' }}>
-              Proof,<br />
-              <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>Not Promises.</span>
+              How We Work,<br />
+              <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>In Practice.</span>
             </h1>
             <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', maxWidth: '480px', lineHeight: 1.72, marginBottom: '48px' }}>
-              Every case study below is a real engagement. Real client. Real outcome. Real numbers.
+              Representative engagements showing how we solve common data and AI problems. {CASE_STUDY_NOTE}
             </p>
             {/* Filters */}
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>

@@ -10,15 +10,20 @@
  *     Execute as: Me.  Who has access: Anyone.  → Deploy → authorise → copy the Web app URL.
  *  4. Send the URL (ends in /exec) to be added to the website.
  * The sheet itself stays private: "Anyone" only means anyone can POST a sign-up, not read the sheet.
+ *
+ * Updating: paste the new version, Save, then Deploy → Manage deployments → ✎ Edit → Version: New version → Deploy.
+ * The URL stays the same. Columns are matched by header name, so new fields are added as new columns at the
+ * right-hand end and your existing rows, Bench status and Internal notes are untouched.
+ * Delete inactive candidates after 24 months (the careers page promises this).
  */
 const SHEET_NAME = 'Candidates';
 const COLUMNS = [
   'Received', 'Name', 'Email', 'Phone', 'LinkedIn', 'Resume', 'Level', 'Cloud', 'Databricks experience', 'Databricks cert', 'Years', 'Skills',
   'Available from', 'Looking for', 'Current status', 'Expected rate', 'Location', 'Notes', 'Consent',
-  'Source', 'Landing page', 'Bench status', 'Internal notes',
+  'Source', 'Landing page', 'Bench status', 'Internal notes', 'Specialism',
 ];
 const FIELD = {
-  Name: 'name', Email: 'email', Phone: 'phone', LinkedIn: 'linkedin', Resume: 'resume', Level: 'level',
+  Specialism: 'specialism', Name: 'name', Email: 'email', Phone: 'phone', LinkedIn: 'linkedin', Resume: 'resume', Level: 'level',
   Cloud: 'cloud', 'Databricks experience': 'databricks', 'Databricks cert': 'cert', Years: 'years', Skills: 'skills', 'Available from': 'availability', 'Looking for': 'commitment',
   'Current status': 'status', 'Expected rate': 'rate', Location: 'location', Notes: 'notes', Consent: 'consent',
 };
@@ -34,22 +39,24 @@ function doPost(e) {
     const sheet = sheet_();
     const clean = (v) => String(v == null ? '' : v).slice(0, 2000).replace(/^[=+\-@]/, "'$&"); // no formula injection
     const source = [d.utm_source || d.first_referrer || d.referrer || 'direct', d.utm_campaign].filter(String).join(' / ');
-    const row = COLUMNS.map((c) => {
+    const header = header_(sheet);
+    const row = header.map((c) => {
       if (c === 'Received') return new Date();
       if (c === 'Source') return clean(source);
       if (c === 'Landing page') return clean(d.landing_page || d.first_landing || '');
       if (c === 'Bench status') return 'New';
       if (c === 'Internal notes') return '';
-      return clean(d[FIELD[c]]);
+      return FIELD[c] ? clean(d[FIELD[c]]) : '';
     });
+    const col = (name) => header.indexOf(name);
 
-    const emails = sheet.getRange(2, 3, Math.max(sheet.getLastRow() - 1, 1), 1).getValues().map((r) => String(r[0]).toLowerCase());
+    const emails = sheet.getRange(2, col('Email') + 1, Math.max(sheet.getLastRow() - 1, 1), 1).getValues().map((r) => String(r[0]).toLowerCase());
     const i = emails.indexOf(String(d.email).toLowerCase());
     if (i >= 0) {
       const r = i + 2;
-      const keep = sheet.getRange(r, COLUMNS.indexOf('Bench status') + 1, 1, 2).getValues()[0]; // keep your notes
-      row[COLUMNS.indexOf('Bench status')] = keep[0] || 'New';
-      row[COLUMNS.indexOf('Internal notes')] = keep[1];
+      const old = sheet.getRange(r, 1, 1, header.length).getValues()[0]; // keep your status and notes
+      row[col('Bench status')] = old[col('Bench status')] || 'New';
+      row[col('Internal notes')] = old[col('Internal notes')];
       sheet.getRange(r, 1, 1, row.length).setValues([row]);
     } else {
       sheet.appendRow(row);
@@ -74,6 +81,19 @@ function sheet_() {
     sh.setFrozenColumns(2);
   }
   return sh;
+}
+
+/** Header row as it is in the sheet; appends any column from COLUMNS that is missing. */
+function header_(sh) {
+  const width = Math.max(sh.getLastColumn(), 1);
+  const header = sh.getRange(1, 1, 1, width).getValues()[0].map(String).filter(String);
+  const missing = COLUMNS.filter((c) => header.indexOf(c) < 0);
+  if (missing.length) {
+    sh.getRange(1, header.length + 1, 1, missing.length).setValues([missing])
+      .setFontWeight('bold').setBackground('#111111').setFontColor('#ffffff');
+    return header.concat(missing);
+  }
+  return header;
 }
 
 function ok_() {

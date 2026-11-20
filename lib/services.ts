@@ -18,7 +18,7 @@ export const services: ServiceContent[] = [
         "Databricks consulting services for lakehouse implementation and Databricks migration: medallion design, Unity Catalog, Lakeflow pipelines and Mosaic AI.",
       keywords: [
         'Databricks consulting services',
-        'Databricks consulting partner',
+        'Databricks consulting company',
         'Databricks consultants',
         'Databricks migration',
         'Hadoop to Databricks migration',
@@ -293,7 +293,7 @@ export const services: ServiceContent[] = [
       keywords: [
         'Snowflake consulting services',
         'Snowflake consultants',
-        'Snowflake consulting partner',
+        'Snowflake consulting company',
         'Snowflake cost optimization',
         'Snowflake migration',
         'Teradata to Snowflake migration',
@@ -579,7 +579,7 @@ export const services: ServiceContent[] = [
     hero: {
       line1: 'Data Engineering',
       line2: 'Staff Augmentation.',
-      tagline: 'Senior talent. Zero ramp-up.',
+      tagline: 'Senior talent. Fast onboarding.',
       highlight: 'When you need it.',
       intro:
         "Data engineering staff augmentation for teams that need senior hands now. We embed Databricks, Snowflake, dbt, Airflow and AI engineers from our India delivery team directly into your squads, working in your tools, your sprints and your Slack.",
@@ -679,7 +679,7 @@ export const services: ServiceContent[] = [
       },
       {
         q: 'What is the difference between staff augmentation and a managed team?',
-        a: "With staff augmentation, you direct the work and our engineers join your team. With a managed team, we own delivery of an agreed scope and you set the goals. Many clients start with one and move to the other as needs change.",
+        a: "With staff augmentation, you direct the work and our engineers join your team. With a managed team, we own delivery of an agreed scope and you set the goals. You can start with one and move to the other as needs change.",
       },
     ],
     leadMagnet: {

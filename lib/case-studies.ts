@@ -17,6 +17,9 @@ export type CaseStudy = {
   tech: string[];
 };
 
+/** Shown wherever case studies appear. */
+export const CASE_STUDY_NOTE = 'Client names and identifying details are withheld under confidentiality. Some engagements are anonymised composites, and figures are indicative of the results achieved, not a guarantee of future results.';
+
 export const caseStudies: CaseStudy[] = [
   {
     category: 'Databricks', tag: 'Databricks Migration', tagColor: '#ff3366',
@@ -75,7 +78,7 @@ export const caseStudies: CaseStudy[] = [
     title: '3 Senior Engineers. 6 Months. Platform Rebuilt.',
     challenge: 'A regional insurance provider lost 3 senior engineers. Delivery was stalled on a critical customer analytics project with a hard regulatory deadline.',
     solution: 'Embedded 3 Aureus senior engineers. Completed the platform on time, migrated 40 legacy ETL jobs to Airflow, and upskilled the existing 5-person team.',
-    outcomes: ['Critical regulatory deadline met', '40 legacy ETL jobs modernized', '3 engineers certified in new stack', 'Zero delivery gaps during engagement'],
+    outcomes: ['Critical regulatory deadline met', '40 legacy ETL jobs modernized', 'Existing team upskilled on the new stack', 'Zero delivery gaps during engagement'],
     tech: ['Azure Data Factory', 'Airflow', 'dbt', 'Azure Synapse', 'Power BI'],
   },
   {

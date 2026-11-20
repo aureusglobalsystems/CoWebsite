@@ -17,6 +17,7 @@ const links = [
   { href: '/case-studies', label: 'Case Studies' },
   { href: '/insights', label: 'Insights' },
   { href: '/assessment', label: 'Assessment' },
+  { href: '/careers', label: 'Careers' },
   { href: '/contact', label: 'Contact' },
 ];
 

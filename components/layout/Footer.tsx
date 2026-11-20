@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { serviceNav } from '@/lib/services-nav';
 import AgsLogo from '@/components/brand/AgsLogo';
+import { TRADEMARK_NOTICE } from '@/lib/site';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -174,10 +175,17 @@ export default function Footer() {
             </div>
             <span style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>India Global Delivery</span>
           </div>
-          <p style={{ ...LABEL, color: '#aaa', fontSize: '0.5rem' }}>
-            © {new Date().getFullYear()} Aureus Global Systems LLP. All rights reserved.
-          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            <Link href="/privacy" className="footer-link" style={{ ...LABEL, fontSize: '0.5rem' }}>Privacy</Link>
+            <Link href="/terms" className="footer-link" style={{ ...LABEL, fontSize: '0.5rem' }}>Terms</Link>
+            <p style={{ ...LABEL, color: '#aaa', fontSize: '0.5rem' }}>
+              © {new Date().getFullYear()} Aureus Global Systems LLP. All rights reserved.
+            </p>
+          </div>
         </div>
+        <p style={{ fontFamily: 'Inter, sans-serif', color: '#555', fontSize: '0.7rem', lineHeight: 1.6, marginTop: '20px', maxWidth: '900px' }}>
+          {TRADEMARK_NOTICE}
+        </p>
       </div>
     </footer>
   );

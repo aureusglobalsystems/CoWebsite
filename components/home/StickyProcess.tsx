@@ -9,8 +9,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const steps = [
   { number: '01', title: 'Discovery & Audit', description: 'We map your current data landscape — infrastructure, pipelines, quality issues, and quick wins. No assumptions, just facts.' },
   { number: '02', title: 'Architecture Design', description: 'A production-grade blueprint tailored to your scale, team, and growth trajectory. Medallion, Lakehouse, or hybrid — we design for longevity.' },
-  { number: '03', title: 'Build & Migrate', description: 'Incremental delivery with zero disruption. Your old platform keeps running while the new one is built, tested, and validated.' },
-  { number: '04', title: 'Handoff & Elevate', description: "Full documentation, team training, and ongoing support. We leave you stronger than we found you — that's the Aureus guarantee." },
+  { number: '03', title: 'Build & Migrate', description: 'Incremental delivery designed to minimise disruption. Your old platform keeps running while the new one is built, tested, and validated.' },
+  { number: '04', title: 'Handoff & Elevate', description: "Full documentation, team training and an agreed handover plan, with ongoing support available if you need it." },
 ];
 
 const SPECTRUM = [new THREE.Color('#ff3366'), new THREE.Color('#ff6b35'), new THREE.Color('#ffd700'), new THREE.Color('#00d4aa'), new THREE.Color('#3366ff')];

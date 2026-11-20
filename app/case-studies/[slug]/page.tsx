@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SEO_META, clip } from '@/lib/seo-meta';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { caseStudies, caseStudyBySlug } from '@/lib/case-studies';
+import { caseStudies, caseStudyBySlug, CASE_STUDY_NOTE } from '@/lib/case-studies';
 import { serviceBySlug } from '@/lib/services-nav';
 import { SITE_URL, SITE_NAME, contactHref } from '@/lib/site';
 import JsonLd from '@/components/seo/JsonLd';
@@ -92,6 +92,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
               </div>
             ))}
           </div>
+          <p style={{ fontFamily: 'Inter, sans-serif', color: '#777', fontSize: '0.74rem', lineHeight: 1.6, marginTop: '28px', maxWidth: '760px' }}>{CASE_STUDY_NOTE}</p>
         </div>
       </section>
 

@@ -301,7 +301,7 @@ function getScoreBand(score: number): ScoreBand {
   };
   return {
     label: 'Best-in-Class',
-    interpretation: 'Industry-leading. Focus on innovation and staying ahead.',
+    interpretation: 'Very mature on this self-assessment. Focus on innovation and staying ahead.',
     color: '#8b5cf6',
   };
 }
@@ -669,6 +669,9 @@ export default function AssessmentPage() {
                     maxWidth: '480px',
                     margin: '0 auto',
                   }}>{band.interpretation}</p>
+                  <p style={{ fontFamily: 'Inter, sans-serif', color: '#999', fontSize: '0.72rem', marginTop: '12px' }}>
+                    A self-assessment for guidance only, not an audit or benchmark.
+                  </p>
                 </div>
 
                 {/* Category breakdown */}

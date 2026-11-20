@@ -20,7 +20,7 @@ const paths = [
   {
     eyebrow: 'Capacity-based',
     title: 'Hire engineers',
-    body: 'Add senior data, AI and ML engineers to your own team. They work in your tools, your sprints and your Slack — and ramp up in days, not months.',
+    body: 'Add senior data, AI and ML engineers to your own team. They work in your tools, your sprints and your Slack — and onboard quickly.',
     points: ['Databricks, Snowflake, AI/ML & BI specialists', '1 engineer to a full pod', 'Flexible 3–12 month terms'],
     cta: 'Hire engineers',
     href: '/contact?service=Staff%20Augmentation',

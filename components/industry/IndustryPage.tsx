@@ -153,7 +153,7 @@ export default function IndustryPage({ industry, shape, services, caseStudies, b
       {industry.compliance.length > 0 && (
         <section style={{ width: '100%', padding: '64px 0', background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
           <div style={S.container}>
-            <h2 className="reveal" style={S.eyebrow()}>Built with your regulations in mind</h2>
+            <h2 className="reveal" style={S.eyebrow()}>Regulations we design platforms to support (certification remains with your organisation)</h2>
             <div className="reveal" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
               {industry.compliance.map((c) => (
                 <span key={c} style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.55rem', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '8px 14px', borderRadius: '100px', color: '#333', background: '#fff', border: '1px solid #e6e6e6' }}>{c}</span>
@@ -185,7 +185,7 @@ export default function IndustryPage({ industry, shape, services, caseStudies, b
 
       <FinalCta
         heading={`Data & AI for`} outlineText={`${industry.name}.`}
-        body="Tell us what you're working on — a project to deliver or engineers to add to your team. A senior engineer replies within one business day."
+        body="Tell us what you're working on — a project to deliver or engineers to add to your team. We aim to reply within one business day."
         accent={accent} accent2="#ff3366" href="/contact" label="Start the conversation" bookingUrl={bookingUrl} service={industry.slug}
       />
     </div>

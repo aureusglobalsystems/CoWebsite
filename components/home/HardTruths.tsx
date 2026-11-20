@@ -7,13 +7,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 const truths = [
   {
     number: '001',
-    headline: '80% of data projects fail before production.',
+    headline: 'Too many data projects stall before production.',
     body: "Not because the technology wasn't good enough — but because no one owned the outcome. We put our name on every platform we build.",
   },
   {
     number: '002',
     headline: 'Your data warehouse is only as smart as its architecture.',
-    body: "Medallion architecture isn't a buzzword. It's the difference between a data swamp and a competitive edge. We build it right the first time.",
+    body: "Medallion architecture isn't a buzzword. It's the difference between a data swamp and a competitive edge. We design it carefully from the start.",
   },
   {
     number: '003',

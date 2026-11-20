@@ -50,8 +50,8 @@ const services = [
     tech: ['Power BI', 'Tableau', 'Looker', 'dbt Metrics', 'Azure Synapse', 'Cube'],
   },
   {
-    number: '06', slug: 'staff-augmentation', href: '/services/data-engineering-staff-augmentation', title: 'Staff Augmentation', tagline: 'Senior talent. Zero ramp-up. When you need it.', accent: '#00d4aa', icon: '◎',
-    description: "Sometimes you need hands — senior ones. We embed battle-tested data and AI engineers directly into your team, working in your tools, your sprint cycles, and your Slack.",
+    number: '06', slug: 'staff-augmentation', href: '/services/data-engineering-staff-augmentation', title: 'Staff Augmentation', tagline: 'Senior talent. Fast onboarding. When you need it.', accent: '#00d4aa', icon: '◎',
+    description: "Sometimes you need hands — senior ones. We embed experienced data and AI engineers directly into your team, working in your tools, your sprint cycles, and your Slack.",
     deliverables: ['Senior data & AI engineer placement (1–5+ engineers)', 'Flexible engagement terms (3–12 months)', 'Skill alignment with your tech stack', 'Weekly progress reporting to stakeholders', 'Knowledge transfer and documentation standards', 'Optional extension or transition to managed team'],
     tech: ['Your Stack', 'Databricks', 'Snowflake', 'AWS/Azure/GCP', 'dbt', 'Airflow'],
   },

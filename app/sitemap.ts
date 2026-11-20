@@ -24,6 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     page('/about', 0.6),
     page('/assessment', 0.6),
     page('/careers', 0.6),
+    page('/privacy', 0.2),
+    page('/terms', 0.2),
     page('/contact', 0.7),
   ];
 }

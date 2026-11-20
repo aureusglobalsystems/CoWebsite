@@ -3,14 +3,15 @@
 import { useState } from 'react';
 import { trackEvent } from '@/lib/analytics';
 import { readFirstTouch } from '@/components/FirstTouch';
-import { AVAILABILITY, CAREERS_ACCENT as ACCENT, CLOUDS, COMMITMENT, DATABRICKS_CERTS, DATABRICKS_EXPERIENCE, LEVELS, LINKEDIN_URL, SKILLS, STATUS, TALENT_SHEET_URL } from '@/lib/careers';
+import Link from 'next/link';
+import { AVAILABILITY, CAREERS_ACCENT as ACCENT, CLOUDS, COMMITMENT, DATABRICKS_EXPERIENCE, LEVELS, LINKEDIN_URL, SKILLS, SPECIALISMS, STATUS, TALENT_SHEET_URL } from '@/lib/careers';
 
 const label: React.CSSProperties = { fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: '#888', display: 'block', marginBottom: '8px' };
 const input: React.CSSProperties = { width: '100%', background: '#fafafa', border: '1px solid #e8e8e8', borderRadius: '12px', padding: '14px 16px', fontFamily: 'Inter, sans-serif', fontSize: '0.9rem', color: '#111', outline: 'none' };
 
 const empty = {
   name: '', email: '', phone: '', linkedin: '', resume: '', location: '', years: '',
-  level: '', cloud: '', databricks: '', cert: '', skills: [] as string[], availability: '', commitment: '', status: '', rate: '', notes: '',
+  level: '', specialism: '', clouds: [] as string[], databricks: '', cert: '', skills: [] as string[], availability: '', commitment: '', status: '', rate: '', notes: '',
   consent: false, _gotcha: '',
 };
 
@@ -18,9 +19,9 @@ export default function TalentForm() {
   const [form, setForm] = useState(empty);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const set = <K extends keyof typeof empty>(k: K, v: (typeof empty)[K]) => setForm((f) => ({ ...f, [k]: v }));
-  const toggleSkill = (s: string) => set('skills', form.skills.includes(s) ? form.skills.filter((x) => x !== s) : [...form.skills, s]);
+  const toggle = (k: 'skills' | 'clouds', v: string) => set(k, form[k].includes(v) ? form[k].filter((x) => x !== v) : [...form[k], v]);
 
-  const ready = form.name && form.email && form.linkedin && form.level && form.cloud && form.databricks && form.consent;
+  const ready = form.name && form.email && form.linkedin && form.level && form.specialism && form.consent;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,13 +38,15 @@ export default function TalentForm() {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           ...form,
+          clouds: undefined,
+          cloud: form.clouds.join(', '),
           skills: form.skills.join(', '),
           consent: form.consent ? 'Yes' : 'No',
           ...readFirstTouch(),
         }),
       });
       setStatus('success');
-      trackEvent('talent_signup', { level: form.level, cloud: form.cloud, availability: form.availability || 'unspecified' });
+      trackEvent('talent_signup', { level: form.level, specialism: form.specialism, availability: form.availability || 'unspecified' });
     } catch { setStatus('error'); }
   };
 
@@ -58,7 +61,7 @@ export default function TalentForm() {
         <div style={{ marginTop: '32px', padding: '24px', border: '1px solid #ececec', borderRadius: '16px', maxWidth: '420px', marginInline: 'auto' }}>
           <p style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '16px', color: '#111', marginBottom: '6px' }}>One more thing</p>
           <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', fontSize: '0.86rem', lineHeight: 1.6, marginBottom: '16px' }}>
-            New Databricks roles are posted on our LinkedIn page first. Follow us so you see them as soon as they open.
+            We share new roles on our LinkedIn page. Follow us to see them when they open.
           </p>
           <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="calc-cta"
             onClick={() => trackEvent('linkedin_follow_click', { location: 'careers_success' })}>Follow AGS on LinkedIn ↗</a>
@@ -105,29 +108,35 @@ export default function TalentForm() {
         </div>
       </fieldset>
 
-      <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
-        <legend style={label}>Primary cloud *</legend>
-        <div className="calc-chips">
-          {CLOUDS.map((c) => (
-            <button type="button" key={c} aria-pressed={form.cloud === c} className={`calc-chip${form.cloud === c ? ' on' : ''}`} onClick={() => set('cloud', c)}>{c}</button>
-          ))}
+      <div className="form-row">
+        <div>
+          <label htmlFor="t-specialism" style={label}>Main specialism *</label>
+          <select id="t-specialism" style={{ ...input, appearance: 'none' }} value={form.specialism} onChange={(e) => set('specialism', e.target.value)} required>
+            <option value="">Select…</option>
+            {SPECIALISMS.map((x) => <option key={x} value={x}>{x}</option>)}
+          </select>
         </div>
-      </fieldset>
+        <fieldset style={{ border: 'none', padding: 0, margin: 0, minWidth: 0 }}>
+          <legend style={label}>Clouds you have worked on</legend>
+          <div className="calc-chips">
+            {CLOUDS.map((c) => (
+              <button type="button" key={c} aria-pressed={form.clouds.includes(c)} className={`calc-chip${form.clouds.includes(c) ? ' on' : ''}`} onClick={() => toggle('clouds', c)}>{c}</button>
+            ))}
+          </div>
+        </fieldset>
+      </div>
 
       <div className="form-row">
         <div>
-          <label htmlFor="t-databricks" style={label}>Databricks experience *</label>
-          <select id="t-databricks" style={{ ...input, appearance: 'none' }} value={form.databricks} onChange={(e) => set('databricks', e.target.value)} required>
+          <label htmlFor="t-databricks" style={label}>Databricks experience</label>
+          <select id="t-databricks" style={{ ...input, appearance: 'none' }} value={form.databricks} onChange={(e) => set('databricks', e.target.value)}>
             <option value="">Select…</option>
             {DATABRICKS_EXPERIENCE.map((x) => <option key={x} value={x}>{x}</option>)}
           </select>
         </div>
         <div>
-          <label htmlFor="t-cert" style={label}>Databricks certification</label>
-          <select id="t-cert" style={{ ...input, appearance: 'none' }} value={form.cert} onChange={(e) => set('cert', e.target.value)}>
-            <option value="">Select…</option>
-            {DATABRICKS_CERTS.map((x) => <option key={x} value={x}>{x}</option>)}
-          </select>
+          <label htmlFor="t-cert" style={label}>Certifications</label>
+          <input id="t-cert" style={input} placeholder="e.g. Databricks DE Professional, SnowPro Core" value={form.cert} onChange={(e) => set('cert', e.target.value)} />
         </div>
       </div>
 
@@ -143,10 +152,10 @@ export default function TalentForm() {
       </div>
 
       <fieldset style={{ border: 'none', padding: 0, margin: 0 }}>
-        <legend style={label}>Other skills you use in production</legend>
+        <legend style={label}>Skills you use in production</legend>
         <div className="calc-chips">
           {SKILLS.map((s) => (
-            <button type="button" key={s} aria-pressed={form.skills.includes(s)} className={`calc-chip${form.skills.includes(s) ? ' on' : ''}`} onClick={() => toggleSkill(s)}>{s}</button>
+            <button type="button" key={s} aria-pressed={form.skills.includes(s)} className={`calc-chip${form.skills.includes(s) ? ' on' : ''}`} onClick={() => toggle('skills', s)}>{s}</button>
           ))}
         </div>
       </fieldset>
@@ -196,7 +205,8 @@ export default function TalentForm() {
 
       <label style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', fontFamily: 'Inter, sans-serif', fontSize: '0.82rem', color: '#555', lineHeight: 1.55, cursor: 'pointer' }}>
         <input type="checkbox" checked={form.consent} onChange={(e) => set('consent', e.target.checked)} required style={{ marginTop: '3px', accentColor: ACCENT, width: '16px', height: '16px', flexShrink: 0 }} />
-        <span>I agree that Aureus Global Systems may store my details and contact me about suitable projects. My profile will only be shared with a client after I agree to it for that role, and I can ask for my details to be deleted at any time. *</span>
+        <span>I am 18 or older and agree that Aureus Global Systems LLP may store my details and contact me about suitable projects, as described in the{' '}
+          <Link href="/privacy" target="_blank" style={{ color: '#111', textDecoration: 'underline' }}>privacy policy</Link>. My profile will be shared with a client only after I agree for that role, and I can withdraw this consent at any time. *</span>
       </label>
 
       {status === 'error' && (

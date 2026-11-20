@@ -12,7 +12,7 @@ export const homeFaqs = [
   },
   {
     q: 'Can we hire your engineers instead of outsourcing a whole project?',
-    a: 'Yes. Many clients embed our senior data, AI and ML engineers directly into their own teams — working in their tools, sprints and Slack — typically for 3 to 12 months. Others hand us the whole outcome as a managed team or fixed-price project. You can also start with one model and switch later.',
+    a: 'Yes. Teams can embed our senior data, AI and ML engineers directly into their own teams — working in their tools, sprints and Slack — typically for 3 to 12 months. Others hand us the whole outcome as a managed team or fixed-price project. You can also start with one model and switch later.',
   },
   {
     q: 'Do you work with companies outside India?',
@@ -24,6 +24,6 @@ export const homeFaqs = [
   },
   {
     q: 'How does an engagement start?',
-    a: 'Tell us what you need through the contact form. A senior engineer replies within one business day, then we hold a short discovery call and send a clear proposal with scope, approach, timeline and pricing. Most engagements can start within a few weeks.',
+    a: 'Tell us what you need through the contact form. We aim to reply within one business day, then we hold a short discovery call and send a clear proposal with scope, approach, timeline and pricing. Most engagements can start within a few weeks.',
   },
 ];
