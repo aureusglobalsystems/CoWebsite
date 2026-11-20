@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { serviceNav } from '@/lib/services-nav';
 import AgsLogo from '@/components/brand/AgsLogo';
-import { TRADEMARK_NOTICE } from '@/lib/site';
+import { LEGAL_ENTITY, TRADEMARK_NOTICE } from '@/lib/site';
 
 const links = [
   { href: '/', label: 'Home' },
@@ -167,7 +167,7 @@ export default function Footer() {
           gap: '16px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>Est. 2024</span>
+            <span style={{ ...LABEL, color: '#666', fontSize: '0.5rem' }}>Est. 2025</span>
             <div style={{ display: 'flex', gap: '6px' }}>
               {['#ff3366', '#ff6b35', '#ffd700', '#00d4aa', '#3366ff'].map((c) => (
                 <div key={c} style={{ width: '6px', height: '6px', borderRadius: '50%', background: c }} />
@@ -184,7 +184,7 @@ export default function Footer() {
           </div>
         </div>
         <p style={{ fontFamily: 'Inter, sans-serif', color: '#555', fontSize: '0.7rem', lineHeight: 1.6, marginTop: '20px', maxWidth: '900px' }}>
-          {TRADEMARK_NOTICE}
+          {LEGAL_ENTITY}. {TRADEMARK_NOTICE}
         </p>
       </div>
     </footer>

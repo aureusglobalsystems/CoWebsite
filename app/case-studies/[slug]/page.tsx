@@ -38,6 +38,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
   const url = `${SITE_URL}/case-studies/${slug}`;
   const others = caseStudies.filter((c) => c.slug !== slug && c.service === cs.service).concat(caseStudies.filter((c) => c.service !== cs.service)).slice(0, 2);
 
+  const summary = `${cs.tag} engagement for a ${cs.industry.toLowerCase()} client, delivered in ${cs.duration}. Results: ${cs.outcomes.join('; ')}.`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -45,6 +46,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         '@type': 'Article',
         headline: cs.title,
         description: `${cs.challenge} ${cs.solution}`,
+        abstract: summary,
+        articleSection: 'Case study',
+        keywords: [cs.tag, cs.industry, ...cs.tech].join(', '),
         url,
         about: cs.tech,
         author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
@@ -72,7 +76,10 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <span style={{ margin: '0 10px' }}>/</span>
             <span style={{ color: accent }}>{cs.tag}</span>
           </nav>
-          <h1 style={{ fontSize: 'clamp(36px, 6vw, 80px)', lineHeight: 0.98, maxWidth: '1000px', marginBottom: '32px' }}>{cs.title}</h1>
+          <h1 style={{ fontSize: 'clamp(36px, 6vw, 80px)', lineHeight: 0.98, maxWidth: '1000px', marginBottom: '24px' }}>{cs.title}</h1>
+          <p style={{ fontFamily: 'Inter, sans-serif', color: '#555', fontSize: '1.02rem', lineHeight: 1.7, maxWidth: '760px', marginBottom: '28px' }}>
+            <strong style={{ color: '#111' }}>In short:</strong> {summary}
+          </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
             {[cs.client, cs.industry, cs.duration].map((m) => (
               <span key={m} className="label" style={{ padding: '8px 14px', borderRadius: '100px', border: '1px solid #e5e5e5', color: '#666' }}>{m}</span>

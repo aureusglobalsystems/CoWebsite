@@ -13,7 +13,7 @@ const sections: LegalSection[] = [
   {
     h: 'Who we are',
     p: [
-      'Aureus Global Systems LLP ("AGS", "we", "us") is a limited liability partnership registered in India. We are the data fiduciary for personal data collected through aureusglobalsystems.com (the "site").',
+      'Aureus Global Systems LLP ("AGS", "we", "us") is a limited liability partnership registered in India (LLPIN ACS-4348), with its registered office at A 167, Sun City, Panda, Rao, Mhow, Indore, Madhya Pradesh 453331. We are the data fiduciary for personal data collected through aureusglobalsystems.com (the "site").',
       `For any privacy question or request, write to ${EMAIL} with "Privacy" in the subject line.`,
     ],
   },

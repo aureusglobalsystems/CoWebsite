@@ -120,7 +120,7 @@ export default function About() {
               <div>
                 <p style={S.label()}>Who We Are</p>
                 <p style={S.body}>
-                  Aureus Global Systems is a data & AI engineering company founded in 2024.
+                  Aureus Global Systems LLP is a data & AI engineering company headquartered in Indore, India.
                   We are a team of senior data engineers, AI architects, and analytics specialists whose
                   engineers bring hands-on experience across retail, fintech, healthcare
                   and manufacturing.

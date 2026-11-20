@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const sections: LegalSection[] = [
   {
     h: 'About these terms',
-    p: ['This website is operated by Aureus Global Systems LLP, a limited liability partnership registered in India ("AGS", "we", "us"). By using the site you agree to these terms. If you do not agree, please do not use the site.'],
+    p: ['This website is operated by Aureus Global Systems LLP, a limited liability partnership registered in India (LLPIN ACS-4348), with its registered office at A 167, Sun City, Panda, Rao, Mhow, Indore, Madhya Pradesh 453331 ("AGS", "we", "us"). By using the site you agree to these terms. If you do not agree, please do not use the site.'],
   },
   {
     h: 'Information only, no offer or advice',

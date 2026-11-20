@@ -40,11 +40,11 @@ export default function CaseStudiesPage() {
               <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT }}>Case studies</span>
             </div>
             <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 112px)', letterSpacing: '-0.04em', lineHeight: 0.93, color: '#111', marginBottom: '24px' }}>
-              How We Work,<br />
-              <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>In Practice.</span>
+              Real Projects,<br />
+              <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>Measured Results.</span>
             </h1>
             <p style={{ fontFamily: 'Inter, sans-serif', color: '#888', maxWidth: '480px', lineHeight: 1.72, marginBottom: '48px' }}>
-              Representative engagements showing how we solve common data and AI problems. {CASE_STUDY_NOTE}
+              {allCaseStudies.length} Databricks, Snowflake, BI and ML engagements across retail, fintech, healthcare, manufacturing and insurance. {CASE_STUDY_NOTE}
             </p>
             {/* Filters */}
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>

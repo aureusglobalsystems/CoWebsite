@@ -3,12 +3,14 @@
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
+import { CASE_STUDY_NOTE } from '@/lib/case-studies';
 
 const stats = [
-  { value: 50, suffix: '+', label: 'Enterprise Projects Delivered', accent: '#ff3366' },
-  { value: 98, suffix: '%', label: 'Client Retention Rate', accent: '#ff6b35' },
-  { value: 2.1, suffix: 'M+', label: 'Annual Savings Unlocked', prefix: '$', accent: '#ffd700' },
-  { value: 47, suffix: '×', label: 'Average Performance Gain', accent: '#00d4aa' },
+  { value: 47, suffix: '×', label: 'Faster queries (14 h → 18 min)', source: 'Retail · Databricks lakehouse migration', href: '/case-studies/databricks-lakehouse-migration-retail', accent: '#ff3366' },
+  { value: 68, suffix: '%', label: 'Lower warehouse cost ($180K → $58K / month)', source: 'FinTech · Snowflake re-platform', href: '/case-studies/snowflake-fintech-500m-transactions', accent: '#29B5E8' },
+  { value: 2.4, suffix: 'M', prefix: '$', label: 'Revenue recovered in 6 months', source: 'D2C retail · ML demand forecasting', href: '/case-studies/ml-demand-forecasting-d2c-retail', accent: '#8b5cf6' },
+  { value: 65, suffix: '%', label: 'Less unplanned downtime', source: 'Manufacturing · IoT streaming on Databricks', href: '/case-studies/databricks-iot-streaming-manufacturing', accent: '#00d4aa' },
 ];
 
 function CountUp({ target, prefix = '', suffix = '', accent }: { target: number; prefix?: string; suffix?: string; accent: string }) {
@@ -73,7 +75,7 @@ export default function Stats() {
     <section ref={sectionRef} style={{ width: '100%', padding: '96px 0' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
         <div style={{ marginBottom: '64px' }}>
-          <p className="label" style={{ color: '#888', marginBottom: '12px', display: 'block' }}>Impact</p>
+          <p className="label" style={{ color: '#888', marginBottom: '12px', display: 'block' }}>Results from client engagements</p>
           <h2 style={{
             fontFamily: 'Syne, sans-serif',
             fontWeight: 800,
@@ -82,8 +84,8 @@ export default function Stats() {
             lineHeight: 1.0,
             color: '#111',
           }}>
-            Numbers That<br />
-            <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>Matter</span>
+            Measured,<br />
+            <span style={{ WebkitTextStroke: '2px #111', color: 'transparent' }}>Not Promised.</span>
           </h2>
         </div>
 
@@ -114,9 +116,15 @@ export default function Stats() {
               }}>
                 {stat.label}
               </p>
+              <Link href={stat.href} className="label" style={{ display: 'inline-block', marginTop: '10px', color: '#aaa', fontSize: '0.5rem', textDecoration: 'none' }}>
+                {stat.source} →
+              </Link>
             </div>
           ))}
         </div>
+        <p style={{ fontFamily: 'Inter, sans-serif', color: '#aaa', fontSize: '0.74rem', lineHeight: 1.6, marginTop: '28px', maxWidth: '760px' }}>
+          Each figure comes from one named case study, measured with the client at project close. {CASE_STUDY_NOTE.split('. ')[0]}.
+        </p>
       </div>
     </section>
   );

@@ -25,6 +25,7 @@ export function GET() {
 
 Ways to engage: fixed-price projects, managed delivery teams, or resource augmentation (senior engineers embedded in your team, typically 3–12 months).
 Contact: info@aureusglobalsystems.com · ${SITE_URL}/contact
+Legal entity: Aureus Global Systems LLP (LLPIN ACS-4348), Indore, Madhya Pradesh, India.
 
 ## Services
 ${svcLines.join('\n')}
@@ -36,7 +37,8 @@ ${svcLines.join('\n')}
 ${industries.map((i) => `- [${i.name}](${SITE_URL}/industries/${i.slug}): ${i.answer}`).join('\n')}
 
 ## Case studies
-${caseStudies.map((c) => `- [${c.title}](${SITE_URL}/case-studies/${c.slug}): ${c.tag}, ${c.industry}. ${c.outcomes.slice(0, 2).join('; ')}.`).join('\n')}
+Client names are withheld under confidentiality agreements; results were measured with each client at project close.
+${caseStudies.map((c) => `- [${c.title}](${SITE_URL}/case-studies/${c.slug}): ${c.tag}, ${c.industry}, ${c.duration}. Results: ${c.outcomes.join('; ')}.`).join('\n')}
 
 ## Insights
 ${posts.map((p) => `- [${p.title}](${SITE_URL}/insights/${p.slug}): ${p.summary}`).join('\n')}

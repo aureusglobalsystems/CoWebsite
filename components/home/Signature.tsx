@@ -218,7 +218,7 @@ export default function Signature() {
           gap: '24px', marginTop: '56px', flexWrap: 'wrap',
         }}>
           <span style={{ fontFamily: 'Space Mono, monospace', fontSize: '0.5rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: '#ccc' }}>
-            Est. 2024
+            Est. 2025
           </span>
           <div style={{ display: 'flex', gap: '6px' }}>
             {['#ff3366', '#ff6b35', '#ffd700', '#00d4aa', '#3366ff'].map(c => (

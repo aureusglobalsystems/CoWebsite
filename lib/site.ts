@@ -27,6 +27,9 @@ export const BING_SITE_VERIFICATION = process.env.NEXT_PUBLIC_BING_SITE_VERIFICA
 export const contactHref = (service?: string) =>
   service ? `/contact?service=${encodeURIComponent(service)}` : '/contact';
 
+// Legal entity (MCA registry). Shown in the footer and legal pages.
+export const LEGAL_ENTITY = 'Aureus Global Systems LLP · LLPIN ACS-4348 · Registered office: A 167, Sun City, Panda, Rao, Mhow, Indore, Madhya Pradesh 453331, India';
+
 // Shown in the footer and the terms of use.
 export const TRADEMARK_NOTICE =
   'Databricks, Snowflake, Microsoft, Azure, Power BI, AWS, Google Cloud, BigQuery, Tableau, OpenAI, NVIDIA and other product names are trademarks of their respective owners. Aureus Global Systems LLP is an independent company and is not affiliated with or endorsed by these vendors unless stated.';

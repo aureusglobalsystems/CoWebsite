@@ -57,7 +57,7 @@ export default function CaseStudies() {
             Case Studies
           </p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(28px, 4vw, 52px)', letterSpacing: '-0.04em', lineHeight: 1.0, color: '#111' }}>
-            How We Work, In Practice.
+            Real Projects, Measured Results.
           </h2>
         </div>
 

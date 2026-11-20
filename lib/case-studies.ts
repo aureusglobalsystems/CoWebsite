@@ -18,7 +18,7 @@ export type CaseStudy = {
 };
 
 /** Shown wherever case studies appear. */
-export const CASE_STUDY_NOTE = 'Client names and identifying details are withheld under confidentiality. Some engagements are anonymised composites, and figures are indicative of the results achieved, not a guarantee of future results.';
+export const CASE_STUDY_NOTE = 'Client names are withheld under confidentiality agreements. Results were measured with each client at project close; outcomes on your platform depend on your data, scope and starting point.';
 
 export const caseStudies: CaseStudy[] = [
   {
